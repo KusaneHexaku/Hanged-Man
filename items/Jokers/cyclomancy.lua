@@ -20,7 +20,7 @@ SMODS.Joker {
 		end
 		if rank == 14 then rank = 'Ace' elseif rank == 13 then rank = 'King' elseif rank == 12 then rank = 'Queen' elseif rank == 11 then rank = 'Jack' end
 		if not (suit == '[suit]') then suitcol = G.C.SUITS[suit] end
-		if card.ability and G.GAME.cyclomancy_stack[card.ability.extra.index][1] == 8 or G.GAME.cyclomancy_stack[card.ability.extra.index][1] == 14 then aoran = 'an' end
+		if card.ability and rank == 8 or rank == 14 then aoran = 'an' end
         return { vars = { rank, suit, card.ability.extra.increment, card.ability.extra.xmult, aoran, colours = { suitcol } } }
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.

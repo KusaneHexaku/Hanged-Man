@@ -925,7 +925,8 @@ return {
             c_hangedman_spotTheDifferenceChal = "Spot the Difference",
             c_hangedman_anOfferYouCantRefuseChal = "An Offer You Can\'t Refuse",
             c_hangedman_vowOfPovertyChal = "Vow of Poverty",
-            c_hangedman_ultimateDraftChal = "Ultimate Draft"
+            c_hangedman_ultimateDraftChal = "Ultimate Draft",
+            c_hangedman_handsDownChal = "Hands Down"
         },
         v_text = {
 
@@ -946,13 +947,20 @@ return {
                 "Shop closes for the rest of run once you leave"
             },
 
+            ch_c_hands_down = {
+                "Permanently lose 1 {C:blue}Hand{} when playing a hand"
+            },
+
             
-            -- More general rules
             ch_c_carryover_discards = {
                 "{C:red}Discards{} carry over between rounds"
             },
             ch_c_carryover_hands = {
                 "{C:blue}Hands{} carry over between rounds"
+            },
+
+            ch_c_no_hands_reset = {
+                "{C:blue}Hands{} no longer reset at end of round"
             },
 
 
