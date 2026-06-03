@@ -3,7 +3,7 @@
 A silly Vanilla-esque mod with no real coherent theme. I just add anything I feel like I can code & draw the sprite for.
 
 ## This mod currently contains
-- 50 Jokers
+- 40 Jokers
 - 4 Seals
 - 4 Spectral cards (4 Seal cards)
 - 5 Challenges
