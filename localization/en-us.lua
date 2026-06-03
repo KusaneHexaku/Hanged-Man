@@ -926,7 +926,8 @@ return {
             c_hangedman_anOfferYouCantRefuseChal = "An Offer You Can\'t Refuse",
             c_hangedman_vowOfPovertyChal = "Vow of Poverty",
             c_hangedman_ultimateDraftChal = "Ultimate Draft",
-            c_hangedman_handsDownChal = "Hands Down"
+            c_hangedman_handsDownChal = "Hands Down",
+            c_hangedman_takeItOrLeaveItChal = "Take It or Leave It"
         },
         v_text = {
 
@@ -939,32 +940,30 @@ return {
             ch_c_vow_of_poverty = {
                 "Lose the run if you have more than {C:money}$10{} at any point"
             },
-
             ch_c_ultimate_draft_large_shop = {
                 "The first shop you enters has 5 {C:attention}card slots{}, 3 {C:attention}Booster Packs{}, and 3 {C:attention}Vouchers{}"
             },
             ch_c_ultimate_draft_close_shop_upon_leave = {
                 "Shop closes for the rest of run once you leave"
             },
-
             ch_c_hands_down = {
                 "Permanently lose 1 {C:blue}Hand{} when playing a hand"
             },
-
-            
+            ch_c_one_of_each_shop = {
+                "Shops only contain one of each slot types"
+            },
+            ch_c_very_expensive_reroll = {
+                "{C:green}Rerolls{} cost starts at {C:money}$99{}"
+            },
             ch_c_carryover_discards = {
                 "{C:red}Discards{} carry over between rounds"
             },
             ch_c_carryover_hands = {
                 "{C:blue}Hands{} carry over between rounds"
             },
-
             ch_c_no_hands_reset = {
                 "{C:blue}Hands{} no longer reset at end of round"
             },
-
-
-            
         },
         labels = {
             hangedman_hiking_seal = "Hiking Seal",
