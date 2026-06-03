@@ -12,9 +12,13 @@ SMODS.Joker {
 	loc_vars = function(self, info_queue, card)
 		local aoran = 'a'
 		local suitcol = G.C.FILTER
-		local rank = (G.GAME.cyclomancy_stack[card.ability.extra.index])[1] or '[rank]'
+		local rank = '[rank]'
+		local suit = '[suit]'
+		if G.GAME.cyclomancy_stack then 
+			rank = (G.GAME.cyclomancy_stack[card.ability.extra.index])[1]
+			suit = (G.GAME.cyclomancy_stack[card.ability.extra.index])[2]
+		end
 		if rank == 14 then rank = 'Ace' elseif rank == 13 then rank = 'King' elseif rank == 12 then rank = 'Queen' elseif rank == 11 then rank = 'Jack' end
-		local suit = (G.GAME.cyclomancy_stack[card.ability.extra.index])[2] or '[suit]'
 		if not (suit == '[suit]') then suitcol = G.C.SUITS[suit] end
 		if card.ability and G.GAME.cyclomancy_stack[card.ability.extra.index][1] == 8 or G.GAME.cyclomancy_stack[card.ability.extra.index][1] == 14 then aoran = 'an' end
         return { vars = { rank, suit, card.ability.extra.increment, card.ability.extra.xmult, aoran, colours = { suitcol } } }
