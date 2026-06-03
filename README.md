@@ -6,7 +6,7 @@ A silly Vanilla-esque mod with no real coherent theme. I just add anything I fee
 - 40 Jokers
 - 4 Seals
 - 4 Spectral cards (4 Seal cards)
-- 5 Challenges
+- 7 Challenges
 - Jokes & References that most people will not get
 - Way too much effort into an underwhelming mechanic
 - Mediocre art
