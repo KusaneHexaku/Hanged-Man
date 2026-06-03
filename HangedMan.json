@@ -1,0 +1,13 @@
+{
+    "id": "HangedMan",
+    "name": "Hanged Man",
+    "author": ["Kusane Hexaku"],
+    "description": "The exact opposite of Cryptid --- adding questionable, situational, and outright bad Jokers to the game",
+    "prefix": "hangedman",
+    "main_file": "HangedMan.lua",
+    "badge_colour": "A58544",
+    "dependencies": [
+        "Steamodded (>=1.0.0~BETA-1620a)"
+    ],
+    "version": "0.1.0"
+}
