@@ -16,9 +16,7 @@ A silly Vanilla-esque mod with no real coherent theme. I just add anything I fee
 - Sprites by Kusane (me)
 Names will be added as contributions from other people are accepted in the future!
 
-
-
-
+<img width="568" height="760" alt="image" src="https://github.com/user-attachments/assets/6bedc41c-f99a-4438-9c93-b81631b7db56" />
 
 
 *This tagline was originally what got me to start learning to mod Balatro in order to make this mod, but nowadays I don't really care for it. Content in this mod do not actually make any attempt to be related to Cryptid.
