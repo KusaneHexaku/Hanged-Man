@@ -19,7 +19,7 @@ SMODS.Joker {
 				]]
 			"{C:mult}+#1#{} Mult, {C:money}+$#2#{}, {C:chips}+#3#{} Chips",
             "Each {C:mult}Mult{}, {C:money}Gold{}, or {C:chips}Bonus{} card scored",
-            "upgrades the other two values."
+            "upgrades the other two values"
 		}
 	},
 	--[[

@@ -8,7 +8,7 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Miner Joker',
 		text = {
-			"{C:green}#1# in #2#{} to upgrade level",
+			"{C:green}#1# in #2#{} chance to upgrade level",
             "of all but played {C:attention}poker hand{}"
 		}
 	},

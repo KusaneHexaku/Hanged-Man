@@ -51,7 +51,7 @@ return {
 		            },
                     {
                        "Each {C:attention}Gros Michel{} or {C:attention}Cavendish{}",
-                        "held also gives {C:white,X:mult}X#2#{}",
+                        "held also gives {C:white,X:mult}X#2#{} Mult",
                     }
                 }
 	        },
