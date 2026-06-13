@@ -13,8 +13,9 @@ SMODS.Joker {
 		]]
 	config = { extra = { chips = 20, previousHandTier = nil, previousHandText = 'Previous hand : [none]',
 
-    previousHandNames = {
+    HandKey = {
         'High Card',
+		'phanta_junk',
         'Pair',
         'Two Pair',
         'Three of a Kind',
@@ -27,6 +28,22 @@ SMODS.Joker {
         'Five of a Kind',
         'Flush House',
         'Flush Five'
+    },
+	HandName = {
+        ['High Card'] = 'High Card',
+		['phanta_junk'] = 'Junk',
+        ['Pair']= 'Pair',
+        ['Two Pair']= 'Two Pair',
+        ['Three of a Kind']= 'Three of a Kind',
+        ['Straight']= 'Straight',
+        ['Flush']= 'Flush',
+        ['Full House']= 'Full House',
+        ['Four of a Kind']= 'Four of a Kind',
+        ['Straight Flush']= 'Straight Flush',
+        ['Royal Flush']= 'Royal Flush',
+        ['Five of a Kind']= 'Five of a Kind',
+        ['Flush House']= 'Flush House',
+        ['Flush Five']= 'Flush Five'
     }
 
 
@@ -51,7 +68,7 @@ SMODS.Joker {
 
 		if context.joker_main then
 
-			local playedTier = indexOf(card.ability.extra.previousHandNames, context.scoring_name)
+			local playedTier = indexOf(card.ability.extra.HandKey, context.scoring_name)
 
 			if card.ability.extra.chips == 0 then
 				card.children.center:set_sprite_pos({x = 5, y = 5})

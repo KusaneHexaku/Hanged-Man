@@ -43,6 +43,7 @@ joker_list = {
     "noMoreJokers",
     "peerPressure",
     "pickACardAnyCard",
+    "sphragisphage",
     "theSuite"
 
 

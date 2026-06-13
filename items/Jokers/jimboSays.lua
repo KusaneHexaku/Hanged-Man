@@ -116,6 +116,8 @@ SMODS.Joker {
 				elseif card.ability.extra.trigger == 'playAnySteel' and counters[11] > 0 then resolveAction(card.ability.extra.valid)
 				elseif card.ability.extra.trigger == 'playThreeSteel' and counters[11] > 2 then resolveAction(card.ability.extra.valid)
 				
+				elseif card.ability.extra.trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then resolveAction(card.ability.extra.valid)
+				
 				else resolveAction(not card.ability.extra.valid)
 				end
 
@@ -155,6 +157,10 @@ SMODS.Joker {
 				'playFourSuit'
 			}
 
+			if next(SMODS.find_mod('GSPhanta')) then
+				triggerKey[#triggerKey+1] = 'phanta_playJunk'
+			end
+
 			local triggerPhrase = {
 				['playFlush'] = 'lay a Flush',
 				['playStraight'] = 'lay a Straight',
@@ -186,7 +192,9 @@ SMODS.Joker {
 				['playAnyGold']= 'lay a hand with at least one Gold card',
 				['playThreeGold']= 'lay a hand with at least three Gold card',
 				['playAnySteel']= 'lay a hand with at least one Steel card',
-				['playThreeSteel']= 'lay a hand with at least three Steel card'
+				['playThreeSteel']= 'lay a hand with at least three Steel card',
+
+				['phanta_playJunk']= 'lay a Junk'
 			}
 
 			local stone_tally = 0
@@ -422,3 +430,12 @@ SMODS.Joker {
 		end
 	end
 }
+
+ function indexOf(array, value)
+		for i, v in ipairs(array) do
+			if v == value then
+				return i
+			end
+		end
+	return nil
+end

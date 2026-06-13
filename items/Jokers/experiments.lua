@@ -153,8 +153,11 @@ SMODS.Joker {
 
 		flag_incrementHand = 0,
 		flag_convergeSuit = 0,
-		flag_randomSuit = 0
-		-- experimentNodeInit = false
+		flag_randomSuit = 0,
+
+		supportedCrossmodFlags = {
+			['Phanta'] = false
+		}
 
 
 
@@ -197,7 +200,14 @@ SMODS.Joker {
 			['play1Card'] = {{'When playing ', G.C.UI.TEXT_DARK}, {'1 ', G.C.FILTER}, {'card, ', G.C.UI.TEXT_DARK}},
 			['cardSold'] = {{'When a card is ', G.C.UI.TEXT_DARK}, {'sold', G.C.MONEY}, {', ', G.C.UI.TEXT_DARK}},
 			['voucherBuy'] = {{'When a ', G.C.UI.TEXT_DARK}, {'Voucher ', G.C.FILTER}, {'is purchased, ', G.C.UI.TEXT_DARK}},
-			-- 24
+			-- Base : 24
+
+
+			['phanta_playJunk'] = {{'When playing a ', G.C.UI.TEXT_DARK}, {'Junk', G.C.FILTER}, {', ', G.C.UI.TEXT_DARK}},
+			['phanta_hasGhostCard'] = {{'If hand contains a scoring ', G.C.UI.TEXT_DARK}, {'Ghost ', G.C.FILTER}, {'card, ', G.C.UI.TEXT_DARK}},
+			['phanta_has3+GhostCard'] = {{'If hand contains ', G.C.UI.TEXT_DARK}, {'3+ ', G.C.FILTER}, {'scoring ', G.C.UI.TEXT_DARK}, {'Ghost ', G.C.FILTER}, {'cards, ', G.C.UI.TEXT_DARK}},
+			['phanta_hasMarbleCard'] = {{'If hand contains a scoring ', G.C.UI.TEXT_DARK}, {'Marble ', G.C.FILTER}, {'card, ', G.C.UI.TEXT_DARK}},
+			['phanta_has3+MarbleCard'] = {{'If hand contains ', G.C.UI.TEXT_DARK}, {'3+ ', G.C.FILTER}, {'scoring ', G.C.UI.TEXT_DARK}, {'Marble ', G.C.FILTER}, {'cards, ', G.C.UI.TEXT_DARK}},
 			}
 
 			local experimentsEffectsPhraseMainend = {
@@ -213,30 +223,33 @@ SMODS.Joker {
 			['xmultScale0.1']= {{'increase this card\'s ', G.C.UI.TEXT_DARK}, {'XMult ', G.C.MULT}, {'by ', G.C.UI.TEXT_DARK}, {'0.1', G.C.FILTER}},
 			['xmultScale0.2']= {{'increase this card\'s ', G.C.UI.TEXT_DARK}, {'XMult ', G.C.MULT}, {'by ', G.C.UI.TEXT_DARK}, {'0.2', G.C.FILTER}},
 			['xmultScale0.25']= {{'increase this card\'s ', G.C.UI.TEXT_DARK}, {'XMult ', G.C.MULT}, {'by ', G.C.UI.TEXT_DARK}, {'0.25', G.C.FILTER}},
-			['randomTarot']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Tarot ', G.C.SECONDARY_SET.Tarot}, {'card (must have room)', G.C.UI.TEXT_DARK}},
-			['randomPlanet']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Planet ', G.C.SECONDARY_SET.Planet}, {'card (must have room)', G.C.UI.TEXT_DARK}},
+			['randomTarot']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Tarot ', G.C.SECONDARY_SET.Tarot}, {'card ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
+			['randomPlanet']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Planet ', G.C.SECONDARY_SET.Planet}, {'card ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
 			['1Gold']= {{'gain ', G.C.UI.TEXT_DARK}, {'$1', G.C.MONEY}},
 			['2Gold']= {{'gain ', G.C.UI.TEXT_DARK}, {'$2', G.C.MONEY}},
 			['3Gold']= {{'gain ', G.C.UI.TEXT_DARK}, {'$3', G.C.MONEY}},
 			['5Gold']= {{'gain ', G.C.UI.TEXT_DARK}, {'$5', G.C.MONEY}},
 			['endRoundGoldScale1']= {{'increase end of Blind bonus by ', G.C.UI.TEXT_DARK}, {'$1', G.C.MONEY}},
 			['endRoundGoldScale2']= {{'increase end of Blind bonus by ', G.C.UI.TEXT_DARK}, {'$2', G.C.MONEY}},
-			['randomFoodJoker']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Food ', G.C.FILTER}, {'Joker (must have room)', G.C.UI.TEXT_DARK}},
-			['randomChipJoker']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Chips ', G.C.CHIPS}, {'Joker (must have room)', G.C.UI.TEXT_DARK}},
-			['spawnOops']= {{'spawn an ', G.C.UI.TEXT_DARK}, {'Oops! All 6s ', G.C.GREEN}, {'Joker (must have room)', G.C.UI.TEXT_DARK}},
+			['randomFoodJoker']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Food ', G.C.FILTER}, {'Joker ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
+			['randomChipJoker']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Chips ', G.C.CHIPS}, {'Joker ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
+			['spawnOops']= {{'spawn an ', G.C.UI.TEXT_DARK}, {'Oops! All 6s ', G.C.GREEN}, {'Joker ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
 			['topUpTag']= {{'spawn a ', G.C.UI.TEXT_DARK}, {'Top-Up ', G.C.FILTER}, {'tag', G.C.UI.TEXT_DARK}},
 			['doubleTag']= {{'spawn a ', G.C.UI.TEXT_DARK}, {'Double ', G.C.FILTER}, {'tag', G.C.UI.TEXT_DARK}},
 			['couponTag']= {{'spawn a ', G.C.UI.TEXT_DARK}, {'Coupon ', G.C.FILTER}, {'tag', G.C.UI.TEXT_DARK}},
 			['d6Tag']= {{'spawn a ', G.C.UI.TEXT_DARK}, {'D6 ', G.C.GREEN}, {'tag', G.C.UI.TEXT_DARK}},
 			['investTag']= {{'spawn an ', G.C.UI.TEXT_DARK}, {'Investment ', G.C.MONEY}, {'tag', G.C.UI.TEXT_DARK}},
-			['resetMoneySpawnRare'] = {{'lose ', G.C.UI.TEXT_DARK}, {'all of ', G.C.RED}, {'your current money and spawn ', G.C.UI.TEXT_DARK}, {'1 ', G.C.FILTER}, {'random ', G.C.UI.TEXT_DARK}, {'Rare ', G.C.RARITY.Rare}, {'Joker (must have room)', G.C.UI.TEXT_DARK}},
-			['halfMoneySpawnUncommon'] = {{'lose ', G.C.UI.TEXT_DARK}, {'half of ', G.C.RED}, {'your current money and spawn up to ', G.C.UI.TEXT_DARK}, {'2 ', G.C.FILTER}, {'random ', G.C.UI.TEXT_DARK}, {'Uncommon ', G.C.RARITY.Uncommon}, {'Jokers (must have room)', G.C.UI.TEXT_DARK}},
+			['resetMoneySpawnRare'] = {{'lose ', G.C.UI.TEXT_DARK}, {'all of ', G.C.RED}, {'your current money and spawn ', G.C.UI.TEXT_DARK}, {'1 ', G.C.FILTER}, {'random ', G.C.UI.TEXT_DARK}, {'Rare ', G.C.RARITY.Rare}, {'Joker ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
+			['halfMoneySpawnUncommon'] = {{'lose ', G.C.UI.TEXT_DARK}, {'half of ', G.C.RED}, {'your current money and spawn up to ', G.C.UI.TEXT_DARK}, {'2 ', G.C.FILTER}, {'random ', G.C.UI.TEXT_DARK}, {'Uncommon ', G.C.RARITY.Uncommon}, {'Jokers ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
 			['nextHandIncrement'] = {{'increase ', G.C.UI.TEXT_DARK}, {'rank ', G.C.FILTER}, {'of all scored cards in next hand by ', G.C.UI.TEXT_DARK}, {'1', G.C.FILTER}},
 			['threeOfClubsFlood'] = {{'add ', G.C.UI.TEXT_DARK}, {'16', G.C.FILTER}, {'3 of ', G.C.UI.TEXT_DARK}, {'Clubs', G.C.SUITS.Clubs}, {'to your deck', G.C.UI.TEXT_DARK}},
 			['convergeSuit'] = {{'convert all ', G.C.UI.TEXT_DARK}, {'scored cards ', G.C.FILTER}, {'in next hand to a single random ', G.C.UI.TEXT_DARK}, {'suit', G.C.FILTER}},
 			['randomSuit'] = {{'convert each ', G.C.UI.TEXT_DARK}, {'scored cards ', G.C.FILTER}, {'in next hand to a random ', G.C.UI.TEXT_DARK}, {'suit', G.C.FILTER}},
 			['freeReroll'] = {{'lose ', G.C.UI.TEXT_DARK}, {'$10 ', G.C.MONEY}, {'and gain ', G.C.UI.TEXT_DARK}, {'1 ', G.C.FILTER}, {'permanent free ', G.C.UI.TEXT_DARK}, {'shop reroll ', G.C.GREEN}},
 			['moreBooster']= {{'permanently add 1 ', G.C.UI.TEXT_DARK}, {'Booster Pack', G.C.FILTER}, {'to each shop ', G.C.UI.TEXT_DARK}},
+
+
+			['phanta_randomHanafuda']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Hanafuda ', HEX("DB534A")}, {'(Phanta) ', HEX("4d1575")}, {'card ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
 		}
 
 
@@ -298,6 +311,28 @@ SMODS.Joker {
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
+
+		-- Enable Phanta crossmod triggers and effects
+		if not card.ability.extra.supportedCrossmodFlags['Phanta'] and next(SMODS.find_mod('GSPhanta')) then
+			card.ability.extra.supportedCrossmodFlags['Phanta'] = true
+
+			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard'}
+			local phantaEffects = {'phanta_randomHanafuda'}
+			
+			
+			for _, key in ipairs(phantaTriggers) do
+				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
+			end
+			for _, key in ipairs(phantaEffects) do
+				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
+			end
+
+
+			
+
+
+
+		end
 
 		-- Boss Blind beaten, generate a new Experiment
 
@@ -385,12 +420,22 @@ SMODS.Joker {
 				]]
 			local counters = {0,0,0,0,0,0,0,0,false,false,false,0}
 
+			--[[ count of Phanta stuff
+						1-2 : scoring Ghost, Marble
+				]]
+			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard'}
+			local phantaCounter = {0,0}
+
 			for i, cardPlayed in ipairs(context.scoring_hand) do
 				if not cardPlayed.debuff then
 					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
 					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
 					for iiii, enhance in ipairs(enhances) do if SMODS.has_enhancement(cardPlayed, enhance) then counters[iiii+8] = true end end
 					if cardPlayed:is_face() then counters[12] = counters[12] + 1 end
+
+					if card.ability.extra.supportedCrossmodFlags['Phanta'] then
+						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
+					end
 
 					-- For Effect : Increment scored card in next hand by 1
 					if card.ability.extra.flag_incrementHand > 0 and cardPlayed:get_id() then
@@ -466,6 +511,12 @@ SMODS.Joker {
 				elseif trigger == 'hasGoldCard' and counters[9] then activateEffect(card.ability.extra.activeEffects[i])
 				elseif trigger == 'hasSteelCard' and counters[10] then activateEffect(card.ability.extra.activeEffects[i])
 				elseif trigger == 'hasStoneCard' and counters[11] then activateEffect(card.ability.extra.activeEffects[i])
+
+				elseif trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_hasGhostCard' and phantaCounter[1] > 0 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_hasMarbleCard' and phantaCounter[2] > 0  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_has3+GhostCard' and phantaCounter[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_has3+MarbleCard' and phantaCounter[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
 				end
 			end
 			
@@ -534,6 +585,7 @@ SMODS.Joker {
                     func = (function()
                         SMODS.add_card {set = 'Tarot'}
                         G.GAME.consumeable_buffer = 0
+						play_sound('timpani')
                         return true
                     end)
                 }))
@@ -545,6 +597,7 @@ SMODS.Joker {
                     func = (function()
                         SMODS.add_card {set = 'Planet'}
                         G.GAME.consumeable_buffer = 0
+						play_sound('timpani')
                         return true
                     end)
                 }))
@@ -664,6 +717,7 @@ SMODS.Joker {
                             		rarity = 'Rare',
                             		key_append = 'experiments'
                         		}
+								play_sound('timpani')
                         	G.GAME.joker_buffer = 0
                     	end
                     return true
@@ -683,6 +737,7 @@ SMODS.Joker {
                             		rarity = 'Uncommon',
                             		key_append = 'experiments'
                         		}
+								play_sound('timpani')
                         	G.GAME.joker_buffer = 0
                     	end
                     return true
@@ -722,6 +777,36 @@ SMODS.Joker {
 				ease_dollars(-10)
 			elseif effectKey == 'moreBooster' then
 				SMODS.change_booster_limit(1)
+
+
+			-- Phanta : spawn a random Hanafuda card
+			elseif effectKey == 'phanta_randomHanafuda' then
+
+				if not card.ability.extra.supportedCrossmodFlags['Phanta'] then return true end
+
+				local phanta_hanaset = pseudorandom_element({"phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_ribbon", "phanta_ribbon", "phanta_animal", "phanta_animal", "phanta_bright" }, pseudoseed('j_hangedman_noMoreJokers'))
+
+				if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+					G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+					G.E_MANAGER:add_event(Event({
+					func = (function()
+						play_sound('timpani')
+						local new_card = SMODS.create_card({ set = phanta_hanaset, key_append = "experiments" })
+						new_card:add_to_deck()
+						G.consumeables:emplace(new_card)
+						card:juice_up(0.3, 0.5)
+						G.GAME.consumeable_buffer = 0
+						return true
+					end)
+				}))
+				end
+
+
+
+
+
+
+
 			end
 
 		end
