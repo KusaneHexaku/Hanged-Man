@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'noMoreJokers',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	
 	config = { extra = { xmult = 1, xmultinc = 0.5,
@@ -100,8 +100,8 @@ SMODS.Joker {
 
 			for index, key in ipairs(card.ability.extra.bannedList) do
 				textrows[index+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.05}, nodes = {
-                            {n = G.UIT.T, config = {align = "cm", text = '- hands containing ', colour = G.C.UI.TEXT_DARK, scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}},
-							{n = G.UIT.T, config = {align = "cm", text = textlookup[key], colour = col, scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}},
+                            {n = G.UIT.T, config = {align = "cm", text = '- hands containing ', colour = G.C.UI.TEXT_DARK, scale = 0.3}},
+							{n = G.UIT.T, config = {align = "cm", text = textlookup[key], colour = col, scale = 0.3}},
                     }}
 			end
 
@@ -113,7 +113,7 @@ SMODS.Joker {
 			mainend = {
                 { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = 
 					{{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
-                            {n = G.UIT.T, config = {align = "cm", text = 'No restrictions', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
+                            {n = G.UIT.T, config = {align = "cm", text = 'No restrictions', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3}},
                     }}}
 				}
             }
@@ -129,7 +129,7 @@ SMODS.Joker {
 	pos = { x = 5, y = 6 },
 	-- Cost of card in shop.
 	cost = 8,
-
+	attributes = {'xmult', 'scaling', 'rank', 'suit', 'hand_type', 'enhancements'},
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)

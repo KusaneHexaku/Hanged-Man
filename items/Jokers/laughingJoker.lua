@@ -26,6 +26,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 5,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'mult', 'five', 'rank'},
 	calculate = function(self, card, context)
 
 		 if context.before and not context.blueprint then

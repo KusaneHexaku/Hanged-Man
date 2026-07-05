@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'experiments',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = false,
 	-- loc_text is the actual name and description that show in-game for the card.
 	
@@ -170,7 +170,7 @@ SMODS.Joker {
 
 		if card.ability and card.ability.extra.experimentsActive > 0 then
 			local textrows = {{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.1}, nodes = {
-                            {n = G.UIT.T, config = {align = "cm", text = 'Active Experiments :', colour = G.C.BLUE, scale = 0.3, max_h = 1, max_w = 8, padding = 0.05}},
+                            {n = G.UIT.T, config = {align = "cm", text = 'Active Experiments :', colour = G.C.BLUE, scale = 0.3}},
                     }}}
 
 			local col = G.C.FILTER
@@ -208,6 +208,10 @@ SMODS.Joker {
 			['phanta_has3+GhostCard'] = {{'If hand contains ', G.C.UI.TEXT_DARK}, {'3+ ', G.C.FILTER}, {'scoring ', G.C.UI.TEXT_DARK}, {'Ghost ', G.C.FILTER}, {'cards, ', G.C.UI.TEXT_DARK}},
 			['phanta_hasMarbleCard'] = {{'If hand contains a scoring ', G.C.UI.TEXT_DARK}, {'Marble ', G.C.FILTER}, {'card, ', G.C.UI.TEXT_DARK}},
 			['phanta_has3+MarbleCard'] = {{'If hand contains ', G.C.UI.TEXT_DARK}, {'3+ ', G.C.FILTER}, {'scoring ', G.C.UI.TEXT_DARK}, {'Marble ', G.C.FILTER}, {'cards, ', G.C.UI.TEXT_DARK}},
+			['phanta_fourGrates'] = {{'If scoring hand contains all ', G.C.UI.TEXT_DARK}, {'4 ', G.C.FILTER}, {'Copper Grate ', HEX("904931")}, {'oxidisation ', G.C.FILTER}, {'levels, ', G.C.UI.TEXT_DARK}},
+
+
+			
 			}
 
 			local experimentsEffectsPhraseMainend = {
@@ -257,11 +261,11 @@ SMODS.Joker {
 				local textpiece = {}
 
 				for _i, textcolourpair in ipairs(experimentsTriggersPhraseMainend[card.ability.extra.activeTriggers[experimentIndex]]) do
-					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}}
+					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3}}
 				end
 
 				for _i, textcolourpair in ipairs(experimentsEffectsPhraseMainend[card.ability.extra.activeEffects[experimentIndex]]) do
-					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}}
+					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3}}
 				end
 
 				textrows[experimentIndex+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.05}, nodes = textpiece}
@@ -274,7 +278,7 @@ SMODS.Joker {
 			mainend = {
                 { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = 
 					{{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
-                            {n = G.UIT.T, config = {align = "cm", text = 'No active experiments currently', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
+                            {n = G.UIT.T, config = {align = "cm", text = 'No active experiments currently', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3}},
                     }}}
 				}
             }
@@ -307,6 +311,7 @@ SMODS.Joker {
 	pos = { x = 1, y = 4 },
 	-- Cost of card in shop.
 	cost = 6,
+	attributes = {'blue_prince','mult','chips','xmult','economy','generation','rank','suit','hand_type','scaling','face','destroy_card','hands','discard','hand_size','joker','tarot','planet','spectral','tag','skip','modify_card','perma_bonus','reroll','enhancements'},
 
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
@@ -316,7 +321,7 @@ SMODS.Joker {
 		if not card.ability.extra.supportedCrossmodFlags['Phanta'] and next(SMODS.find_mod('GSPhanta')) then
 			card.ability.extra.supportedCrossmodFlags['Phanta'] = true
 
-			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard'}
+			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard', 'phanta_fourGrates'}
 			local phantaEffects = {'phanta_randomHanafuda'}
 			
 			
@@ -358,7 +363,7 @@ SMODS.Joker {
 				card.ability.extra.activeTriggers[#card.ability.extra.activeTriggers + 1] = card.ability.extra.experimentsTriggersKey[1]
 				card.ability.extra.activeEffects[#card.ability.extra.activeEffects + 1] = card.ability.extra.experimentsEffectsKey[1]
 
-				card.ability.extra.experimentsPhrases[card.ability.extra.experimentsActive] = card.ability.extra.experimentsTriggersPhrase[card.ability.extra.experimentsTriggersKey[1]] .. " " .. card.ability.extra.experimentsEffectsPhrase[card.ability.extra.experimentsEffectsKey[1]]
+				--card.ability.extra.experimentsPhrases[card.ability.extra.experimentsActive] = card.ability.extra.experimentsTriggersPhrase[card.ability.extra.experimentsTriggersKey[1]] .. " " .. card.ability.extra.experimentsEffectsPhrase[card.ability.extra.experimentsEffectsKey[1]]
 				
 				table.remove(card.ability.extra.experimentsTriggersKey,1)
 				table.remove(card.ability.extra.experimentsEffectsKey,1)
@@ -401,7 +406,7 @@ SMODS.Joker {
         end
 
 		if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
-			if not indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
+			if indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
         end
 
 		if context.selling_card and indexOf(card.ability.extra.activeTriggers, 'cardSold') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'cardSold')]) end
@@ -420,11 +425,17 @@ SMODS.Joker {
 				]]
 			local counters = {0,0,0,0,0,0,0,0,false,false,false,0}
 
-			--[[ count of Phanta stuff
-						1-2 : scoring Ghost, Marble
+			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
+			local phantaCounter = {0,0,0,0,0,0,0}
+			--[[ count of stuff
+						1 : scoring Ghost card
+						2 : scoring Marble card
+						3 : scoring Fresh Copper Grate card
+						4 : scoring Exposed Copper Grate card
+						5 : scoring Weathered Copper Grate card
+						6 : scoring Oxidised Copper Grate card
+						7 : count of distinct Copper Grate oxidisation level in scoring hand
 				]]
-			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard'}
-			local phantaCounter = {0,0}
 
 			for i, cardPlayed in ipairs(context.scoring_hand) do
 				if not cardPlayed.debuff then
@@ -491,6 +502,8 @@ SMODS.Joker {
 				end
             end
 
+			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
+
 			for i, trigger in ipairs(card.ability.extra.activeTriggers) do
 
 				--- Evaluating Triggers on Hand played
@@ -517,6 +530,7 @@ SMODS.Joker {
 				elseif trigger == 'phanta_hasMarbleCard' and phantaCounter[2] > 0  then activateEffect(card.ability.extra.activeEffects[i])
 				elseif trigger == 'phanta_has3+GhostCard' and phantaCounter[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
 				elseif trigger == 'phanta_has3+MarbleCard' and phantaCounter[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_fourGrates' and phantaCounter[7] > 3  then activateEffect(card.ability.extra.activeEffects[i])
 				end
 			end
 			

@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'glassHouse',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {
@@ -36,6 +36,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 8,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'retrigger', 'destroy_card', 'enhancements'},
 	calculate = function(self, card, context)
 
 		if context.before then card.ability.extra.destroyFlag = false end

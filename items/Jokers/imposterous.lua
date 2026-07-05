@@ -1,7 +1,7 @@
 SMODS.Joker {
 	key = 'imposterous',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = false,
     allow_duplicates = true,
 	no_mod_badges = true,
@@ -169,8 +169,8 @@ SMODS.Joker {
         elseif card.ability.extra.disguisingAs == 'j_wee' then loc_ret = {0, 8}
         elseif card.ability.extra.disguisingAs == 'j_merry_andy' then loc_ret = {3, -1}
         elseif card.ability.extra.disguisingAs == 'j_idol' then
-            loc_ret = {2, localize(G.GAME.current_round.idol_card.rank, 'ranks'), localize(G.GAME.current_round.idol_card.suit, 'suits_plural')}
             loc_col = {G.C.SUITS[G.GAME.current_round.idol_card.suit]}
+            loc_ret = {2, localize(G.GAME.current_round.idol_card.rank, 'ranks'), localize(G.GAME.current_round.idol_card.suit, 'suits_plural'), colours = loc_col }
         elseif card.ability.extra.disguisingAs == 'j_seeing_double' then loc_ret = {2}
         elseif card.ability.extra.disguisingAs == 'j_matador' then loc_ret = {8}
         elseif card.ability.extra.disguisingAs == 'j_hit_the_road' then loc_ret = {0.5, 1}
@@ -222,13 +222,13 @@ SMODS.Joker {
         elseif card.ability.extra.disguisingAs == 'j_popcorn' then loc_ret = {20, 4}
         elseif card.ability.extra.disguisingAs == 'j_ramen' then loc_ret = {2, 0.01}
         elseif card.ability.extra.disguisingAs == 'j_ancient' then
-            loc_ret = {1.5, localize(G.GAME.current_round.ancient_card.suit, 'suits_singular')}
             loc_col = {G.C.SUITS[G.GAME.current_round.ancient_card.suit]}
+            loc_ret = {1.5, localize(G.GAME.current_round.ancient_card.suit, 'suits_singular'), colours = loc_col }
         elseif card.ability.extra.disguisingAs == 'j_walkie_talkie' then loc_ret = {10, 4}
         elseif card.ability.extra.disguisingAs == 'j_selzer' then loc_ret = {10}
         elseif card.ability.extra.disguisingAs == 'j_castle' then
-            loc_ret = {3, localize(G.GAME.current_round.castle_card.suit, 'suits_singular'), 0}
             loc_col = {G.C.SUITS[G.GAME.current_round.castle_card.suit]}
+            loc_ret = {3, localize(G.GAME.current_round.castle_card.suit, 'suits_singular'), 0, colours = loc_col}
         elseif card.ability.extra.disguisingAs == 'j_smiley' then loc_ret = {5}
         elseif card.ability.extra.disguisingAs == 'j_campfire' then loc_ret = {0.25, 1}
         elseif card.ability.extra.disguisingAs == 'j_stuntman' then loc_ret = {250, 2}
@@ -264,7 +264,7 @@ SMODS.Joker {
 
         return { key = loc_key,
 				vars = loc_ret,
-                colours = loc_col }
+        }
 
 
         
@@ -274,6 +274,7 @@ SMODS.Joker {
 	atlas = 'HangedMan_imposterousJokers',
 	pos = { x = 0, y = 9 },
 	cost = 4,
+    attributes = {'ktane','mult','chips','xmult','economy','generation','rank','suit','hand_type','hand_size','scaling','face','destroy_card','hands','discard','hand_size','joker','tarot','planet','spectral','tag','skip','modify_card','perma_bonus','reroll','enhancements'},
 
     add_to_deck = function(self, card, from_debuff)
         if not from_debuff then
@@ -509,18 +510,21 @@ SMODS.Joker {
             end
         end
 
-        if context.debuff_card and not context.blueprint then
+        if context.debuff_card and context.debuff_card.area == G.hand then
             local debuffing = false
             if card.ability.extra.consequence == 'debuffFace' and context.debuff_card:is_face() then debuffing = true
             elseif card.ability.extra.consequence == 'debuffClubs' and context.debuff_card:is_suit('Clubs') then debuffing = true
             elseif card.ability.extra.consequence == 'debuffHearts' and context.debuff_card:is_suit('Hearts') then debuffing = true
             elseif card.ability.extra.consequence == 'debuffSpadess' and context.debuff_card:is_suit('Spades') then debuffing = true
-            elseif card.ability.extra.consequence == 'debuffDiamonds' and context.debuff_card:is_suit('diamonds') then debuffing = true
+            elseif card.ability.extra.consequence == 'debuffDiamonds' and context.debuff_card:is_suit('Diamonds') then debuffing = true
             end
 
             return {debuff = debuffing}
         end
 
+        if context.hand_drawn then
+            if G.hand then for i = 1, #G.hand do SMODS.recalc_debuff(G.hand[i]) end end
+        end
         
 
         if context.discard and not context.blueprint then

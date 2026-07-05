@@ -20,6 +20,7 @@ SMODS.Joker {
 	pos = { x = 3, y = 5 },
 	-- Cost of card in shop.
 	cost = 8,
+	attributes = {'economy', 'mult', 'scaling', 'on_sell', 'blue_prince'},
 
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.

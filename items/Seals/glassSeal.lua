@@ -5,7 +5,6 @@ SMODS.Seal {
     config = { extra = { retriggers = 2, chance = 5, breaking = false } },
     badge_colour = HEX('d9e8e9'),
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
-    always_scores = true,
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(self, 1, self.config.extra.chance, 'HangedMan_glassSeal')
         return { vars = { self.config.extra.retriggers, numerator, denominator } }

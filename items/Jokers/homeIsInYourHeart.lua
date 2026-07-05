@@ -26,7 +26,7 @@ SMODS.Joker {
 	pos = { x = 1, y = 5 },
 	-- Cost of card in shop.
 	cost = 6,
-
+	attributes = {'suit', 'mult', 'hand_type', 'hearts', 'suit', 'lirie', 'vtuber'},
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)

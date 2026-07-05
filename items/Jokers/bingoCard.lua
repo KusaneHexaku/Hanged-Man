@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'bingoCard',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
     allow_duplicates = false,
 	-- loc_text is the actual name and description that show in-game for the card.
@@ -123,6 +123,7 @@ SMODS.Joker {
 	pos = { x = 0, y = 1 },
 	-- Cost of card in shop.
 	cost = 8,
+    attributes = {'xmult', 'rank', 'suit', 'scaling', 'dropout', 'game_changer'},
 
     add_to_deck = function(self, card, from_debuff)
 

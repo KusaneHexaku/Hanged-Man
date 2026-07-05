@@ -64,6 +64,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 4,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'chips', 'hand_type', 'scaling'},
 	calculate = function(self, card, context)
 
 		if context.joker_main then
@@ -78,7 +79,7 @@ SMODS.Joker {
 			end
 
             if card.ability.extra.previousHandTier == nil then
-                card.ability.extra.previousHandText = 'Previous hand : ' .. context.scoring_name
+                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
                 card.ability.extra.previousHandTier = playedTier
                 return {
 						chips = card.ability.extra.chips,
@@ -87,7 +88,7 @@ SMODS.Joker {
 
             if playedTier > card.ability.extra.previousHandTier then
                 card.ability.extra.chips = math.floor(card.ability.extra.chips * 2)
-                card.ability.extra.previousHandText = 'Previous hand : ' .. context.scoring_name
+                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
                 card.ability.extra.previousHandTier = playedTier
                 return {
 				    message = 'Doubles!',
@@ -119,7 +120,7 @@ SMODS.Joker {
 				end
 
 
-                card.ability.extra.previousHandText = 'Previous hand : ' .. context.scoring_name
+                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
                 card.ability.extra.previousHandTier = playedTier
                 return {
 				    message = 'Decimates!',

@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'sandcastle',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {
@@ -45,6 +45,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 5,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'mult', 'chance', 'reset'},
 	calculate = function(self, card, context)
 
         if context.individual and not context.blueprint and context.cardarea == G.play then

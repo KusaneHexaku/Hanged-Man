@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'theColourOfMoney',
     unlocked = true,
-	discovered = true,
+	discovered = false,
 	blueprint_compat = false,
     allow_duplicates = true,
 	-- loc_text is the actual name and description that show in-game for the card.
@@ -60,6 +60,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 6,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'economy', 'chance', 'hidden_mechanic'},
 
 	add_to_deck = function(self, card, from_debuff)
 

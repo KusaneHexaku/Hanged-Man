@@ -2,6 +2,7 @@ joker_list = {
     -- Common
     "backside",
     "boomerang",
+    "devilInTheDetails",
     "doNotRedeem",
     "funnyBusiness",
     "monke",
@@ -24,6 +25,7 @@ joker_list = {
     "magnaNut",
     "minerJoker",
     "nothingburger",
+    "pairOfThighHighs",
     "removalService",
     "rideTheTide",
     "ryb",

@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'sphragisphage',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {
@@ -104,22 +104,22 @@ SMODS.Joker {
 			for key, value in pairs(card.ability.extra.sealConsumed) do
 
 				local textpiece = {
-					{n = G.UIT.T, config = {align = "cm", text = key .. ' Seal', colour = sealcolour[key], scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}},
-					{n = G.UIT.T, config = {align = "cm", text = ': ', colour = G.C.UI.TEXT_DARK, scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}}
+					{n = G.UIT.T, config = {align = "cm", text = key .. ' Seal', colour = sealcolour[key], scale = 0.3}},
+					{n = G.UIT.T, config = {align = "cm", text = ': ', colour = G.C.UI.TEXT_DARK, scale = 0.3}}
 				}
 				if value > 0 then
 
 					for _i, textcolourpair in ipairs(textlookup[key]) do
-						textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3, max_h = 0.5, max_w = 8, padding = 0}}
+						textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.3}}
 					end
 
 					textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.05}, nodes = textpiece}
 
 					textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
-							{n = G.UIT.T, config = {align = "cm", text = '(', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
-                            {n = G.UIT.T, config = {align = "cm", text = '' .. value .. ' ' , colour = G.C.FILTER, scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
-							{n = G.UIT.T, config = {align = "cm", text = '' .. key .. ' Seals ' , colour = sealcolour[key], scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
-							{n = G.UIT.T, config = {align = "cm", text = 'consumed)', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3, max_h = 1, max_w = 8, padding = 0}},
+							{n = G.UIT.T, config = {align = "cm", text = '(', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3}},
+                            {n = G.UIT.T, config = {align = "cm", text = '' .. value .. ' ' , colour = G.C.FILTER, scale = 0.3}},
+							{n = G.UIT.T, config = {align = "cm", text = '' .. key .. ' Seals ' , colour = sealcolour[key], scale = 0.3}},
+							{n = G.UIT.T, config = {align = "cm", text = 'consumed)', colour = G.C.UI.TEXT_INACTIVE, scale = 0.3, max_h = 1}},
                     }}
 
 				end
@@ -150,7 +150,7 @@ SMODS.Joker {
 	pos = { x = 0, y = 2 },
 	-- Cost of card in shop.
 	cost = 8,
-
+	attributes = {'seals', 'modify_card', 'retrigger', 'hand_type', 'tarot', 'planet', 'generation', 'spectral', 'mult'},
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
@@ -278,7 +278,7 @@ SMODS.Joker {
 		if context.individual and context.cardarea == G.hand then
 
 			local nailyMult = math.floor((card.ability.extra.sealConsumed['Naily'] or 0) / 3) * 15
-			if nailyMult > 0 and context.other_card:get_seal() == 'bfdi_naily' then return {mult = nailyMult} end
+			if nailyMult > 0 and context.other_card:get_seal() == 'bfdi_naily' and not context.end_of_round then return {mult = nailyMult} end
 
 		end
 

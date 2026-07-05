@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'theSuite',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
     allow_duplicates = false,
 	-- loc_text is the actual name and description that show in-game for the card.
@@ -91,7 +91,7 @@ SMODS.Joker {
 	pos = { x = 0, y = 0 },
 	-- Cost of card in shop.
 	cost = 7,
-  
+    attributes = {'retrigger', 'suit', 'clubs', 'hearts', 'spades', 'diamonds'},
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
 

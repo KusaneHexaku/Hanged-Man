@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'cyclomancy',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	config = { extra = { xmult = 1, increment = 0.1, full_stack = {{'[rank]','[suit]'}}, index = 1 } },
@@ -31,6 +31,7 @@ SMODS.Joker {
 	pos = { x = 0, y = 5 },
 	-- Cost of card in shop.
 	cost = 8,
+	attributes = {'xmult', 'rank', 'suit', 'scaling', 'hidden_mechanic', 'hidden_interaction'},
 
 	
 

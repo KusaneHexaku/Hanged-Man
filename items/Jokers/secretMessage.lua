@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'secretMessage',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {

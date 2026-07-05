@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'peerPressure',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = false,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {
@@ -30,7 +30,7 @@ SMODS.Joker {
 	pos = { x = 1, y = 1 },
 	-- Cost of card in shop.
 	cost = 8,
-
+	attributes = {'enhancements', 'editions', 'seals'},
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)

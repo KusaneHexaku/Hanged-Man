@@ -48,6 +48,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 8,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'tarot_joker','economy','generation','rank','suit','hand_type','destroy_card','discard','joker','tarot','planet','tag','skip','modify_card','enhancements'},
 	calculate = function(self, card, context)
 
 

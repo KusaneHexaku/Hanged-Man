@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'jimboSays',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = false,
 	-- loc_text is the actual name and description that show in-game for the card.
 	--[[
@@ -13,7 +13,11 @@ SMODS.Joker {
 		]]
 	config = { extra = { mult = 0, increment = 10, penalty = 12, command = 'Follow Jimbo\'s command, but only if he says \"Jimbo Says\"',
 				trigger = '',
-				valid = false
+				valid = false,
+
+				crossmodFlag = {
+					['Phanta'] = false
+				}
 			} },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
@@ -30,9 +34,13 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 4,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'mult', 'scaling', 'hand_type', 'enhancements', 'dropout', 'game_changer'},
 	calculate = function(self, card, context)
 
 		if context.setting_blind and not context.blueprint then 
+
+			if next(SMODS.find_mod('GSPhanta')) then card.ability.extra.crossmodFlag['Phanta'] = true else card.ability.extra.crossmodFlag['Phanta'] = false end
+
 			G.E_MANAGER:add_event(Event({
 				trigger = 'immediate',
 				func = function()
@@ -74,14 +82,33 @@ SMODS.Joker {
 				]]
 			local counters = {0,0,0,0,0,0,0,0,0,0,0,0,0}
 
+			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
+			local phantaCounter = {0,0,0,0,0,0,0}
+			--[[ count of stuff
+						1 : scoring Ghost card
+						2 : scoring Marble card
+						3 : scoring Fresh Copper Grate card
+						4 : scoring Exposed Copper Grate card
+						5 : scoring Weathered Copper Grate card
+						6 : scoring Oxidised Copper Grate card
+						7 : count of distinct Copper Grate oxidisation levels in scoring hand
+				]]
+
 			for i, cardPlayed in ipairs(context.scoring_hand) do
 				if not cardPlayed.debuff then
 					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
 					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
 					for iiii, enhancements in ipairs(enhancements) do if SMODS.has_enhancement(cardPlayed, enhancements) then counters[iiii+9] = counters[iiii+9]+1 end end
 					if cardPlayed:is_face() then counters[13] = counters[13] + 1 end
+
+					if card.ability.extra.crossmodFlag['Phanta'] then
+						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
+					end
+
 				end
             end
+
+			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
 
 				--- Evaluating Triggers on Hand played
 				if card.ability.extra.trigger == 'playFlush' and next(context.poker_hands["Flush"]) then resolveAction(card.ability.extra.valid)
@@ -117,6 +144,10 @@ SMODS.Joker {
 				elseif card.ability.extra.trigger == 'playThreeSteel' and counters[11] > 2 then resolveAction(card.ability.extra.valid)
 				
 				elseif card.ability.extra.trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'phanta_twoDifferentGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] > 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'phanta_twoSameGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] == 1 then resolveAction(card.ability.extra.valid)
+				
+				
 				
 				else resolveAction(not card.ability.extra.valid)
 				end
@@ -156,9 +187,13 @@ SMODS.Joker {
 				'playOneDiamonds',
 				'playFourSuit'
 			}
-
-			if next(SMODS.find_mod('GSPhanta')) then
-				triggerKey[#triggerKey+1] = 'phanta_playJunk'
+			
+			
+			if card.ability.extra.crossmodFlag['Phanta'] then
+				local phantaCommands = {'phanta_playJunk', 'phanta_twoDifferentGrate', 'phanta_twoSameGrate'}
+				for _, key in ipairs(phantaCommands) do
+					triggerKey[#triggerKey+1] = key
+				end
 			end
 
 			local triggerPhrase = {
@@ -194,7 +229,9 @@ SMODS.Joker {
 				['playAnySteel']= 'lay a hand with at least one Steel card',
 				['playThreeSteel']= 'lay a hand with at least three Steel card',
 
-				['phanta_playJunk']= 'lay a Junk'
+				['phanta_playJunk']= 'lay a Junk',
+				['phanta_twoDifferentGrate']= 'lay a hand with 2+ scoring Copper Grate cards where 2+ different oxidisation levels are present ',
+				['phanta_twoSameGrate']= 'lay a hand with 2+ scoring Copper Grate cards where exactly 1 oxidisation level is present'
 			}
 
 			local stone_tally = 0

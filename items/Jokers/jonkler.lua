@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'jonkler',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	--[[
@@ -27,6 +27,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 5,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'chips', 'mult', 'xmult', 'chance'},
 	calculate = function(self, card, context)
 
         if context.setting_blind then
@@ -64,7 +65,10 @@ SMODS.Joker {
 
                 pseudoshuffle(tempIndices, 'jonklerShuffle')
 
-                card.ability.extra.valueTable[tempIndices[1]],card.ability.extra.valueTable[tempIndices[2]] = card.ability.extra.valueTable[tempIndices[2]],card.ability.extra.valueTable[tempIndices[1]]
+				local temptemp = card.ability.extra.valueTable[tempIndices[1]]
+
+                card.ability.extra.valueTable[tempIndices[1]] = card.ability.extra.valueTable[tempIndices[2]]
+				card.ability.extra.valueTable[tempIndices[2]] = temptemp
 
                 card.ability.extra.plusChips = card.ability.extra.valueTable[1]
                 card.ability.extra.plusMult = card.ability.extra.valueTable[2]

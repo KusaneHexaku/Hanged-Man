@@ -2,7 +2,7 @@ SMODS.Joker {
 	-- How the code refers to the joker.
 	key = 'magnaHeart',
     unlocked = true,
-    discovered = true,
+    discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
 	loc_txt = {
@@ -36,6 +36,7 @@ SMODS.Joker {
 	-- Cost of card in shop.
 	cost = 5,
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
+	attributes = {'chance', 'xmult', 'suit', 'hearts', 'magna'},
 	calculate = function(self, card, context)
 
 		if context.individual and context.cardarea == G.hand and not context.end_of_round and context.other_card:is_suit('Hearts') and SMODS.pseudorandom_probability(card, 'hangedman_magnaHeart', 1, card.ability.extra.odds) then
