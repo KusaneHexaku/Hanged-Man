@@ -518,12 +518,12 @@ SMODS.Joker {
             elseif card.ability.extra.consequence == 'debuffSpadess' and context.debuff_card:is_suit('Spades') then debuffing = true
             elseif card.ability.extra.consequence == 'debuffDiamonds' and context.debuff_card:is_suit('Diamonds') then debuffing = true
             end
-
+            if G.playing_cards then for k, v in pairs(G.playing_cards) do SMODS.recalc_debuff(v) end end
             return {debuff = debuffing}
         end
 
         if context.hand_drawn then
-            if G.hand then for i = 1, #G.hand do SMODS.recalc_debuff(G.hand[i]) end end
+            if G.playing_cards then for k, v in pairs(G.playing_cards) do SMODS.recalc_debuff(v) end end
         end
         
 

@@ -24,6 +24,7 @@ local atlasList =
     {"HangedMan_TheSuite", 71, 95, "HangedMan_TheSuite.png"},
     {"HangedMan_imposterousJokers", 71, 95, "HangedMan_imposterousJokers.png"},
     {"HangedMan_pickacardanycard", 71, 95, "HangedMan_pickacardanycard.png"},
+    {"HangedMan_Stepswitcher", 71, 95, "HangedMan_Stepswitcher.png"},
 
     -- consumable sheets
     {"HangedMan_Spectrals", 71, 95, "HangedMan_Spectrals.png"},
@@ -71,6 +72,7 @@ function HangedMan.load_file(address)
 	end
 end
 
+HangedMan.load_file("miscfunctions.lua")
 HangedMan.load_file("jokers.lua")
 HangedMan.load_file("calc.lua")
 HangedMan.load_file("localization/en-us.lua")

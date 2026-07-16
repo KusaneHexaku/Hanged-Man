@@ -61,6 +61,7 @@ SMODS.Joker {
 				ease_dollars(card.ability.extra.gold)
 				G.E_MANAGER:add_event(Event({
 					trigger = 'after',
+					delay = 0.1,
 					func = function()
 						v:juice_up(0.3, 0.3)
 						play_sound('tarot1', 0.3, 0.4)

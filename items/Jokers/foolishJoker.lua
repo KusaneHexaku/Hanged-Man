@@ -406,11 +406,6 @@ SMODS.Joker {
 			
 		end
 
-		function indexOf(array, value)
-    		for i, v in ipairs(array) do if v == value then return i end end
-    		return nil
-		end
-
 	end,
 
 	locked_loc_vars = function(self, info_queue, card)

@@ -33,6 +33,7 @@ joker_list = {
     "secretMessage",
     "sodaBee",
     "spiralOfStars",
+    "stepswitcher",
 
     -- Rare
     "bingoCard",

@@ -86,17 +86,7 @@ SMODS.Joker {
 
 			card.children.center:set_sprite_pos({x = card.ability.extra.spriteX, y = card.ability.extra.spriteY})
 
-		end
-
-		function indexOf(array, value)
-    		for i, v in ipairs(array) do
-        		if v == value then
-            		return i
-        		end
-    		end
-    	return nil
-		end
-	
+		end	
 	end,
 
 

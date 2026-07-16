@@ -148,114 +148,124 @@ SMODS.current_mod.calculate = function(self, context)
     end
 
     -- Track consumables usages
-        if context.using_consumeable then
+    if context.using_consumeable then
 
-            --print("[HangedMan_CalcEvent] A " .. tostring(context.consumeable.config.center.key) .. " was used")
+        --print("[HangedMan_CalcEvent] A " .. tostring(context.consumeable.config.center.key) .. " was used")
 
-            G.GAME.consumeables_used = G.GAME.consumeables_used or {}
-            G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] or 0
-            G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] + 1
+        G.GAME.consumeables_used = G.GAME.consumeables_used or {}
+        G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] or 0
+        G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] + 1
 
-            G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run or 0
-            G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run + 1
+        G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run or 0
+        G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run + 1
 
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.consumeables_used_this_run) .. " consumables used this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.consumeables_used_this_run) .. " consumables used this run" )
 
-            -- Check for unlocks
-            check_for_unlock({type = 'unlock_spiralOfStars'})
-            check_for_unlock({type = 'unlock_foolishJoker'})
-            
+        -- Check for unlocks
+        check_for_unlock({type = 'unlock_spiralOfStars'})
+        check_for_unlock({type = 'unlock_foolishJoker'})
+        
 
-        end
+    end
 
     -- Track removing/destroying playing cards
-        if context.remove_playing_cards then
+    if context.remove_playing_cards then
 
-            --print("[HangedMan_CalcEvent] " .. tostring(#context.removed) .." playing card was destroyed or removed")
+        --print("[HangedMan_CalcEvent] " .. tostring(#context.removed) .." playing card was destroyed or removed")
 
-            G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run or 0
-            G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run + #context.removed
+        G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run or 0
+        G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run + #context.removed
 
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.cards_destroyed_this_run) .. " playing cards destroyed this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.cards_destroyed_this_run) .. " playing cards destroyed this run" )
 
-            -- Check for unlocks
-            check_for_unlock({type = 'unlock_removalService'})
+        -- Check for unlocks
+        check_for_unlock({type = 'unlock_removalService'})
 
+    end
+
+    if context.initial_scoring_step then
+
+
+        -- Track unique hand types played in current run
+
+        G.GAME.unique_hands_this_run = G.GAME.unique_hands_this_run or {}
+        
+        if indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
+            G.GAME.unique_hands_this_run[#G.GAME.unique_hands_this_run + 1] = context.scoring_name
+            --print("[HangedMan_CalcEvent] " .. tostring(context.scoring_name) .. " has been played for the first time this run")
+            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.unique_hands_this_run) .. " unique hand types played this run" )
         end
 
-        if context.initial_scoring_step then
-
-
-            -- Track unique hand types played in current run
-
-            G.GAME.unique_hands_this_run = G.GAME.unique_hands_this_run or {}
-            
-            if indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
-                G.GAME.unique_hands_this_run[#G.GAME.unique_hands_this_run + 1] = context.scoring_name
-                --print("[HangedMan_CalcEvent] " .. tostring(context.scoring_name) .. " has been played for the first time this run")
-                --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.unique_hands_this_run) .. " unique hand types played this run" )
-            end
-
-            
-            
+        
+        
 
 
 
 
 
-            -- Check for unlocks
-            check_for_unlock({type = 'unlock_rideTheTide'})
-            check_for_unlock({type = 'unlock_homeIsInYourHeart', handname = context.scoring_name, cards = context.scoring_hand})
+        -- Check for unlocks
+        check_for_unlock({type = 'unlock_rideTheTide'})
+        check_for_unlock({type = 'unlock_homeIsInYourHeart', handname = context.scoring_name, cards = context.scoring_hand})
 
-            
+        
+    end
+
+    -- Track boosters packs skipped
+    if context.skipping_booster then
+        
+        --print(tostring(context.booster.config))
+
+        G.GAME.boosters_packs_skipped = G.GAME.boosters_packs_skipped or {}
+        G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] or 0
+        G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] + 1
+
+        G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run or 0
+        G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run + 1
+
+        --print("[HangedMan_CalcEvent] A " .. tostring(context.booster.kind) .. " Pack was skipped")
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.boosters_packs_skipped_this_run) .. " Booster Pack(s) skipped this run" )
+
+    end
+
+    if context.skip_blind and G.GAME.blind_on_deck == 'Big' then
+
+        G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run or 0
+        G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run + 1
+
+        --print("[HangedMan_CalcEvent] A Small Blind was skipped")
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.small_blind_skipped_this_run) .. " Small Blind(s) skipped this run" )
+
+    end
+
+    if context.skip_blind and G.GAME.blind_on_deck == 'Boss' then
+
+        G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run or 0
+        G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run + 1
+
+        --print("[HangedMan_CalcEvent] A Big Blind was skipped")
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.big_blind_skipped_this_run) .. " Big Blind(s) skipped this run" )
+
+    end
+
+
+    if context.before and #context.full_hand == 5 then
+        local test = {8,4,6,2,14}
+        local flag = true
+
+        for i, v in ipairs(test) do
+            if not (context.full_hand[i]:get_id() == v) then flag = false break end
         end
 
-        -- Track boosters packs skipped
-        if context.skipping_booster then
-            
-            --print(tostring(context.booster.config))
-
-            G.GAME.boosters_packs_skipped = G.GAME.boosters_packs_skipped or {}
-            G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] or 0
-            G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] + 1
-
-            G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run or 0
-            G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run + 1
-
-            --print("[HangedMan_CalcEvent] A " .. tostring(context.booster.kind) .. " Pack was skipped")
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.boosters_packs_skipped_this_run) .. " Booster Pack(s) skipped this run" )
-
+        if flag then
+            return {
+                message = '*click*'
+            }
         end
 
-        if context.skip_blind and G.GAME.blind_on_deck == 'Big' then
 
-			G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run or 0
-			G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run + 1
+    end
 
-            --print("[HangedMan_CalcEvent] A Small Blind was skipped")
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.small_blind_skipped_this_run) .. " Small Blind(s) skipped this run" )
-
-		end
-
-        if context.skip_blind and G.GAME.blind_on_deck == 'Boss' then
-
-			G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run or 0
-			G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run + 1
-
-            --print("[HangedMan_CalcEvent] A Big Blind was skipped")
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.big_blind_skipped_this_run) .. " Big Blind(s) skipped this run" )
-
-		end
-
-
-    function indexOf(array, value)
-    		for i, v in ipairs(array) do
-        		if v == value then
-            		return i
-        		end
-    		end
-    	return nil
-	end
+    
 
 
 end
