@@ -147,12 +147,12 @@ SMODS.current_mod.calculate = function(self, context)
         end
     end
 
+
     -- Track consumables usages
+    G.GAME.consumeables_used = G.GAME.consumeables_used or {}
     if context.using_consumeable then
 
         --print("[HangedMan_CalcEvent] A " .. tostring(context.consumeable.config.center.key) .. " was used")
-
-        G.GAME.consumeables_used = G.GAME.consumeables_used or {}
         G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] or 0
         G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] + 1
 
@@ -169,11 +169,10 @@ SMODS.current_mod.calculate = function(self, context)
     end
 
     -- Track removing/destroying playing cards
+    G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run or 0
     if context.remove_playing_cards then
 
         --print("[HangedMan_CalcEvent] " .. tostring(#context.removed) .." playing card was destroyed or removed")
-
-        G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run or 0
         G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run + #context.removed
 
         --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.cards_destroyed_this_run) .. " playing cards destroyed this run" )
@@ -185,9 +184,7 @@ SMODS.current_mod.calculate = function(self, context)
 
     if context.initial_scoring_step then
 
-
         -- Track unique hand types played in current run
-
         G.GAME.unique_hands_this_run = G.GAME.unique_hands_this_run or {}
         
         if indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
@@ -197,12 +194,7 @@ SMODS.current_mod.calculate = function(self, context)
         end
 
         
-        
-
-
-
-
-
+    
         -- Check for unlocks
         check_for_unlock({type = 'unlock_rideTheTide'})
         check_for_unlock({type = 'unlock_homeIsInYourHeart', handname = context.scoring_name, cards = context.scoring_hand})
@@ -211,11 +203,10 @@ SMODS.current_mod.calculate = function(self, context)
     end
 
     -- Track boosters packs skipped
+    G.GAME.boosters_packs_skipped = G.GAME.boosters_packs_skipped or {}
     if context.skipping_booster then
         
         --print(tostring(context.booster.config))
-
-        G.GAME.boosters_packs_skipped = G.GAME.boosters_packs_skipped or {}
         G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] or 0
         G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] + 1
 
@@ -227,24 +218,19 @@ SMODS.current_mod.calculate = function(self, context)
 
     end
 
+    G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run or 0
+    G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run or 0
+
     if context.skip_blind and G.GAME.blind_on_deck == 'Big' then
-
-        G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run or 0
         G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run + 1
-
         --print("[HangedMan_CalcEvent] A Small Blind was skipped")
         --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.small_blind_skipped_this_run) .. " Small Blind(s) skipped this run" )
-
     end
 
     if context.skip_blind and G.GAME.blind_on_deck == 'Boss' then
-
-        G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run or 0
         G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run + 1
-
         --print("[HangedMan_CalcEvent] A Big Blind was skipped")
         --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.big_blind_skipped_this_run) .. " Big Blind(s) skipped this run" )
-
     end
 
 
