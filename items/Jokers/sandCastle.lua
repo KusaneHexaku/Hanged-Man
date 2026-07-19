@@ -17,10 +17,10 @@ SMODS.Joker {
 				Multiple variables can be used in one space, as long as you separate them with a comma. {C:attention, X:chips, s:1.3} would be the yellow attention color, with a blue chips-colored background,, and 1.3 times the scale of other text.
 				You can find the vanilla joker descriptions and names as well as several other things in the localization files.
 				]]
-            "Gain {C:mult}+#5#{} Mult per card scored,",
-            "{C:mult}#3#{C:green} in #4#{} chance to reset",
+            "Gain {C:mult}+#1#{} Mult per card scored,",
+            "{C:mult}#2#{C:green} in #3#{} chance to reset",
             "after each hand played",
-			"{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult){}",
+			"{C:inactive}(Currently {C:mult}+#4#{} {C:inactive}Mult){}",
 		}
 	},
 	--[[
@@ -29,12 +29,13 @@ SMODS.Joker {
 		If you want to change the static value, you'd only change this number, instead
 		of going through all your code to change each instance individually.
 		]]
-	config = { extra = { mult = 1, odds = 1, base_odds = 1, odds_max = 100, mult_gain = 1, base_mult = 1 } },
+	config = { extra = { mult = 1, mult_gain = 1 } },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.mult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.odds_max, card.ability.extra.mult_gain, card.ability.extra.base_mult, card.ability.extra.base_odds } }
+		local numerator, denominator = SMODS.get_probability_vars(card, card.ability.extra.mult, 100, 'hangedman_sandcastle')
+		return { vars = { card.ability.extra.mult_gain, numerator, denominator, card.ability.extra.mult } }
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
 	rarity = 2,
@@ -51,8 +52,6 @@ SMODS.Joker {
         if context.individual and not context.blueprint and context.cardarea == G.play then
 
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
-            card.ability.extra.base_odds = (card.ability.extra.base_odds + card.ability.extra.mult_gain)
-            card.ability.extra.odds = (G.GAME.probabilities.normal or 1)*card.ability.extra.base_odds
 
             return {
                 message = '+1',
@@ -68,8 +67,6 @@ SMODS.Joker {
 		-- joker_main is a SMODS specific thing, and is where the effects of jokers that just give +stuff in the joker area area triggered, like Joker giving +Mult, Cavendish giving XMult, and Bull giving +Chips.
 		if context.joker_main then
 			-- Tells the joker what to do. In this case, it pulls the value of mult from the config, and tells the joker to use that variable as the "mult_mod".
-
-
 			return {
 				mult_mod = card.ability.extra.mult,
 				-- This is a localize function. Localize looks through the localization files, and translates it. It ensures your mod is able to be translated. I've left it out in most cases for clarity reasons, but this one is required, because it has a variable.
@@ -84,10 +81,8 @@ SMODS.Joker {
 			G.E_MANAGER:add_event(Event({
 					trigger = 'after',
 					func = function()
-						if pseudorandom('sandcastle') < card.ability.extra.odds / card.ability.extra.odds_max then
-               				card.ability.extra.mult = card.ability.extra.base_mult
-                			card.ability.extra.base_odds = card.ability.extra.base_mult
-                			card.ability.extra.odds = (G.GAME.probabilities.normal or 1)*card.ability.extra.base_odds
+						if SMODS.pseudorandom_probability(card, 'hangedman_sandcastle', card.ability.extra.mult, 100) then
+               				card.ability.extra.mult = 1
 							return {
 								message = 'Reset!',
                     			colour = G.C.RED,

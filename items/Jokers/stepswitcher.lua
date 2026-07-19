@@ -13,7 +13,7 @@ SMODS.Joker {
 			"switches after each hand played",
 		}
 	},
-	config = { extra = { backbeat = false, repetitions = 1 } },
+	config = { extra = { backbeat = false, repetitions = 1, in_blind = false } },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
@@ -37,6 +37,7 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 		if context.setting_blind and not context.blueprint then
+			card.ability.extra.in_blind = true
 			local offset = 0
 			if card.ability.extra.backbeat then offset = 1 end
 			G.E_MANAGER:add_event(Event({
@@ -83,7 +84,22 @@ SMODS.Joker {
                     return true
                 end
             }))
+			card.ability.extra.in_blind = false
         end
 		
+	end,
+
+	set_sprites = function(self, card, front)
+		G.E_MANAGER:add_event(Event({
+            blockable = false,
+            func = function()
+				local offset = 0
+				if card.abilty and card.ability.extra.backbeat then offset = 1 end
+				if not card.ability.extra.in_blind then card.children.center:set_sprite_pos({x = 0, y = 0})
+				else card.children.center:set_sprite_pos({x = 1+offset, y = 0})
+				end
+                return true
+            end
+        }))
 	end
 }

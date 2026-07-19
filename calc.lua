@@ -51,7 +51,7 @@ SMODS.current_mod.calculate = function(self, context)
 
 
     if context.starting_shop then   
-        --Run following somewhere when shop is created
+        -- Hooking the function of the Next Round button in shop
         local node = G.shop:get_UIE_by_ID('next_round_button')
         node.config.func = "shop_button_function"
     end

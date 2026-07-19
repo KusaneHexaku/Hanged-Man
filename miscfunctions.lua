@@ -12,6 +12,18 @@ function round(num, numDecimalPlaces)
   return math.floor(num * mult + 0.5) / mult
 end
 
+-- A re-implementation of the pseudoshuffle function that actually works with a list of integers
+-- the vanilla function uses sort_id without checking if the entry is something that cannot be indexed, such as an int
+-- so if you have a list of integers, the game simply crashes anytime you call the function on it
+function better_pseudoshuffle(list, seed)
+  if seed then math.randomseed(pseudoseed(""..seed)) end
+
+  for i = #list, 2, -1 do
+    local j = math.random(i)
+    list[i], list[j] = list[j], list[i]
+  end
+end
+
 -- yahimouse helper function reference
 function findOutIfThisNumberIsEvenInTheMostInefficientWayPossible(num)
     local even = true

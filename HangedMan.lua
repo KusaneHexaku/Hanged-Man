@@ -106,18 +106,35 @@ SMODS.ObjectType({
     cards = {},
 })
 
+-- Pool of Hanged Man's jokers
+SMODS.ObjectType({
+    key = "hangedman_pool",
+    default = "",
+    cards = {},
+})
+
 local SMODS_injectItems_ref = SMODS.injectItems
 function SMODS.injectItems()
     SMODS_injectItems_ref()
     for i, v in ipairs(G.P_CENTER_POOLS.Joker) do
         if not v.original_mod or v.original_mod.id == "Balatro" then
              SMODS.ObjectTypes.vanilla:inject_card(v)
+        end
+        if v.original_mod and v.original_mod.id == "HangedMan" then
+             SMODS.ObjectTypes.hangedman_pool:inject_card(v)
 
         end
     end
 end
 
-
+--[[
+local gameInitHook = Game.init_game_object
+function Game:init_game_object()
+    local ret = gameInitHook(self)
+    ret.pseudorandom = G.GAME.pseudorandom and G.GAME.pseudorandom or {}
+    return ret
+end
+]]
 
 
 ----------------------------------------------

@@ -134,7 +134,7 @@ SMODS.Joker {
 			
 			for i = 1, 45, 1 do card.ability.extra.fullstring[i] = selectedstring:sub(i, i) end
 
-			notDumb_pseudoshuffle(card.ability.extra.unrevealedindex, pseudoseed("hangedMan_secretMessage"))
+			better_pseudoshuffle(card.ability.extra.unrevealedindex, pseudoseed("hangedMan_secretMessage"))
 
 			card.ability.extra.generated = true
 
@@ -320,11 +320,3 @@ SMODS.Joker {
 
 
 
-function notDumb_pseudoshuffle(list, seed)
-  if seed then math.randomseed(seed) end
-
-  for i = #list, 2, -1 do
-    local j = math.random(i)
-    list[i], list[j] = list[j], list[i]
-  end
-end
