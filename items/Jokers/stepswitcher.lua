@@ -41,7 +41,6 @@ SMODS.Joker {
 			local offset = 0
 			if card.ability.extra.backbeat then offset = 1 end
 			G.E_MANAGER:add_event(Event({
-                blockable = false,
                 trigger = 'after',
                 func = function()
                         card:juice_up()
@@ -64,7 +63,6 @@ SMODS.Joker {
 			local offset = 0
 			if card.ability.extra.backbeat then offset = 1 end
 			G.E_MANAGER:add_event(Event({
-                blockable = false,
                 trigger = 'after',
                 func = function()
                         card:juice_up()
@@ -76,7 +74,6 @@ SMODS.Joker {
 
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             G.E_MANAGER:add_event(Event({
-                blockable = false,
                 trigger = 'after',
                 func = function()
                         card:juice_up()

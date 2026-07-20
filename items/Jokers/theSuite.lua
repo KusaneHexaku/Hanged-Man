@@ -109,8 +109,7 @@ SMODS.Joker {
             card.ability.extra.suiteState = card.ability.extra.stateNames[card.ability.extra.anchorSuit .. card.ability.extra.followSuit]
 
             G.E_MANAGER:add_event(Event({
-                blockable = false,
-                trigger = 'immediate',
+                trigger = 'after',
                 func = function()
                         card:juice_up()
                         card.children.center:set_sprite_pos({x = card.ability.extra.spriteX[card.ability.extra.anchorSuit .. card.ability.extra.followSuit], y = card.ability.extra.spriteY[card.ability.extra.anchorSuit .. card.ability.extra.followSuit]})
@@ -161,7 +160,6 @@ SMODS.Joker {
             card.ability.extra.suiteState = card.ability.extra.stateNames[card.ability.extra.anchorSuit .. card.ability.extra.followSuit]
 
             G.E_MANAGER:add_event(Event({
-                blockable = false,
                 trigger = 'after',
                 func = function()
                         card:juice_up()
