@@ -22,6 +22,7 @@ SMODS.current_mod.calculate = function(self, context)
                 elseif v.key == 'j_hangedman_boomerang' then context.pool[idx].weight = math.min(10 + (30 * (G.GAME.HangedMan_boomerangSellCount or 0)), 4000)
                 -- Imposterous : 1600% weight boost by default, significantly boosted during the "Spot the Difference" challenge
                 elseif v.key == 'j_hangedman_imposterous' then context.pool[idx].weight = (G.GAME.imposterous_challenge_rate or 160)
+                elseif v.original_mod and v.original_mod.id == "Cryptid" then context.pool[idx].weight = 1
                 else end -- more failsafe
             end
         end
