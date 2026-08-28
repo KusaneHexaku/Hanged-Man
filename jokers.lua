@@ -6,10 +6,15 @@ joker_list = {
     "doNotRedeem",
     "funnyBusiness",
     "monke",
+    "zgyzhs",
 
     -- Uncommon
     "theChameleon",
     "theColourOfMoney",
+    "comet",
+    "cambrels",
+    "ladder",
+    "necklace",
     "homeIsInYourHeart",
     "imposterous",
     "jimboSays",
@@ -47,7 +52,8 @@ joker_list = {
     "peerPressure",
     "pickACardAnyCard",
     "sphragisphage",
-    "theSuite"
+    "theSuite",
+    "theTower"
 
 
 

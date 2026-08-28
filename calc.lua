@@ -50,6 +50,22 @@ SMODS.current_mod.calculate = function(self, context)
         if G.GAME.skip_shop_count < 0 then G.GAME.skip_shop_count = 0 end
     end
 
+    -- Utility flag [G.GAME.free_booster_packs] : set to TRUE to make all Booster Packs free
+    -- Utility flag [G.GAME.free_booster_packs_count] : set to an integer above 0 to make the next n Booster Packs free
+    G.GAME.free_booster_packs = G.GAME.free_booster_packs or false
+    G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count or 0
+    if (G.GAME.free_booster_packs or (G.GAME.free_booster_packs_count > 0)) and (context.starting_shop or context.open_booster) then
+        if G.GAME.free_booster_packs_count > 0 and context.open_booster then G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count - 1 end
+        G.E_MANAGER:add_event(Event({
+        func = function()
+            for _, other_card in pairs(G.I.CARD or {}) do
+                if other_card.set_cost then other_card:set_cost() end
+            end
+            return true
+        end
+        }))
+    end
+
 
     if context.starting_shop then   
         -- Hooking the function of the Next Round button in shop
@@ -188,7 +204,7 @@ SMODS.current_mod.calculate = function(self, context)
         -- Track unique hand types played in current run
         G.GAME.unique_hands_this_run = G.GAME.unique_hands_this_run or {}
         
-        if indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
+        if HangedMan.indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
             G.GAME.unique_hands_this_run[#G.GAME.unique_hands_this_run + 1] = context.scoring_name
             --print("[HangedMan_CalcEvent] " .. tostring(context.scoring_name) .. " has been played for the first time this run")
             --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.unique_hands_this_run) .. " unique hand types played this run" )
@@ -200,6 +216,12 @@ SMODS.current_mod.calculate = function(self, context)
         check_for_unlock({type = 'unlock_rideTheTide'})
         check_for_unlock({type = 'unlock_homeIsInYourHeart', handname = context.scoring_name, cards = context.scoring_hand})
 
+        
+    end
+
+    if context.open_booster then
+
+    
         
     end
 
@@ -252,11 +274,13 @@ SMODS.current_mod.calculate = function(self, context)
 
     end
 
-    
-
-
 end
 
--- updating Global value a la Idol/Castle/etc.
--- function SMODS.current_mod.reset_game_globals(run_start)
--- end
+local card_set_cost_value_ref = Card.set_cost_value
+function Card:set_cost_value(...) -- SMODS addition
+    local ret = card_set_cost_value_ref(self, ...)
+    if G.GAME and (G.GAME.free_booster_packs or ((G.GAME.free_booster_packs_count or 0) > 0)) then
+        if self.ability.set == 'Booster' then self.cost = 0 end
+    end
+    return ret
+end

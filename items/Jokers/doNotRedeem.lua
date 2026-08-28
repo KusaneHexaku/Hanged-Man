@@ -27,7 +27,7 @@ SMODS.Joker {
 		return { vars = { number_format(card.ability.extra.mult), card.ability.extra.increment, card.ability.extra.penalty } }
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
-	rarity = 2,
+	rarity = 1,
 	-- Which atlas key to pull from.
 	atlas = 'HangedMan',
 	-- This card's position on the atlas, starting at {x=0,y=0} for the very top left.

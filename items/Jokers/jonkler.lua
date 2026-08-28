@@ -48,7 +48,7 @@ SMODS.Joker {
                 
                 local tempIndices = {1,2,3,4,5,6}
 
-                better_pseudoshuffle(tempIndices, 'hangedman_jonkler')
+                HangedMan.better_pseudoshuffle(tempIndices, 'hangedman_jonkler')
 
 				local temptemp = card.ability.extra.valueTable[tempIndices[1]]
 

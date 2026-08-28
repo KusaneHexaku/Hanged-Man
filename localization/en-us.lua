@@ -644,6 +644,172 @@ return {
 		        }
 	        },
 
+            j_hangedman_theTower_floor0 = {
+		        name = {
+                    'Freedom',
+                    '{s:0.6}from the Tower{}',
+                },
+		        text = {
+                    {
+                        "+{C:chips}88{} Chips for each {C:attention}Stone{} card in full deck",
+                        "+{C:chips}20{} Chips for each {C:attention}Enhanced{} card held in hand",
+                        "The first {C:attention}Booster Pack{} you buy in each shop is free",
+                        "Played {C:attention}4{}s has a {C:green}#1# in #2#{} chance to give {C:money}$4{} when scored",
+                        "+{C:mult}5{} Mult for each {C:attention}Vouchers{} redeemed this run",
+                        "Played {C:attention}6{}s give +{C:chips}66{} Chips when scored",
+                        "Spawn a random {C:tarot}Tarot{} card when a {C:attention}7{} is discarded",
+                        "Each {C:tarot}Tarot{} card held gives {C:white,X:mult}X1.25{} Mult",
+                        "{C:inactive}(Currently +{}{C:chips}#3#{}{C:inactive} Chips and +{}{C:mult}#4#{}{C:inactive} Mult)"
+                    },
+                    {
+                        "Spawn a {C:dark_edition}Negative{} {C:attention}The Tower{} {C:tarot}Tarot{}",
+                        "every {C:attention}#5#{}{C:inactive}(#6#){} {C:attention}Stone Cards{} scored"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor1 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 1{}',
+                },
+		        text = {
+			        "{C:attention}Leave{} the tower",
+			        "if the condition is statisfied",
+			        "Otherwise, {C:green}#1# in #2#{} chance",
+                    "to go up a floor after each hand",
+		        }
+	        },
+
+            j_hangedman_theTower_floor2 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 2{}',
+                },
+		        text = {
+			        {
+                        "+{C:chips}20{} Chips for each",
+                        "{C:attention}Enhanced{} card held in hand",
+                        "{C:inactive}(Currently +{}{C:chips}#1#{}{C:inactive} Chips)"
+                    },{
+                        "Go down to {C:attention}Floor 1{} if played hand",
+                        "contains at least 3 {C:attention}Enhanced{} cards",
+                        "Otherwise, go up a floor when Blind is beaten"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor3 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 3{}',
+                },
+		        text = {
+			        {
+                        "The next {C:attention}Booster Pack{}",
+                        "bought in the shop is free"
+                    },{
+                        "Go down to {C:attention}Floor 2{} if it's a",
+                        "{C:attention}Standard{} or {C:attention}Spectral{} pack",
+                        "Otherwise, go up a floor when",
+                        "any other Packs is opened"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor4 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 4{}',
+                },
+		        text = {
+			        {
+                        "Played {C:attention}4{}s has a {C:green}#1# in #2#{} chance",
+                        "to give {C:money}$4{} when scored"
+                    },{
+                        "Go down to {C:attention}Floor 3{} if played hand",
+                        "contains at least four {C:attention}4{}s",
+                        "Otherwise, go up a floor when Blind is beaten"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor5 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 5{}',
+                },
+		        text = {
+			        {
+                        "+{C:mult}5{} Mult for each",
+                        "{C:attention}Vouchers{} redeemed this run",
+                        "{C:inactive}(Currently +{}{C:mult}#1#{}{C:inactive} Mult)"
+                    },{
+                        "Go down to {C:attention}Floor 4{}",
+                        "when a {C:attention}Vouchers{} is redeemed",
+                        "Otherwise, go up a floor when",
+                        "{C:attention}Blind{} is selected"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor6 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 6{}',
+                },
+		        text = {
+			        {
+                        "Played {C:attention}6{}s give",
+                        "+{C:chips}66{} Chips when scored"
+                    },{
+                        "When Blind is beaten, go down to {C:attention}Floor 5{}",
+                        "if full deck contains at least six {C:attention}6{}s",
+                        "Otherwise, go up a floor"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor7 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 7{}',
+                },
+		        text = {
+			        {
+                        "Spawn a random {C:tarot}Tarot{} card",
+                        "when a {C:attention}7{} is discarded",
+                        "{C:inactive}(must have room)"
+                    },{
+                        "When Blind is beaten, go down to {C:attention}Floor 6{}",
+                        "if exactly {C:attention}7{} cards were discarded",
+                        "Otherwise, go up a floor"
+                    }
+		        }
+	        },
+
+            j_hangedman_theTower_floor8 = {
+		        name = {
+                    'The Tower',
+                    '{s:0.6}Floor 8{}',
+                },
+		        text = {
+                    {
+                        "To {C:green}escape{} the tower, return to {C:attention}Floor 1{}",
+			            "and play a hand containing the following cards in this exact order:",
+                        "{C:attention}#1#{}",
+                        "{C:attention}#2#{}",
+                        "{C:attention}#3#{}",
+                        "{C:attention}#4#{}",
+                        "{C:attention}#5#{}"
+                    },{
+                        "Go down to {C:attention}Floor 7{} if played hand",
+                        "contains a {C:attention}Stone{} card",
+                    }
+			        
+			        
+		        }
+	        },
 
 
             
@@ -828,6 +994,59 @@ return {
                     "Upgrade the hand",
                     "of this {C:planet}Planet{} card",
                     "at end of Blind",
+                },
+            },
+
+            -- Crossmod entries for Foolish Joker
+
+            -- Phanta's Tarot cards
+            c_hangedman_foolishJoker_TheGatherer = {
+                name = "The Gatherer",
+                text = {
+                    "Earn {C:money}$4{} each hand",
+                },
+            },
+            c_hangedman_foolishJoker_TheGrave = {
+                name = "The Grave",
+                text = {
+                    "Enhance {C:attention}1{} random card",
+                    "with no {C:attention}Enhancements{}",
+                    "held into a {C:attention}Ghost{} card",
+                },
+            },
+            c_hangedman_foolishJoker_TheBrazier = {
+                name = "The Brazier",
+                text = {
+                    "Enhance {C:attention}1{} random card with",
+                    "no {C:attention}Enhancements{} held into a",
+                    "{C:attention}Copper Grate (Fresh){} card",
+                },
+            },
+            c_hangedman_foolishJoker_TheSculptor = {
+                name = "The Brazier",
+                text = {
+                    "Enhance {C:attention}1{} random card",
+                    "with no {C:attention}Enhancements{}",
+                    "held into a {C:attention}Marble{} card",
+                },
+            },
+            c_hangedman_foolishJoker_TheBeekeeper = {
+                name = "The Brazier",
+                text = {
+                    "Apply {C:dark_edition}Waxed{} to",
+                    "{C:attention}1{} random card with",
+                    "no {C:dark_edition}Edition{} held",
+                },
+            },
+
+            -- notice for incompatible Foolish card
+
+            c_hangedman_foolishJoker_incompatibleCardNotice = {
+                name = "Incompatible Card",
+                text = {
+                    "This card does not have a",
+                    "{C:attention}Foolish{} effect implementation yet!",
+                    "Let {C:green}Kusane{} know what he should do with it!",
                 },
             },
         },

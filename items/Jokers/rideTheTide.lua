@@ -12,7 +12,7 @@ SMODS.Joker {
 		of going through all your code to change each instance individually.
 		]]
 	config = { extra = { chips = 20, previousHandTier = nil, previousHandText = 'Previous hand : [none]',
-
+--[[
     HandKey = {
         'High Card',
 		'phanta_junk',
@@ -45,7 +45,7 @@ SMODS.Joker {
         ['Flush House']= 'Flush House',
         ['Flush Five']= 'Flush Five'
     }
-
+]]
 
 
     } },
@@ -69,7 +69,10 @@ SMODS.Joker {
 
 		if context.joker_main then
 
-			local playedTier = indexOf(card.ability.extra.HandKey, context.scoring_name)
+			-- probably unnecessary failsafe but also eh
+			if not G.handlist then return false end
+
+			local playedTier = HangedMan.indexOf(G.handlist, context.scoring_name)
 
 			if card.ability.extra.chips == 0 then
 				card.children.center:set_sprite_pos({x = 5, y = 5})
@@ -79,16 +82,16 @@ SMODS.Joker {
 			end
 
             if card.ability.extra.previousHandTier == nil then
-                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
+                card.ability.extra.previousHandText = 'Previous hand : ' .. localize(context.scoring_name, 'poker_hands')
                 card.ability.extra.previousHandTier = playedTier
                 return {
 						chips = card.ability.extra.chips,
 			    }
             end
 
-            if playedTier > card.ability.extra.previousHandTier then
+            if playedTier < card.ability.extra.previousHandTier then
                 card.ability.extra.chips = math.floor(card.ability.extra.chips * 2)
-                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
+                card.ability.extra.previousHandText = 'Previous hand : ' .. localize(context.scoring_name, 'poker_hands')
                 card.ability.extra.previousHandTier = playedTier
                 return {
 				    message = 'Doubles!',
@@ -99,7 +102,7 @@ SMODS.Joker {
 			    }
             end
 
-            if playedTier < card.ability.extra.previousHandTier then
+            if playedTier > card.ability.extra.previousHandTier then
                 card.ability.extra.chips = math.floor(card.ability.extra.chips / 10)
 
 				if card.ability.extra.chips == 0 then
@@ -120,7 +123,7 @@ SMODS.Joker {
 				end
 
 
-                card.ability.extra.previousHandText = 'Previous hand : ' .. card.ability.extra.HandName[context.scoring_name]
+                card.ability.extra.previousHandText = 'Previous hand : ' .. localize(context.scoring_name, 'poker_hands')
                 card.ability.extra.previousHandTier = playedTier
                 return {
 				    message = 'Decimates!',

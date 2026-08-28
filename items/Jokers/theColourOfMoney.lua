@@ -70,10 +70,10 @@ SMODS.Joker {
 			local countdownKey = G.PROFILES[G.SETTINGS.profile]["colourOfMoneyKey"][card.ability.extra.colourID]
 			local letters = {'B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z','A','E','I','O','U'}
 
-			if indexOf(letters, countdownKey) >= 22 then
-				card.ability.extra.countdown = pseudorandom("colourOfMoney", (indexOf(letters, countdownKey) - 21)*5, (indexOf(letters, countdownKey) - 20)*5) 
+			if HangedMan.indexOf(letters, countdownKey) >= 22 then
+				card.ability.extra.countdown = pseudorandom("colourOfMoney", (HangedMan.indexOf(letters, countdownKey) - 21)*5, (HangedMan.indexOf(letters, countdownKey) - 20)*5) 
 			else
-				card.ability.extra.countdown = indexOf(letters, countdownKey) + 4
+				card.ability.extra.countdown = HangedMan.indexOf(letters, countdownKey) + 4
 			end
 
 			if card.ability.extra.colourID <= 14 then

@@ -134,7 +134,7 @@ SMODS.Joker {
 			
 			for i = 1, 45, 1 do card.ability.extra.fullstring[i] = selectedstring:sub(i, i) end
 
-			better_pseudoshuffle(card.ability.extra.unrevealedindex, pseudoseed("hangedMan_secretMessage"))
+			HangedMan.better_pseudoshuffle(card.ability.extra.unrevealedindex, pseudoseed("hangedMan_secretMessage"))
 
 			card.ability.extra.generated = true
 

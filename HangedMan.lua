@@ -25,6 +25,8 @@ local atlasList =
     {"HangedMan_imposterousJokers", 71, 95, "HangedMan_imposterousJokers.png"},
     {"HangedMan_pickacardanycard", 71, 95, "HangedMan_pickacardanycard.png"},
     {"HangedMan_Stepswitcher", 71, 95, "HangedMan_Stepswitcher.png"},
+    {"HangedMan_TheTower", 71, 95, "HangedMan_TheTower.png"},
+    {"HangedMan_LingoBlocks", 71, 95, "HangedMan_LingoBlocks.png"},
 
     -- consumable sheets
     {"HangedMan_Spectrals", 71, 95, "HangedMan_Spectrals.png"},

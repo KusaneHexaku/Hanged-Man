@@ -161,14 +161,14 @@ SMODS.Joker {
 
 			-- Seals from Phanta
 			-- Ghost Seal
-			if next(SMODS.find_mod('GSPhanta')) and not indexOf(card.ability.extra.supportedSeal, 'phanta_ghostseal') then
+			if next(SMODS.find_mod('GSPhanta')) and not HangedMan.indexOf(card.ability.extra.supportedSeal, 'phanta_ghostseal') then
 				card.ability.extra.supportedSeal[#card.ability.extra.supportedSeal+1] = 'phanta_ghostseal'
 				card.ability.extra.sealConsumed['Ghost'] = card.ability.extra.sealConsumed['Ghost'] or 0
 			end
 
 			-- Seals from BFDI
 			-- Naily Seal
-			if next(SMODS.find_mod('GSBFDI')) and not indexOf(card.ability.extra.supportedSeal, 'bfdi_naily') then
+			if next(SMODS.find_mod('GSBFDI')) and not HangedMan.indexOf(card.ability.extra.supportedSeal, 'bfdi_naily') then
 				card.ability.extra.supportedSeal[#card.ability.extra.supportedSeal+1] = 'bfdi_naily'
 				card.ability.extra.sealConsumed['Naily'] = card.ability.extra.sealConsumed['Naily'] or 0
 			end
@@ -179,7 +179,7 @@ SMODS.Joker {
 				
 				local sealed = {}
 				for _, scored_card in ipairs(context.scoring_hand) do
-					if scored_card.seal and scored_card:get_seal() and not scored_card.debuff and not scored_card.sphragisphaged and indexOf(card.ability.extra.supportedSeal, scored_card:get_seal()) then
+					if scored_card.seal and scored_card:get_seal() and not scored_card.debuff and not scored_card.sphragisphaged and HangedMan.indexOf(card.ability.extra.supportedSeal, scored_card:get_seal()) then
 						local sealtype = card.ability.extra.sealNames[scored_card:get_seal()]
 
 						if sealtype == 'Stone' and card.ability.extra.sealConsumed['Stone'] % 3 == 2 then
@@ -211,7 +211,7 @@ SMODS.Joker {
 			end
 
 			-- Handle Ghost Seal's effect
-			if indexOf(card.ability.extra.supportedSeal, 'phanta_ghostseal') then
+			if HangedMan.indexOf(card.ability.extra.supportedSeal, 'phanta_ghostseal') then
 				local ghostspawn = math.floor((card.ability.extra.sealConsumed['Ghost'] or 0) / 2)
 				if context.scoring_name == 'phanta_junk' and ghostspawn and (ghostspawn > 0) and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
 					for i = 1, math.min(ghostspawn, G.consumeables.config.card_limit - #G.consumeables.cards) do

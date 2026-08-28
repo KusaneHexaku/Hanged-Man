@@ -100,10 +100,10 @@ SMODS.Joker {
 				end
 
 				if upgradeCheck == 2 then
-					card.ability.extra.chips = round(card.ability.extra.chips * card.ability.extra.incrementmult, 2)
-					card.ability.extra.mult = round(card.ability.extra.mult * card.ability.extra.incrementmult, 2)
-					card.ability.extra.xmult = round(card.ability.extra.xmult * card.ability.extra.incrementmult, 2)
-					--card.ability.extra.incrementmult = round(card.ability.extra.incrementmult * card.ability.extra.incrementmult, 2)
+					card.ability.extra.chips = HangedMan.round(card.ability.extra.chips * card.ability.extra.incrementmult, 2)
+					card.ability.extra.mult = HangedMan.round(card.ability.extra.mult * card.ability.extra.incrementmult, 2)
+					card.ability.extra.xmult = HangedMan.round(card.ability.extra.xmult * card.ability.extra.incrementmult, 2)
+					--card.ability.extra.incrementmult = HangedMan.round(card.ability.extra.incrementmult * card.ability.extra.incrementmult, 2)
 				end
 
 				if chips + mult + xmult < 2 then return true else

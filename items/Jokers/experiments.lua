@@ -376,20 +376,20 @@ SMODS.Joker {
             for _, removed_card in ipairs(context.removed) do
                 if removed_card.shattered then glass_cards = glass_cards + 1 end
             end  
-			if glass_cards > 0 and indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
+			if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
 				for i = 1, glass_cards, 1 do
-					activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
+					activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
 				end
 			end
         end
 
-		if context.buying_card and context.card.ability.set == 'Voucher' and not context.blueprint and indexOf(card.ability.extra.activeTriggers, 'voucherBuy') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'voucherBuy')]) end
+		if context.buying_card and context.card.ability.set == 'Voucher' and not context.blueprint and HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy')]) end
 
-		if context.discard and not context.blueprint and #context.full_hand == 1 and indexOf(card.ability.extra.activeTriggers, 'discard1Card') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'discard1Card') or nil]) end
-		if context.before and #context.full_hand == 1 and indexOf(card.ability.extra.activeTriggers, 'play1Card') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'play1Card')]) end
+		if context.discard and not context.blueprint and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') or nil]) end
+		if context.before and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card')]) end
 
         if context.using_consumeable and context.consumeable.ability.set == 'Tarot' and not context.blueprint then
-			if indexOf(card.ability.extra.activeTriggers, 'tarotUse') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'tarotUse')]) end
+			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse')]) end
 
 			if context.consumeable.config.center.key == 'c_hanged_man' then
             	-- Glass Joker updates on Hanged Man and no other destroy consumable
@@ -397,19 +397,19 @@ SMODS.Joker {
             	for _, removed_card in ipairs(G.hand.highlighted) do
             	    if SMODS.has_enhancement(removed_card, 'm_glass') then glass_cards = glass_cards + 1 end
             	end
-				if glass_cards > 0 and indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
+				if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
 					for i = 1, glass_cards, 1 do
-						activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
+						activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
 					end
 				end
 			end
         end
 
 		if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
-			if indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
+			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
         end
 
-		if context.selling_card and indexOf(card.ability.extra.activeTriggers, 'cardSold') then activateEffect(card.ability.extra.activeEffects[indexOf(card.ability.extra.activeTriggers, 'cardSold')]) end
+		if context.selling_card and HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold')]) end
 		
 		if context.joker_main then
 

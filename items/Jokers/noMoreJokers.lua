@@ -178,13 +178,13 @@ SMODS.Joker {
 				if ranktext == '13' then ranktext = 'King' end
 				if ranktext == '12' then ranktext = 'Queen' end
 				if ranktext == '11' then ranktext = 'Jack' end
-				if amount > 1 and not indexOf(card.ability.extra.bannedList, 'Any' .. ranktext) then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Two' .. ranktext end
+				if amount > 1 and not HangedMan.indexOf(card.ability.extra.bannedList, 'Any' .. ranktext) then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Two' .. ranktext end
 				if amount > 0 then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Any' .. ranktext end
 			end
 
 			-- suits bans
 			for banningsuit, amount in ipairs(suitcount) do
-				if amount > 2 and not indexOf(card.ability.extra.bannedList, 'Any' .. suitorder[banningsuit]) then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Three' .. suitorder[banningsuit] end
+				if amount > 2 and not HangedMan.indexOf(card.ability.extra.bannedList, 'Any' .. suitorder[banningsuit]) then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Three' .. suitorder[banningsuit] end
 				if amount > 0 then card.ability.extra.bannable_pool[#card.ability.extra.bannable_pool+1] = 'Any' .. suitorder[banningsuit] end
 			end
 
@@ -210,10 +210,10 @@ SMODS.Joker {
 
 			-- checking for any matches between pool and current bannedList, resets if found
 			for _, key in ipairs(card.ability.extra.bannable_pool) do
-				if indexOf(card.ability.extra.bannedList, key) then
+				if HangedMan.indexOf(card.ability.extra.bannedList, key) then
 					--print('[No More Jokers] Property ' .. key .. ' of played was found to match an existing banned element')
 					card.ability.extra.failure = true
-					--table.remove(card.ability.extra.bannable_pool, indexOf(card.ability.extra.bannable_pool, key))
+					--table.remove(card.ability.extra.bannable_pool, HangedMan.indexOf(card.ability.extra.bannable_pool, key))
 				end
 			end
 
@@ -227,15 +227,15 @@ SMODS.Joker {
 			end
 
 			-- remove redundant bans
-			if indexOf(card.ability.extra.bannedList, 'Face') then
+			if HangedMan.indexOf(card.ability.extra.bannedList, 'Face') then
 				local k = {'AnyJack', 'AnyQueen', 'AnyKing', 'TwoJack', 'TwoQueen', 'TwoKing', 'TwoFace'}
 				for _, key in ipairs(k) do
-					if indexOf(card.ability.extra.bannable_pool, key) then table.remove(card.ability.extra.bannable_pool, indexOf(card.ability.extra.bannable_pool, key)) end
+					if HangedMan.indexOf(card.ability.extra.bannable_pool, key) then table.remove(card.ability.extra.bannable_pool, HangedMan.indexOf(card.ability.extra.bannable_pool, key)) end
 				end
 			end
 
-			if indexOf(card.ability.extra.bannedList, 'Pair') and indexOf(card.ability.extra.bannable_pool, 'Two Pair') then
-				table.remove(card.ability.extra.bannable_pool, indexOf(card.ability.extra.bannable_pool, 'Two Pair'))
+			if HangedMan.indexOf(card.ability.extra.bannedList, 'Pair') and HangedMan.indexOf(card.ability.extra.bannable_pool, 'Two Pair') then
+				table.remove(card.ability.extra.bannable_pool, HangedMan.indexOf(card.ability.extra.bannable_pool, 'Two Pair'))
 			end
 
 			--print(card.ability.extra.bannable_pool)

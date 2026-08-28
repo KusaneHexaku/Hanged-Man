@@ -40,7 +40,11 @@ SMODS.Joker {
 
 		if context.before and SMODS.pseudorandom_probability(card, 'hangedman_miner', 1, card.ability.extra.odds) then
 
-			local handNames = {
+			local handNames = {}
+
+			if not G.handlist then 
+				-- fallback to hardcoded vanilla list as failsafe
+				handNames = {
         		'High Card',
         		'Pair',
         		'Two Pair',
@@ -53,51 +57,56 @@ SMODS.Joker {
         		'Five of a Kind',
         		'Flush House',
         		'Flush Five'
-    		}
+    			}
+			else
+				for index, value in ipairs(G.handlist) do
+					handNames[index] = value
+				end
+			end
 
-			table.remove(handNames,indexOf(handNames, context.scoring_name))
+			table.remove(handNames,HangedMan.indexOf(handNames, context.scoring_name))
 
 			update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
-            { handname = 'All but ' .. context.scoring_name, chips = '...', mult = '...', level = '' })
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.2,
-            func = function()
-                play_sound('tarot1')
-                card:juice_up(0.8, 0.5)
-                G.TAROT_INTERRUPT_PULSE = true
-                return true
-            end
-        }))
-        update_hand_text({ delay = 0 }, { mult = '+', StatusText = true })
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.9,
-            func = function()
-                play_sound('tarot1')
-                card:juice_up(0.8, 0.5)
-                return true
-            end
-        }))
-        update_hand_text({ delay = 0 }, { chips = '+', StatusText = true })
-        G.E_MANAGER:add_event(Event({
-            trigger = 'after',
-            delay = 0.9,
-            func = function()
-                play_sound('tarot1')
-                card:juice_up(0.8, 0.5)
-                G.TAROT_INTERRUPT_PULSE = nil
-                return true
-            end
-        }))
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { level = '+1' })
-        delay(1.3)
+            { handname = 'All but ' .. localize(context.scoring_name, 'poker_hands'), chips = '...', mult = '...', level = '' })
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.2,
+				func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					G.TAROT_INTERRUPT_PULSE = true
+					return true
+				end
+			}))
+			update_hand_text({ delay = 0 }, { mult = '+', StatusText = true })
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.9,
+				func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					return true
+				end
+			}))
+			update_hand_text({ delay = 0 }, { chips = '+', StatusText = true })
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				delay = 0.9,
+				func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					G.TAROT_INTERRUPT_PULSE = nil
+					return true
+				end
+			}))
+			update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { level = '+1' })
+			delay(1.3)
 
-        SMODS.upgrade_poker_hands({ hands = handNames, instant = true })
+			SMODS.upgrade_poker_hands({ hands = handNames, instant = true })
 
 
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 },
-            { mult = 0, chips = 0, handname = '', level = '' })
+			update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 },
+				{ mult = 0, chips = 0, handname = '', level = '' })
 
 
         end    
