@@ -27,16 +27,17 @@ function HangedMan.better_pseudoshuffle(list, seed)
     end
 end
 
--- Get hand type of a Planet card
--- Yoinked straight off of from Aikoshen
--- thank you aiko reliable as always
-function HangedMan.get_hand_in_game(_c)
-    return (G.GAME and 
-    G.GAME.hands and 
-    _c.ability and 
-    _c.ability.hand_type and 
-    G.GAME.hands[_c.ability.hand_type]) 
-    and G.GAME.hands[_c.ability.hand_type] or nil
+-- Get the hand type of a Planet card from its key
+-- probably not the correct way to do it but eh
+function HangedMan.planet_hand_type_from_key(_key)
+    if not G.P_CENTER_POOLS.Planet then return nil end
+    local _hand = nil
+    for _, planet_center in pairs(G.P_CENTER_POOLS.Planet) do
+        if planet_center.key == _key then
+            _hand = planet_center.config.hand_type
+        end
+    end
+    return _hand
 end
 
 -- Function to immediately kill a run

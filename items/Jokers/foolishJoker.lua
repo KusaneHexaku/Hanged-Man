@@ -19,6 +19,8 @@ SMODS.Joker {
 		local last_tarot_planet = fool_c and localize { type = 'name_text', key = fool_c.key, set = fool_c.set } or 'nothing'
 		local colour1 = G.C.UI.TEXT_INACTIVE
 
+		local professionalnoun = {'he', 'she', 'they'}
+
 		if fool_c and fool_c.name == 'The Fool' then
 			colour1 = G.C.UI.TEXT_INACTIVE
 			last_tarot_planet = 'nothing'
@@ -27,7 +29,7 @@ SMODS.Joker {
 			info_queue[#info_queue + 1] = G.P_CENTERS["c_wheel_of_fortune"]
 		elseif fool_c and fool_c.set == "Tarot" then
 			colour1 = G.C.SECONDARY_SET.Tarot
-			info_queue[#info_queue + 1] = { set = fool_c.set, key = 'c_hangedman_foolishJoker_' .. last_tarot_planet:gsub("%s+", ""), vars = {} } 
+			info_queue[#info_queue + 1] = { set = fool_c.set, key = 'c_hangedman_foolishJoker_' .. last_tarot_planet:gsub("[%p%c%s]", ""), vars = {} } 
 
 			if fool_c.key == 'c_magician' then info_queue[#info_queue + 1] = G.P_CENTERS['m_lucky']
 			elseif fool_c.key == 'c_empress' then info_queue[#info_queue + 1] = G.P_CENTERS['m_mult']
@@ -46,6 +48,8 @@ SMODS.Joker {
 			elseif fool_c.key == 'c_phanta_sculptor' then info_queue[#info_queue + 1] = G.P_CENTERS['m_phanta_marblecard']
 			elseif fool_c.key == 'c_phanta_beekeeper' then info_queue[#info_queue + 1] = G.P_CENTERS['e_phanta_waxed_showcase']
 			
+
+			-- catchall for any Tarot not implemented yet
 			else 
 				colour1 = G.C.UI.TEXT_INACTIVE
 				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {} } 
@@ -53,10 +57,10 @@ SMODS.Joker {
 
 
 		elseif fool_c and fool_c.set == "Planet" then
-			local upgradeHand = HangedMan.get_hand_in_game(fool_c.key) or nil
+			local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
 			if not upgradeHand then
 				colour1 = G.C.UI.TEXT_INACTIVE
-				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {} } 
+				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {professionalnoun[math.random(#professionalnoun)]} } 
 			end
 			colour1 = G.C.SECONDARY_SET.Planet
 			info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_UpgradePlanet', vars = {} } 
@@ -382,7 +386,7 @@ SMODS.Joker {
 				else
 					-- standard Planet card handling
 
-					local upgradeHand = HangedMan.get_hand_in_game(fool_c.key) or nil
+					local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
 					if not upgradeHand then return false end
 
 					SMODS.upgrade_poker_hands({ hands = {upgradeHand}})

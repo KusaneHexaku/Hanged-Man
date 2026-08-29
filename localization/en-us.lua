@@ -1039,14 +1039,14 @@ return {
                 },
             },
 
-            -- notice for incompatible Foolish card
 
+            -- notice for incompatible Foolish card
             c_hangedman_foolishJoker_incompatibleCardNotice = {
                 name = "Incompatible Card",
                 text = {
                     "This card does not have a",
                     "{C:attention}Foolish{} effect implementation yet!",
-                    "Let {C:green}Kusane{} know what he should do with it!",
+                    "Let {C:green}Kusane{} know what #1# should do with it!",
                 },
             },
         },
