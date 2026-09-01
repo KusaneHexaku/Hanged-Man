@@ -701,7 +701,14 @@ SMODS.Joker {
 		G.E_MANAGER:add_event(Event({
             blockable = false,
             func = function()
-                if card.ability and card.ability.extra.disguisingAs then card.children.center:set_sprite_pos({x = card.ability.extra.spriteX, y = card.ability.extra.spriteY}) end 
+                if card.ability and card.ability.extra.disguisingAs then
+                    card.children.center:set_sprite_pos({x = card.ability.extra.spriteX, y = card.ability.extra.spriteY})
+                    if card and card.children and card.children.center and card.children.center.set_sprite_pos then
+                        if next(SMODS.find_mod('GhostCards')) then card.children.center.atlas = G.ASSET_ATLAS["hangedman_HangedMan_imposterousJokers_GhostCard"]
+                        else card.children.center.atlas = G.ASSET_ATLAS["hangedman_HangedMan_imposterousJokers"] end
+                        card.children.center:reset()
+                    end
+                end 
                 return true
             end
         }))
@@ -754,6 +761,11 @@ function SMODS.create_card(args)
             card.cost = G.P_CENTERS[card.ability.extra.disguisingAs].cost
             card.rarity = G.P_CENTERS[card.ability.extra.disguisingAs].rarity
 			card.children.center:set_sprite_pos({x = card.ability.extra.spriteX, y = card.ability.extra.spriteY})
+
+            if next(SMODS.find_mod('GhostCards')) then card.children.center.atlas = G.ASSET_ATLAS["hangedman_HangedMan_imposterousJokers_GhostCard"]
+            else card.children.center.atlas = G.ASSET_ATLAS["hangedman_HangedMan_imposterousJokers"] end
+            card.children.center:reset()
+
 		end
 
     end

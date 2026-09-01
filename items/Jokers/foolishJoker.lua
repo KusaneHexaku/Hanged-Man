@@ -10,7 +10,20 @@ SMODS.Joker {
 		If you want to change the static value, you'd only change this number, instead
 		of going through all your code to change each instance individually.
 		]]
-	config = { extra = { deathActivating = false } },
+	config = { extra = { deathActivating = false,
+
+	supportedTarot = {
+		-- list of Tarots with an implemented effect, used to check for the unsupported tarot message
+
+		-- Vanilla Tarots
+		'c_fool','c_magician','c_high_priestess','c_empress','c_emperor','c_heirophant','c_lovers','c_chariot','c_justice','c_hermit','c_wheel_of_fortune','c_strength','c_hanged_man','c_death','c_temperance','c_devil','c_tower','c_star','c_moon','c_sun','c_judgement','c_world',
+
+		-- Phanta Tarots
+		'c_phanta_gatherer','c_phanta_grave','c_phanta_brazier','c_phanta_sculptor','c_phanta_beekeeper'
+
+	}
+
+	} },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
@@ -50,10 +63,10 @@ SMODS.Joker {
 			
 
 			-- catchall for any Tarot not implemented yet
-			else 
+			elseif not HangedMan.indexOf(card.ability.extra.supportedTarot,fool_c.key) then
 				colour1 = G.C.UI.TEXT_INACTIVE
 				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {} } 
-			end
+			else end
 
 
 		elseif fool_c and fool_c.set == "Planet" then

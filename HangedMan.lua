@@ -33,15 +33,20 @@ local atlasList =
 
     -- non-cards sheets
 	{"HangedMan_Seals", 71, 95, "HangedMan_Seals.png"},
+
+    -- crossmod sheets
+    {"HangedMan_imposterousJokers_GhostCard", 71, 95, "HangedMan_imposterousJokers_GhostCard.png"},
     
 }
+
 
 for _index, _object in ipairs(atlasList) do
     SMODS.Atlas {
         key = _object[1],
         px = _object[2],
         py = _object[3],
-        path = _object[4]
+        path = _object[4],
+        atlas_table = 'ASSET_ATLAS'
     }
 end
 

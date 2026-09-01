@@ -30,6 +30,7 @@ end
 -- Get the hand type of a Planet card from its key
 -- probably not the correct way to do it but eh
 function HangedMan.planet_hand_type_from_key(_key)
+    if not _key then return nil end
     if not G.P_CENTER_POOLS.Planet then return nil end
     local _hand = nil
     for _, planet_center in pairs(G.P_CENTER_POOLS.Planet) do
@@ -39,6 +40,7 @@ function HangedMan.planet_hand_type_from_key(_key)
     end
     return _hand
 end
+
 
 -- Function to immediately kill a run
 -- thank you Winter reliable as always
