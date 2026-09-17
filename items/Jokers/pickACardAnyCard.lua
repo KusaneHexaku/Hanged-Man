@@ -106,7 +106,7 @@ SMODS.Joker {
 					--card.ability.extra.incrementmult = HangedMan.round(card.ability.extra.incrementmult * card.ability.extra.incrementmult, 2)
 				end
 
-				if chips + mult + xmult < 2 then return true else
+				if chips + mult + xmult < 2 then return else
 					return {
 						chips = chips,
 						extra = {

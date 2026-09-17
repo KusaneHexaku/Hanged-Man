@@ -44,7 +44,7 @@ SMODS.Joker {
 			local left = false
 			local right = false
 			local cardPos = HangedMan.indexOf(context.full_hand,context.other_card)
-			if not cardPos or cardPos == 1 or cardPos == #context.full_hand then return true end
+			if not cardPos or cardPos == 1 or cardPos == #context.full_hand then return end
 
 			for i = 1, #context.full_hand, 1 do
 				if i < cardPos and HangedMan.indexOf(context.scoring_hand, context.full_hand[i]) then left = true end
