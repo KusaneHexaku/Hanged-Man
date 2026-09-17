@@ -15,6 +15,8 @@ A silly Vanilla-esque mod with no real coherent theme. I just add anything I fee
 ## Credits
 - Codes by Kusane (me), with copius amount of help from the Balatro modding channels
 - Sprites by Kusane (me)
+- Imposterous sprites based on vanilla sprite by LocalThunk
+- Alternate Imposterous sprites based on Ghost Cards by GhostSalt
 Names will be added as contributions from other people are accepted in the future!
 
 <img width="568" height="760" alt="image" src="https://github.com/user-attachments/assets/6bedc41c-f99a-4438-9c93-b81631b7db56" />
