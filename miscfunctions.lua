@@ -32,12 +32,18 @@ end
 function HangedMan.planet_hand_type_from_key(_key)
     if not _key then return nil end
     if not G.P_CENTER_POOLS.Planet then return nil end
+
     local _hand = nil
+
     for _, planet_center in pairs(G.P_CENTER_POOLS.Planet) do
         if planet_center.key == _key then
-            _hand = planet_center.config.hand_type
+            if string.find(_key, 'c_akyrs_planet', 1, true) and (not string.find(_key, 'bishop_ring', 1, true)) then _hand = planet_center.akyrs_applicable_hands or nil
+            elseif _key == 'c_akyrs_p_microscopium' then _hand = planet_center.config.akyrs_hand_types or nil
+            else _hand = planet_center.config.hand_type end
+            break
         end
     end
+
     return _hand
 end
 
@@ -52,6 +58,39 @@ function HangedMan.instant_death()
     G:save_settings()
     G.FILE_HANDLER.force = true
     G.STATE_COMPLETE = false
+end
+
+-- Function to display a `Nope!` on any card a la Wheel of Fortune failing
+function HangedMan.display_wheel_nope(card)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.4,
+        func = function()
+            attention_text({
+                text = localize('k_nope_ex'),
+                scale = 1.3,
+                hold = 1.4,
+                major = card,
+                backdrop_colour = G.C.SECONDARY_SET.Tarot,
+                align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and 'tm' or 'cm',
+                offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
+                silent = true
+            })
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.06 * G.SETTINGS.GAMESPEED,
+                blockable = false,
+                blocking = false,
+                func = function()
+                    play_sound('tarot2', 0.76, 0.4)
+                    return true
+                end
+            }))
+        play_sound('tarot2', 1, 0.4)
+        card:juice_up(0.3, 0.5)
+        return true
+        end
+    }))
 end
 
 

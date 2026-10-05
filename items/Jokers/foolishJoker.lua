@@ -19,9 +19,11 @@ SMODS.Joker {
 		'c_fool','c_magician','c_high_priestess','c_empress','c_emperor','c_heirophant','c_lovers','c_chariot','c_justice','c_hermit','c_wheel_of_fortune','c_strength','c_hanged_man','c_death','c_temperance','c_devil','c_tower','c_star','c_moon','c_sun','c_judgement','c_world',
 
 		-- Phanta Tarots
-		'c_phanta_gatherer','c_phanta_grave','c_phanta_brazier','c_phanta_sculptor','c_phanta_beekeeper'
+		'c_phanta_gatherer','c_phanta_grave','c_phanta_brazier','c_phanta_sculptor','c_phanta_beekeeper','c_phanta_exorcist','c_phanta_angel','c_phanta_philosopher','c_phanta_sludge'
 
-	}
+	},
+
+	phanta_sludged = false
 
 	} },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
@@ -34,7 +36,11 @@ SMODS.Joker {
 
 		local professionalnoun = {'he', 'she', 'they'}
 
-		if fool_c and fool_c.name == 'The Fool' then
+		if fool_c and fool_c.key == 'c_phanta_sludge' or card.ability.extra.phanta_sludged then
+			last_tarot_planet = 'Sludge'
+			card.ability.extra.phanta_sludged = true
+			info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_PhantaSludged', vars = {} } 
+		elseif fool_c and fool_c.name == 'The Fool' then
 			colour1 = G.C.UI.TEXT_INACTIVE
 			last_tarot_planet = 'nothing'
 		elseif fool_c and fool_c.name == 'The Wheel of Fortune' then
@@ -71,7 +77,7 @@ SMODS.Joker {
 
 		elseif fool_c and fool_c.set == "Planet" then
 			local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
-			if not upgradeHand then
+			if (not upgradeHand) and (not fool_c.key == 'c_akyrs_planet_bishop_ring') then
 				colour1 = G.C.UI.TEXT_INACTIVE
 				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {professionalnoun[math.random(#professionalnoun)]} } 
 			end
@@ -95,7 +101,7 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 
-		if context.before and not context.blueprint then
+		if context.before and not context.blueprint and not card.ability.extra.phanta_sludged then
 
 			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 			if not fool_c then return true end
@@ -220,7 +226,7 @@ SMODS.Joker {
 
 		end
 
-		if context.after and not context.blueprint then
+		if context.after and not context.blueprint and not card.ability.extra.phanta_sludged then
 
 			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 			
@@ -309,41 +315,13 @@ SMODS.Joker {
                     }))
 
         		else
-            		G.E_MANAGER:add_event(Event({
-                		trigger = 'after',
-                		delay = 0.4,
-                		func = function()
-                    		attention_text({
-                        		text = localize('k_nope_ex'),
-                        		scale = 1.3,
-                        		hold = 1.4,
-                        		major = card,
-                        		backdrop_colour = G.C.SECONDARY_SET.Tarot,
-                        		align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and 'tm' or 'cm',
-                        		offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
-                        		silent = true
-                    		})
-                    		G.E_MANAGER:add_event(Event({
-                        		trigger = 'after',
-                        		delay = 0.06 * G.SETTINGS.GAMESPEED,
-                        		blockable = false,
-                        		blocking = false,
-                        		func = function()
-                            		play_sound('tarot2', 0.76, 0.4)
-                            		return true
-                        		end
-                   			}))
-                    	play_sound('tarot2', 1, 0.4)
-                    	card:juice_up(0.3, 0.5)
-                    	return true
-                		end
-            		}))
+					HangedMan.display_wheel_nope(card)
         		end
 			end
 		end
 
 		-- end of round effects
-		if context.end_of_round and context.game_over == false and not context.blueprint then
+		if context.end_of_round and context.game_over == false and not context.blueprint and not card.ability.extra.phanta_sludged then
 			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 
 			-- handles Judgement, spawning a Joker when Blind beaten
@@ -361,10 +339,111 @@ SMODS.Joker {
         		delay(0.6)
 			end
 
+			-- handles Phanta's The Exorcist, destroying up to 3 random cards held in hand at end of Blind
+			if fool_c and fool_c.key == 'c_phanta_exorcist' then
+				local cards = G.hand.cards
+				local candidates = {}
+				for i = 1, #cards do candidates[#candidates+1] = cards[i] end
+				local selected = {}
+				table.sort(candidates,
+				function(a, b)
+					return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card
+				end
+				)
+				local size = math.min(3, #candidates)
+				HangedMan.better_pseudoshuffle(candidates, "hangedman_foolishJoker_exorcist")
+				for i = 1, size do selected[#selected + 1] = candidates[i] end
+
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					delay = 0.4,
+					func = function()
+						play_sound("tarot1")
+						card:juice_up(0.3, 0.5)
+						delay(0.2)
+						G.hand:unhighlight_all()
+						return true
+					end
+				}))
+				SMODS.destroy_cards(selected)
+				delay(0.5)
+				
+			end
+
+			-- handles Phanta's The Angel
+			if fool_c and fool_c.key == 'c_phanta_angel' then
+				local candidates = G.hand.cards
+
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					delay = 0.4,
+					func = function()
+						play_sound("tarot1")
+						card:juice_up(0.3, 0.5)
+						return true
+					end
+				}))
+
+				for i = 1, #candidates do
+					local percent = 1.15 - (i - 0.999) / (#candidates - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = "after",
+						delay = 0.15,
+						func = function()
+						candidates[i]:flip()
+						play_sound("card1", percent)
+						candidates[i]:juice_up(0.3, 0.3)
+						return true
+						end
+					}))
+				end
+
+				delay(0.2)
+
+				for i = 1, #candidates do
+					G.E_MANAGER:add_event(Event({
+						func = function()
+						assert(SMODS.modify_rank(candidates[i], 1))
+						return true
+						end
+					}))
+				end
+
+				for i = 1, #candidates do
+					local percent = 0.85 + (i - 0.999) / (#candidates - 0.998) * 0.3
+					G.E_MANAGER:add_event(Event({
+						trigger = "after",
+						delay = 0.15,
+						func = function()
+						candidates[i]:flip()
+						play_sound("tarot2", percent, 0.6)
+						candidates[i]:juice_up(0.3, 0.3)
+						return true
+						end
+					}))
+				end
+
+				G.E_MANAGER:add_event(Event({
+					trigger = "after",
+					delay = 0.2,
+					func = function()
+						G.hand:unhighlight_all()
+						return true
+					end
+				}))
+
+				delay(0.5)
+				
+			end
+
+
+
 			-- the rest of Planet cards effects
 
 			if fool_c and fool_c.set == 'Planet' then
-				--local upgradeHand = card.ability.extra.planetToHand[fool_c.key]
+
+				local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
+				if not upgradeHand then return end
 
 				-- catching special cases for non-standard Planet cards
 
@@ -391,27 +470,56 @@ SMODS.Joker {
 						return true end }))
 					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
 					delay(1.3)
-					G.GAME.akyrs_pure_hand_modifier.multiplier = G.GAME.akyrs_pure_hand_modifier.multiplier + card.ability.extra * 0.5 * G.GAME.akyrs_pure_hand_modifier.level
-					G.GAME.akyrs_pure_hand_modifier.level = G.GAME.akyrs_pure_hand_modifier.level + card.ability.extra
+					G.GAME.akyrs_pure_hand_modifier.multiplier = G.GAME.akyrs_pure_hand_modifier.multiplier + 1 * 0.5 * G.GAME.akyrs_pure_hand_modifier.level
+					G.GAME.akyrs_pure_hand_modifier.level = G.GAME.akyrs_pure_hand_modifier.level + 1
 					update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 
 
+				-- Edgecase with Aikoshen's Microscopium
+				elseif fool_c.key == 'c_akyrs_p_microscopium' then
+					
+				update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_words_long'),chips = '...', mult = '...', level=''})
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					G.TAROT_INTERRUPT_PULSE = true
+					return true end }))
+				update_hand_text({delay = 0}, {mult = '+', StatusText = true})
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					return true end }))
+				update_hand_text({delay = 0}, {chips = '+', StatusText = true})
+				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+					play_sound('tarot1')
+					card:juice_up(0.8, 0.5)
+					G.TAROT_INTERRUPT_PULSE = nil
+					return true end }))
+				update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
+				delay(1.3)
+				SMODS.upgrade_poker_hands({ hands = upgradeHand, instant = true})
+				update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+
+				-- Catching Aikoshen's Factorio multi-hand Planets cards
+				elseif string.find(fool_c.key, 'c_akyrs_planet', 1, true) then
+
+					--print('Aikoshen Planet detected!')
+					local lockey = {
+						['c_akyrs_planet_vulcanus'] = 'k_akyrs_pairs',
+						['c_akyrs_planet_nauvis'] = 'k_akyrs_unique_hand_combo',
+						['c_akyrs_planet_fulgora'] = 'k_akyrs_unique_flush_hands',
+						['c_akyrs_planet_gleba'] = 'k_akyrs_unique_straight_hands',
+						['c_akyrs_planet_aquilo'] = 'k_akyrs_any_combo_hands',
+						['c_akyrs_planet_shattered'] = 'k_akyrs_gt5_hands',
+					}
+
+					AKYRS.auto_planet_anim(card, localize(lockey[fool_c.key]))
+					SMODS.upgrade_poker_hands{hands = SMODS.Attributes[upgradeHand].keys, instant = true}
+
 				else
 					-- standard Planet card handling
-
-					local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
-					if not upgradeHand then return false end
-
 					SMODS.upgrade_poker_hands({ hands = {upgradeHand}})
-					G.E_MANAGER:add_event(Event({
-						trigger = 'after',
-						delay = 0.4,
-						func = function()
-							card:juice_up(0.3, 0.5)
-							play_sound('tarot1', 0.8, 0.4)
-							return true
-						end
-					}))
+
 				end
 
         		delay(0.6)
@@ -420,14 +528,65 @@ SMODS.Joker {
 
         end
 
+		if context.setting_blind and not context.blueprint and not card.ability.extra.phanta_sludged then
+			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
+			-- thank you ghostsalt much appreciated :3
+			if fool_c and fool_c.key == 'c_phanta_philosopher' then
+				G.E_MANAGER:add_event(Event({
+				func = function()
+					G.FUNCS.phanta_run_philo_menu(2)
+					return true
+				end
+				}))
+
+				G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.4,
+				func = function()
+					if not G.GAME.phanta_philo_cards then HangedMan.display_wheel_nope(card)
+					else 
+						for i = 1, math.min(2, G.consumeables.config.card_limit - count_consumables()) do
+							G.E_MANAGER:add_event(Event({
+							trigger = "after",
+							delay = 0.4,
+							blockable = false,
+							func = function()
+								if G.consumeables.config.card_limit > #G.consumeables.cards then
+								play_sound("timpani")
+								local _card = SMODS.add_card({ key = G.GAME.phanta_philo_cards[i].key, edition = G.GAME.phanta_philo_cards[i].edition })
+								for k, v in pairs(SMODS.Stickers) do
+									if _card.ability[k] or _card[k] then
+									_card:remove_sticker(k)
+									end
+								end
+								-- add any stickers it had
+								for _, v in ipairs(G.GAME.phanta_philo_cards[i].stickers) do
+									_card:add_sticker(v, true)
+								end
+								card:juice_up(0.3, 0.5)
+								end
+								return true
+							end
+							}))
+						end
+					end
+					return true
+				end
+				}))
+				delay(0.4)
+			end
+		end
+
 		-- juice card if Hanged Man is active
-		if context.first_hand_drawn then
+		if context.first_hand_drawn and not card.ability.extra.phanta_sludged then
+			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
+			if not fool_c then return true end
             local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES and fool_c and fool_c.key == 'c_hanged_man' end
             juice_card_until(card, eval, true)
         end
 
 		-- additional checks for Death's effect
-		if context.pre_discard and not context.blueprint and #context.full_hand == 2 then 
+		if context.pre_discard and not context.blueprint and #context.full_hand == 2 and not card.ability.extra.phanta_sludged then 
 			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 			if fool_c and fool_c.key == 'c_death' and #context.full_hand == 2 then
 				card.ability.extra.deathActivating = false
@@ -471,7 +630,7 @@ SMODS.Joker {
 		end
 
 		-- handles effects that activates on Discards
-		if context.discard and not context.blueprint then
+		if context.discard and not context.blueprint and not card.ability.extra.phanta_sludged then
 
 			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 			if not fool_c then return false
@@ -498,6 +657,7 @@ SMODS.Joker {
 					return { remove = true, delay = 0.3 }
 					
 				end
+				delay(0.5)
 			end
 			
 		end

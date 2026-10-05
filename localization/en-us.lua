@@ -1023,7 +1023,7 @@ return {
                 },
             },
             c_hangedman_foolishJoker_TheSculptor = {
-                name = "The Brazier",
+                name = "The Sculptor",
                 text = {
                     "Enhance {C:attention}1{} random card",
                     "with no {C:attention}Enhancements{}",
@@ -1031,7 +1031,7 @@ return {
                 },
             },
             c_hangedman_foolishJoker_TheBeekeeper = {
-                name = "The Brazier",
+                name = "The Beekeeper",
                 text = {
                     "Apply {C:dark_edition}Waxed{} to",
                     "{C:attention}1{} random card with",
@@ -1039,6 +1039,41 @@ return {
                 },
             },
 
+            c_hangedman_foolishJoker_TheExorcist = {
+                name = "The Exorcist",
+                text = {
+                    "Destroy up to {C:attention}3{} random",
+                    "playing cards held in hand ",
+                    "at end of Blind",
+                },
+            },
+
+            c_hangedman_foolishJoker_TheAngel = {
+                name = "The Angel",
+                text = {
+                    "Increase rank of playing cards",
+                    "held in hand by {C:attention}1{} at end of Blind",
+                },
+            },
+
+            c_hangedman_foolishJoker_ThePhilosopher = {
+                name = "The Philosopher",
+                text = {
+                    "When Blind is selected,",
+                    "{C:attention}1{} of {C:attention}2{} {C:tarot}Tarot{} cards",
+                    "to create"
+                },
+            },
+
+
+            -- Phanta: if Sludge is used
+            c_hangedman_foolishJoker_PhantaSludged = {
+                name = "Sludged",
+                text = {
+                    "Cannot change off of Sludged",
+                    "There is no other effects",
+                },
+            },
 
             -- notice for incompatible Foolish card
             c_hangedman_foolishJoker_incompatibleCardNotice = {

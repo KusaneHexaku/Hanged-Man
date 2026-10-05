@@ -156,7 +156,8 @@ SMODS.Joker {
 		flag_randomSuit = 0,
 
 		supportedCrossmodFlags = {
-			['Phanta'] = false
+			['Phanta'] = false,
+			['Aikoshen'] = false
 		}
 
 
@@ -254,6 +255,8 @@ SMODS.Joker {
 
 
 			['phanta_randomHanafuda']= {{'spawn a random ', G.C.UI.TEXT_DARK}, {'Hanafuda ', HEX("DB534A")}, {'(Phanta) ', HEX("4d1575")}, {'card ', G.C.UI.TEXT_DARK}, {'(must have room)', G.C.UI.TEXT_INACTIVE}},
+
+			['aikoshen_bishopring']= {{'increase level of ', G.C.UI.TEXT_DARK}, {'Pure Hands ', G.C.FILTER}, {'by ', G.C.UI.TEXT_DARK}, {'1', G.C.FILTER}},
 		}
 
 
@@ -324,7 +327,6 @@ SMODS.Joker {
 			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard', 'phanta_fourGrates'}
 			local phantaEffects = {'phanta_randomHanafuda'}
 			
-			
 			for _, key in ipairs(phantaTriggers) do
 				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
 			end
@@ -332,10 +334,20 @@ SMODS.Joker {
 				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
 			end
 
+		end
 
+		if not card.ability.extra.supportedCrossmodFlags['AikoShen'] and next(SMODS.find_mod('aikoyorisshenanigans')) then
+			card.ability.extra.supportedCrossmodFlags['AikoShen'] = true
+
+			local aikoshenTriggers = {}
+			local aikoshenEffects = {'aikoshen_bishopring'}
 			
-
-
+			for _, key in ipairs(aikoshenTriggers) do
+				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
+			end
+			for _, key in ipairs(aikoshenEffects) do
+				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
+			end
 
 		end
 
@@ -796,7 +808,7 @@ SMODS.Joker {
 			-- Phanta : spawn a random Hanafuda card
 			elseif effectKey == 'phanta_randomHanafuda' then
 
-				if not card.ability.extra.supportedCrossmodFlags['Phanta'] then return true end
+				if not card.ability.extra.supportedCrossmodFlags['Phanta'] then return end
 
 				local phanta_hanaset = pseudorandom_element({"phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_chaff", "phanta_ribbon", "phanta_ribbon", "phanta_animal", "phanta_animal", "phanta_bright" }, pseudoseed('j_hangedman_noMoreJokers'))
 
@@ -815,6 +827,36 @@ SMODS.Joker {
 				}))
 				end
 
+			-- Aikoshen : Upgrade Pure Hands multiplier
+			elseif effectKey == 'aikoshen_bishopring' then
+
+				if not card.ability.extra.supportedCrossmodFlags['Aikoshen'] then return end
+				G.GAME.akyrs_pure_unlocked = true
+					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_akyrs_pure_hands'),chips = '...', mult = '...', level=''})
+					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+						play_sound('tarot1')
+						card:juice_up(0.8, 0.5)
+						G.TAROT_INTERRUPT_PULSE = true
+						return true end }))
+					update_hand_text({delay = 0}, {mult = '+', StatusText = true})
+					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+						play_sound('tarot1')
+						card:juice_up(0.8, 0.5)
+						return true end }))
+					update_hand_text({delay = 0}, {chips = '+', StatusText = true})
+					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+						play_sound('tarot1')
+						card:juice_up(0.8, 0.5)
+						G.TAROT_INTERRUPT_PULSE = nil
+						return true end }))
+					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
+					delay(1.3)
+					G.GAME.akyrs_pure_hand_modifier.multiplier = G.GAME.akyrs_pure_hand_modifier.multiplier + 1 * 0.5 * G.GAME.akyrs_pure_hand_modifier.level
+					G.GAME.akyrs_pure_hand_modifier.level = G.GAME.akyrs_pure_hand_modifier.level + 1
+					update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+
+
+			else
 			end
 
 		end

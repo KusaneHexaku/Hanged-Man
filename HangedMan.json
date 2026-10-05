@@ -7,7 +7,11 @@
     "main_file": "HangedMan.lua",
     "badge_colour": "A58544",
     "dependencies": [
-        "Steamodded (>=1.0.0~BETA-1620a)"
+        "Steamodded (>=26.829.0)"
     ],
-    "version": "0.1.2"
+    "conflicts": [
+	],
+	"provides": [
+	],
+    "version": "0.1.3"
 }
