@@ -29,9 +29,9 @@ SMODS.current_mod.calculate = function(self, context)
 
     end
 
-    -- Utility flag [G.GAME.prevent_shop_exit] : set to TRUE to disable the 'Next Round' button
+    -- Utility flag [G.GAME.HangedMan_prevent_shop_exit] : set to TRUE to disable the 'Next Round' button
     G.FUNCS.shop_button_function = function(e)
-        if not G.GAME.prevent_shop_exit then
+        if not G.GAME.HangedMan_prevent_shop_exit then
             e.config.colour = G.C.RED
             e.config.button = "toggle_shop"
         else
@@ -41,21 +41,21 @@ SMODS.current_mod.calculate = function(self, context)
 
     end
 
-    -- Utility flag [G.GAME.skip_shop] : set to TRUE to skip shops
-    -- Utility flag [G.GAME.skip_shop_count] : set to an integer above 0 to skip that many shops
-    G.GAME.skip_shop_count = G.GAME.skip_shop_count or 0
-    if context.starting_shop and ((G.GAME.skip_shop) or (G.GAME.skip_shop_count > 0)) then
+    -- Utility flag [G.GAME.HangedMan_skip_shop] : set to TRUE to skip shops
+    -- Utility flag [G.GAME.HangedMan_skip_shop_count] : set to an integer above 0 to skip that many shops
+    G.GAME.HangedMan_skip_shop_count = G.GAME.HangedMan_skip_shop_count or 0
+    if context.starting_shop and ((G.GAME.HangedMan_skip_shop) or (G.GAME.HangedMan_skip_shop_count > 0)) then
         G.FUNCS.toggle_shop()
-        G.GAME.skip_shop_count = G.GAME.skip_shop_count - 1
-        if G.GAME.skip_shop_count < 0 then G.GAME.skip_shop_count = 0 end
+        G.GAME.HangedMan_skip_shop_count = G.GAME.HangedMan_skip_shop_count - 1
+        if G.GAME.HangedMan_skip_shop_count < 0 then G.GAME.HangedMan_skip_shop_count = 0 end
     end
 
-    -- Utility flag [G.GAME.free_booster_packs] : set to TRUE to make all Booster Packs free
-    -- Utility flag [G.GAME.free_booster_packs_count] : set to an integer above 0 to make the next n Booster Packs free
-    G.GAME.free_booster_packs = G.GAME.free_booster_packs or false
-    G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count or 0
-    if (G.GAME.free_booster_packs or (G.GAME.free_booster_packs_count > 0)) and (context.starting_shop or context.open_booster) then
-        if G.GAME.free_booster_packs_count > 0 and context.open_booster then G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count - 1 end
+    -- Utility flag [G.GAME.HangedMan_free_booster_packs] : set to TRUE to make all Booster Packs free
+    -- Utility flag [G.GAME.HangedMan_free_booster_packs_count] : set to an integer above 0 to make the next n Booster Packs free
+    G.GAME.HangedMan_free_booster_packs = G.GAME.HangedMan_free_booster_packs or false
+    G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count or 0
+    if (G.GAME.HangedMan_free_booster_packs or (G.GAME.HangedMan_free_booster_packs_count > 0)) and (context.starting_shop or context.open_booster) then
+        if G.GAME.HangedMan_free_booster_packs_count > 0 and context.open_booster then G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count - 1 end
         G.E_MANAGER:add_event(Event({
         func = function()
             for _, other_card in pairs(G.I.CARD or {}) do
@@ -66,26 +66,31 @@ SMODS.current_mod.calculate = function(self, context)
         }))
     end
 
-
+    
     if context.starting_shop then   
         -- Hooking the function of the Next Round button in shop
         local node = G.shop:get_UIE_by_ID('next_round_button')
         node.config.func = "shop_button_function"
+        G.GAME.HangedMan_have_not_bought_something_in_shop = true
     end
 
+    if (context.buying_card or context.open_booster) and G.GAME.HangedMan_have_not_bought_something_in_shop then G.GAME.HangedMan_have_not_bought_something_in_shop = nil end
+
+    G.GAME.HangedMan_shop_skipped = G.GAME.HangedMan_shop_skipped or 0
+    if context.ending_shop and G.GAME.HangedMan_have_not_bought_something_in_shop then G.GAME.HangedMan_shop_skipped = G.GAME.HangedMan_shop_skipped + 1 end
 
     -- Track max money in current run
-    G.GAME.max_money_this_run = G.GAME.max_money_this_run or 0
+    G.GAME.HangedMan_max_money_this_run = G.GAME.HangedMan_max_money_this_run or 0
     local current_money = G.GAME.dollars or 0
-    if current_money > G.GAME.max_money_this_run then G.GAME.max_money_this_run = current_money end
+    if current_money > G.GAME.HangedMan_max_money_this_run then G.GAME.HangedMan_max_money_this_run = current_money end
 
 
     -- set global flag for Cyclomancy's effect on other cards
-    if G.jokers and G.jokers.cards then G.GAME.cyclomancy_active = G.GAME.cyclomancy_active or next(SMODS.find_card('j_hangedman_cyclomancy')) end
+    if G.jokers and G.jokers.cards then G.GAME.HangedMan_cyclomancy_active = G.GAME.HangedMan_cyclomancy_active or next(SMODS.find_card('j_hangedman_cyclomancy')) end
 
     -- generate Cyclomancy's stack
-    G.GAME.cyclomancy_stack = G.GAME.cyclomancy_stack or {}
-    if #G.GAME.cyclomancy_stack < 52 then
+    G.GAME.HangedMan_cyclomancy_stack = G.GAME.HangedMan_cyclomancy_stack or {}
+    if #G.GAME.HangedMan_cyclomancy_stack < 52 then
         
         local stackKey = {
 			'stebbin',
@@ -104,7 +109,7 @@ SMODS.current_mod.calculate = function(self, context)
             for i = 1, 52, 1 do
                 pos = ((i % 10)*10) + math.floor(i/10)
                 if pos < 52 then pos = pos - 45 end
-                G.GAME.cyclomancy_stack[pos] = {rank,suitorder[suit]}
+                G.GAME.HangedMan_cyclomancy_stack[pos] = {rank,suitorder[suit]}
                 if rank == 13 then suit = suit + 1 end
                 if rank == 14 then rank = 2 else rank = rank + 1 end
             end
@@ -120,7 +125,7 @@ SMODS.current_mod.calculate = function(self, context)
             local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
             
             for i = 1, 52, 1 do
-                G.GAME.cyclomancy_stack[i] = {rank,suitorder[suit]}
+                G.GAME.HangedMan_cyclomancy_stack[i] = {rank,suitorder[suit]}
                 if rank > 11 then rank = rank - 10 else rank = rank + 3 end
                 if suit == 4 then suit = 1 else suit = suit + 1 end
             end
@@ -133,7 +138,7 @@ SMODS.current_mod.calculate = function(self, context)
             local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
 
             for i = 1, 52, 1 do
-                G.GAME.cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
+                G.GAME.HangedMan_cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
                 if rank == 13 then rank = 1 else rank = rank + 1 end
                 if suit == 4 then suit = 1 else suit = suit + 1 end
             end
@@ -147,7 +152,7 @@ SMODS.current_mod.calculate = function(self, context)
             local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
 
             for i = 1, 52, 1 do
-                G.GAME.cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
+                G.GAME.HangedMan_cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
                 rank = (rank * 2) + suit
                 while rank > 13 do rank = rank - 13 end
 
@@ -166,17 +171,17 @@ SMODS.current_mod.calculate = function(self, context)
 
 
     -- Track consumables usages
-    G.GAME.consumeables_used = G.GAME.consumeables_used or {}
+    G.GAME.HangedMan_consumeables_used = G.GAME.HangedMan_consumeables_used or {}
     if context.using_consumeable then
 
         --print("[HangedMan_CalcEvent] A " .. tostring(context.consumeable.config.center.key) .. " was used")
-        G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] or 0
-        G.GAME.consumeables_used[context.consumeable.config.center.key] = G.GAME.consumeables_used[context.consumeable.config.center.key] + 1
+        G.GAME.HangedMan_consumeables_used[context.consumeable.config.center.key] = G.GAME.HangedMan_consumeables_used[context.consumeable.config.center.key] or 0
+        G.GAME.HangedMan_consumeables_used[context.consumeable.config.center.key] = G.GAME.HangedMan_consumeables_used[context.consumeable.config.center.key] + 1
 
-        G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run or 0
-        G.GAME.consumeables_used_this_run = G.GAME.consumeables_used_this_run + 1
+        G.GAME.HangedMan_consumeables_used_this_run = G.GAME.HangedMan_consumeables_used_this_run or 0
+        G.GAME.HangedMan_consumeables_used_this_run = G.GAME.HangedMan_consumeables_used_this_run + 1
 
-        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.consumeables_used_this_run) .. " consumables used this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.HangedMan_consumeables_used_this_run) .. " consumables used this run" )
 
         -- Check for unlocks
         check_for_unlock({type = 'unlock_spiralOfStars'})
@@ -186,13 +191,13 @@ SMODS.current_mod.calculate = function(self, context)
     end
 
     -- Track removing/destroying playing cards
-    G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run or 0
+    G.GAME.HangedMan_cards_destroyed_this_run = G.GAME.HangedMan_cards_destroyed_this_run or 0
     if context.remove_playing_cards then
 
         --print("[HangedMan_CalcEvent] " .. tostring(#context.removed) .." playing card was destroyed or removed")
-        G.GAME.cards_destroyed_this_run = G.GAME.cards_destroyed_this_run + #context.removed
+        G.GAME.HangedMan_cards_destroyed_this_run = G.GAME.HangedMan_cards_destroyed_this_run + #context.removed
 
-        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.cards_destroyed_this_run) .. " playing cards destroyed this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.HangedMan_cards_destroyed_this_run) .. " playing cards destroyed this run" )
 
         -- Check for unlocks
         check_for_unlock({type = 'unlock_removalService'})
@@ -202,12 +207,12 @@ SMODS.current_mod.calculate = function(self, context)
     if context.initial_scoring_step then
 
         -- Track unique hand types played in current run
-        G.GAME.unique_hands_this_run = G.GAME.unique_hands_this_run or {}
+        G.GAME.HangedMan_unique_hands_this_run = G.GAME.HangedMan_unique_hands_this_run or {}
         
-        if HangedMan.indexOf(G.GAME.unique_hands_this_run, context.scoring_name) == nil then
-            G.GAME.unique_hands_this_run[#G.GAME.unique_hands_this_run + 1] = context.scoring_name
+        if HangedMan.indexOf(G.GAME.HangedMan_unique_hands_this_run, context.scoring_name) == nil then
+            G.GAME.HangedMan_unique_hands_this_run[#G.GAME.HangedMan_unique_hands_this_run + 1] = context.scoring_name
             --print("[HangedMan_CalcEvent] " .. tostring(context.scoring_name) .. " has been played for the first time this run")
-            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.unique_hands_this_run) .. " unique hand types played this run" )
+            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.HangedMan_unique_hands_this_run) .. " unique hand types played this run" )
         end
 
         
@@ -226,34 +231,34 @@ SMODS.current_mod.calculate = function(self, context)
     end
 
     -- Track boosters packs skipped
-    G.GAME.boosters_packs_skipped = G.GAME.boosters_packs_skipped or {}
+    G.GAME.HangedMan_boosters_packs_skipped = G.GAME.HangedMan_boosters_packs_skipped or {}
     if context.skipping_booster then
         
         --print(tostring(context.booster.config))
-        G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] or 0
-        G.GAME.boosters_packs_skipped[context.booster.kind] = G.GAME.boosters_packs_skipped[context.booster.kind] + 1
+        G.GAME.HangedMan_boosters_packs_skipped[context.booster.kind] = G.GAME.HangedMan_boosters_packs_skipped[context.booster.kind] or 0
+        G.GAME.HangedMan_boosters_packs_skipped[context.booster.kind] = G.GAME.HangedMan_boosters_packs_skipped[context.booster.kind] + 1
 
-        G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run or 0
-        G.GAME.boosters_packs_skipped_this_run = G.GAME.boosters_packs_skipped_this_run + 1
+        G.GAME.HangedMan_boosters_packs_skipped_this_run = G.GAME.HangedMan_boosters_packs_skipped_this_run or 0
+        G.GAME.HangedMan_boosters_packs_skipped_this_run = G.GAME.HangedMan_boosters_packs_skipped_this_run + 1
 
         --print("[HangedMan_CalcEvent] A " .. tostring(context.booster.kind) .. " Pack was skipped")
-        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.boosters_packs_skipped_this_run) .. " Booster Pack(s) skipped this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.HangedMan_boosters_packs_skipped_this_run) .. " Booster Pack(s) skipped this run" )
 
     end
 
-    G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run or 0
-    G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run or 0
+    G.GAME.HangedMan_small_blind_skipped_this_run = G.GAME.HangedMan_small_blind_skipped_this_run or 0
+    G.GAME.HangedMan_big_blind_skipped_this_run = G.GAME.HangedMan_big_blind_skipped_this_run or 0
 
     if context.skip_blind and G.GAME.blind_on_deck == 'Big' then
-        G.GAME.small_blind_skipped_this_run = G.GAME.small_blind_skipped_this_run + 1
+        G.GAME.HangedMan_small_blind_skipped_this_run = G.GAME.HangedMan_small_blind_skipped_this_run + 1
         --print("[HangedMan_CalcEvent] A Small Blind was skipped")
-        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.small_blind_skipped_this_run) .. " Small Blind(s) skipped this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.HangedMan_small_blind_skipped_this_run) .. " Small Blind(s) skipped this run" )
     end
 
     if context.skip_blind and G.GAME.blind_on_deck == 'Boss' then
-        G.GAME.big_blind_skipped_this_run = G.GAME.big_blind_skipped_this_run + 1
+        G.GAME.HangedMan_big_blind_skipped_this_run = G.GAME.HangedMan_big_blind_skipped_this_run + 1
         --print("[HangedMan_CalcEvent] A Big Blind was skipped")
-        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.big_blind_skipped_this_run) .. " Big Blind(s) skipped this run" )
+        --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(G.GAME.HangedMan_big_blind_skipped_this_run) .. " Big Blind(s) skipped this run" )
     end
 
 
@@ -279,7 +284,7 @@ end
 local card_set_cost_value_ref = Card.set_cost_value
 function Card:set_cost_value(...) -- SMODS addition
     local ret = card_set_cost_value_ref(self, ...)
-    if G.GAME and (G.GAME.free_booster_packs or ((G.GAME.free_booster_packs_count or 0) > 0)) then
+    if G.GAME and (G.GAME.HangedMan_free_booster_packs or ((G.GAME.HangedMan_free_booster_packs_count or 0) > 0)) then
         if self.ability.set == 'Booster' then self.cost = 0 end
     end
     return ret

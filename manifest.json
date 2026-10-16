@@ -1,9 +1,9 @@
 {
     "name": "Hanged_Man",
     "description": "A general content mod with no focus on any particular theme",
-    "version_number": "0.1.2",
+    "version_number": "0.1.3",
     "dependencies": [
-        "Steamodded-Steamodded-1.1620.0"
+        "Steamodded-Steamodded-26.1002.0"
     ],
     "website_url": "https://github.com/KusaneHexaku/Hanged-Man"
 }

@@ -14,9 +14,9 @@ SMODS.Joker {
 		local suitcol = G.C.FILTER
 		local rank = '[rank]'
 		local suit = '[suit]'
-		if G.GAME.cyclomancy_stack then 
-			rank = (G.GAME.cyclomancy_stack[card.ability.extra.index])[1]
-			suit = (G.GAME.cyclomancy_stack[card.ability.extra.index])[2]
+		if G.GAME.HangedMan_cyclomancy_stack then 
+			rank = (G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index])[1]
+			suit = (G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index])[2]
 		end
 		if rank == 14 then rank = 'Ace' elseif rank == 13 then rank = 'King' elseif rank == 12 then rank = 'Queen' elseif rank == 11 then rank = 'Jack' end
 		if not (suit == '[suit]') then suitcol = G.C.SUITS[suit] end
@@ -38,11 +38,11 @@ SMODS.Joker {
 
 	add_to_deck = function(self, card, from_debuff)
 
-		G.GAME.cyclomancy_active = G.GAME.cyclomancy_active or true
+		G.GAME.HangedMan_cyclomancy_active = G.GAME.HangedMan_cyclomancy_active or true
 
 		-- Stack generation code, from when each Cyclomancies used to have their own individual stack instead of one global stack
 		--[[
-		if not from_debuff and #G.GAME.cyclomancy_stack < 52 then
+		if not from_debuff and #G.GAME.HangedMan_cyclomancy_stack < 52 then
 			local stackKey = {
 			'stebbin',
 			'gauci',
@@ -60,7 +60,7 @@ SMODS.Joker {
 				for i = 1, 52, 1 do
 					pos = ((i % 10)*10) + math.floor(i/10)
 					if pos < 52 then pos = pos - 45 end
-					G.GAME.cyclomancy_stack[pos] = {rank,suitorder[suit]}
+					G.GAME.HangedMan_cyclomancy_stack[pos] = {rank,suitorder[suit]}
 					if rank == 13 then suit = suit + 1 end
 					if rank == 14 then rank = 2 else rank = rank + 1 end
 				end
@@ -76,7 +76,7 @@ SMODS.Joker {
 				local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
 				
 				for i = 1, 52, 1 do
-					G.GAME.cyclomancy_stack[i] = {rank,suitorder[suit]}
+					G.GAME.HangedMan_cyclomancy_stack[i] = {rank,suitorder[suit]}
 					if rank > 12 then rank = rank - 10 else rank = rank + 3 end
 					if suit == 4 then suit = 1 else suit = suit + 1 end
 				end
@@ -89,7 +89,7 @@ SMODS.Joker {
 				local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
 
 				for i = 1, 52, 1 do
-					G.GAME.cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
+					G.GAME.HangedMan_cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
 					if rank == 13 then rank = 1 else rank = rank + 1 end
 					if suit == 4 then suit = 1 else suit = suit + 1 end
 				end
@@ -103,7 +103,7 @@ SMODS.Joker {
 				local suit = pseudorandom(pseudoseed('stackmaker'), 1, 4)
 
 				for i = 1, 52, 1 do
-					G.GAME.cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
+					G.GAME.HangedMan_cyclomancy_stack[i] = {rankorder[rank],suitorder[suit]}
 					rank = (rank * 2) + suit
 					while rank > 13 do rank = rank - 13 end
 
@@ -119,7 +119,7 @@ SMODS.Joker {
 
 			end
 
-			--print(G.GAME.cyclomancy_stack)
+			--print(G.GAME.HangedMan_cyclomancy_stack)
 
 		end
 		]]
@@ -130,8 +130,8 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 		if context.individual and context.cardarea == G.play and
-        	context.other_card:get_id() == G.GAME.cyclomancy_stack[card.ability.extra.index][1] and
-            context.other_card:is_suit(G.GAME.cyclomancy_stack[card.ability.extra.index][2]) then
+        	context.other_card:get_id() == G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index][1] and
+            context.other_card:is_suit(G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index][2]) then
 				card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.increment
 				if card.ability.extra.index == 52 then card.ability.extra.index = 1 else card.ability.extra.index = card.ability.extra.index +1 end
 				return {

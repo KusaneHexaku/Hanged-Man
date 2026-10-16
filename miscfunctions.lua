@@ -94,6 +94,7 @@ function HangedMan.display_wheel_nope(card)
 end
 
 
+
 -- yahimouse helper function reference
 function HangedMan.findOutIfThisNumberIsEvenInTheMostInefficientWayPossible(num)
     local even = true

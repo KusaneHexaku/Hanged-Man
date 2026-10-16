@@ -33,14 +33,14 @@ SMODS.Joker {
 			local suitorder = {'Hearts','Clubs','Diamonds','Spades'}
 			local suitindex = pseudorandom(pseudoseed('anycard'), 1, 4)
 
-			if G.GAME.cyclomancy_active then
+			if G.GAME.HangedMan_cyclomancy_active then
 				-- if Cyclomancy is present, use the global Cyclomancy stack instead of selecting a random card
 				if card.ability.extra.cyclomancy_index < 1 then card.ability.extra.cyclomancy_index = pseudorandom(pseudoseed('cyclomancy'), 1, 52)
 				elseif card.ability.extra.cyclomancy_index == 52 then card.ability.extra.cyclomancy_index = 1
 				else card.ability.extra.cyclomancy_index = card.ability.extra.cyclomancy_index + 1 end
 
-				card.ability.extra.rank = (G.GAME.cyclomancy_stack[card.ability.extra.cyclomancy_index])[1] 
-				card.ability.extra.suit = (G.GAME.cyclomancy_stack[card.ability.extra.cyclomancy_index])[2]
+				card.ability.extra.rank = (G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.cyclomancy_index])[1] 
+				card.ability.extra.suit = (G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.cyclomancy_index])[2]
 
 				print('Card #' .. card.ability.extra.cyclomancy_index .. ' of the Cyclomancy stack : ' .. card.ability.extra.rank .. ' of ' .. card.ability.extra.suit )
 

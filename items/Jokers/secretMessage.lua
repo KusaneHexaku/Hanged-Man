@@ -167,33 +167,33 @@ SMODS.Joker {
 				return {chips = chips}
 			end
 
-			if card.ability.extra.selectedID == 4 and G.GAME.small_blind_skipped_this_run and G.GAME.small_blind_skipped_this_run > 0 and
+			if card.ability.extra.selectedID == 4 and G.GAME.HangedMan_small_blind_skipped_this_run and G.GAME.HangedMan_small_blind_skipped_this_run > 0 and
 			context.other_card:get_id() == 2 or context.other_card:get_id() == 3 or context.other_card:get_id() == 5 or context.other_card:get_id() == 7 then
 				return {
 					message = 'Again!',
-					repetitions = (G.GAME.small_blind_skipped_this_run or 0),
+					repetitions = (G.GAME.HangedMan_small_blind_skipped_this_run or 0),
 					card = context.other_card
 				}
 			end
 
-			if card.ability.extra.selectedID == 5 and G.GAME.small_blind_skipped_this_run and G.GAME.small_blind_skipped_this_run > 0 and
+			if card.ability.extra.selectedID == 5 and G.GAME.HangedMan_small_blind_skipped_this_run and G.GAME.HangedMan_small_blind_skipped_this_run > 0 and
 			context.other_card:is_face() then
 				return {
 					message = 'Again!',
-					repetitions = (G.GAME.small_blind_skipped_this_run or 0),
+					repetitions = (G.GAME.HangedMan_small_blind_skipped_this_run or 0),
 					card = context.other_card
 				}
 			end
 
 			if card.ability.extra.selectedID > 5 and card.ability.extra.selectedID < 9
-			and G.GAME.small_blind_skipped_this_run and G.GAME.small_blind_skipped_this_run > 0 then
+			and G.GAME.HangedMan_small_blind_skipped_this_run and G.GAME.HangedMan_small_blind_skipped_this_run > 0 then
 				local suitlist = {'Clubs','Hearts','Spades'}
 				local suit = suitlist[card.ability.extra.selectedID - 5]
 
 				if context.other_card:is_suit(suit) then
 					return {
 						message = 'Again!',
-						repetitions = (G.GAME.small_blind_skipped_this_run or 0),
+						repetitions = (G.GAME.HangedMan_small_blind_skipped_this_run or 0),
 						card = context.other_card
 					}
 				end
@@ -255,13 +255,13 @@ SMODS.Joker {
 			
 			if card.ability.extra.selectedID > 40 and card.ability.extra.selectedID < 44 then
 				local chips = 40 + (10*(card.ability.extra.selectedID - 41))
-				local arcana = G.GAME.boosters_packs_skipped['Arcana'] or 0
+				local arcana = G.GAME.HangedMan_boosters_packs_skipped['Arcana'] or 0
 				if arcana > 0 then return { chips = chips * arcana } end
 			end
 
 			if card.ability.extra.selectedID > 43 and card.ability.extra.selectedID < 47 then
 				local chips = 40 + (10*(card.ability.extra.selectedID - 44))
-				local buffoon = G.GAME.boosters_packs_skipped['Buffoon'] or 0
+				local buffoon = G.GAME.HangedMan_boosters_packs_skipped['Buffoon'] or 0
 				if buffoon > 0 then return { chips = chips * buffoon } end
 			end
 
@@ -300,8 +300,8 @@ SMODS.Joker {
 			if suittally > 2 then return math.floor(suittally/3) end
 		end
 
-		if card.ability.extra.selectedID == 27 or card.ability.extra.selectedID == 28 and G.GAME.small_blind_skipped_this_run and G.GAME.small_blind_skipped_this_run > 0 then
-			return G.GAME.small_blind_skipped_this_run * (card.ability.extra.selectedID - 26)
+		if card.ability.extra.selectedID == 27 or card.ability.extra.selectedID == 28 and G.GAME.HangedMan_small_blind_skipped_this_run and G.GAME.HangedMan_small_blind_skipped_this_run > 0 then
+			return G.GAME.HangedMan_small_blind_skipped_this_run * (card.ability.extra.selectedID - 26)
 		end
 
 		if card.ability.extra.selectedID == 39 or card.ability.extra.selectedID == 40 and G.jokers.cards then

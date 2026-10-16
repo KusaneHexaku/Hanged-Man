@@ -1,7 +1,6 @@
 return {
     descriptions = {
         Joker = {
-
             j_hangedman_spiralOfStars = {
                 name = "Spiral of Stars",
                 text = {
@@ -806,16 +805,40 @@ return {
                         "Go down to {C:attention}Floor 7{} if played hand",
                         "contains a {C:attention}Stone{} card",
                     }
-			        
-			        
+			         
 		        }
 	        },
-
-
-            
-
-
         },
+
+        Blind = {
+            bl_hangedman_theBloat = {
+                name = "The Bloat",
+                text = {
+                    "Add 2 random base",
+                    "playing card to hand",
+                    "per card played",
+                },
+            },
+            bl_hangedman_theStutter = {
+                name = "The Stutter",
+                text = {
+                    "#1#X Blind Size each",
+                    "time a playing card",
+                    "is retriggered",
+                },
+            },
+            bl_hangedman_theBank = {
+                name = "The Bank",
+                text = {
+                    "#1#X base Blind Size",
+                    "Decrease by #2#X per shops",
+                    "left without any purchase",
+                    "(Minimum #3#X Base Size)"
+                },
+            },
+        },
+
+
         Tarot = {
 
 

@@ -66,7 +66,7 @@ SMODS.Joker {
 	-- Removal Service : Destroy 10 playing cards in a single run
 	check_for_unlock = function(self, args)
         if args.type == 'unlock_removalService' then
-			if G.GAME.cards_destroyed_this_run > 9 then 
+			if G.GAME.HangedMan_cards_destroyed_this_run > 9 then 
 				print("[HangedMan_Unlock] 10 playing cards removed - Removal Service unlocked!")
 				unlock_card(self)
 			end

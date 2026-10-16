@@ -142,7 +142,7 @@ SMODS.Joker {
 	-- Ride the Tide : Play 8 unique hand types in a single run
 	check_for_unlock = function(self, args)
         if args.type == 'unlock_rideTheTide' then
-			if #G.GAME.unique_hands_this_run >= 8 then
+			if #G.GAME.HangedMan_unique_hands_this_run >= 8 then
 				unlock_card(self)
 				print("[HangedMan_CalcEvent] 8 unique hand types has been played - Ride the Tide unlocked!" )
 			end

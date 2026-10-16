@@ -54,19 +54,37 @@ end
 -- load animated atlases
 local animatedAtlasList =
 {
-    {"HangedMan_Disapproval", 71, 95, "HangedMan_Disapproval_Frames.png", 4, 3}
+    -- animated jokers
+    {"HangedMan_Disapproval", 71, 95, "HangedMan_Disapproval_Frames.png", 4, 3},
+
+    -- blind chips
+    {"HangedMan_BlindChips", 34, 34, "HangedMan_BlindChips.png", 21, nil},
 }
 
 for _index, _object in ipairs(animatedAtlasList) do
-    SMODS.Atlas {
-        key = _object[1],
-        px = _object[2],
-        py = _object[3],
-        path = _object[4],
-        atlas_table = 'ANIMATION_ATLAS',
-        frames = _object[5],
-        fps = _object[6]
-    }
+
+    if _object[6] then
+        SMODS.Atlas{
+            key = _object[1],
+            px = _object[2],
+            py = _object[3],
+            path = _object[4],
+            atlas_table = 'ANIMATION_ATLAS',
+            frames = _object[5],
+            fps = _object[6]
+        }
+    else
+        SMODS.Atlas{
+            key = _object[1],
+            px = _object[2],
+            py = _object[3],
+            path = _object[4],
+            atlas_table = 'ANIMATION_ATLAS',
+            frames = _object[5],
+        }
+    end
+
+    
 end
 
 
@@ -94,7 +112,8 @@ end
 local folderList = {
     'Seals',
     'Spectrals',
-    'Challenges'
+    'Challenges',
+    'Blinds'
 }
 
 for _, folder in ipairs(folderList) do

@@ -47,7 +47,7 @@ SMODS.Joker {
 	end,
 
 	check_for_unlock = function(self, args)
-		local max = G.GAME.max_money_this_run or 0
+		local max = G.GAME.HangedMan_max_money_this_run or 0
         return args.type == 'win_custom' and max < 21
     end,
 }

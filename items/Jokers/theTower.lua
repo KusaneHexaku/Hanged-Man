@@ -192,7 +192,7 @@ SMODS.Joker {
 			end
 
 			if context.starting_shop then
-				G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count + 1
+				G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count + 1
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						for _, other_card in pairs(G.I.CARD or {}) do
@@ -204,7 +204,7 @@ SMODS.Joker {
 			end
 
 			if context.ending_shop then
-				if G.GAME.free_booster_packs_count > 0 then G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count - 1 end
+				if G.GAME.HangedMan_free_booster_packs_count > 0 then G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count - 1 end
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						for _, other_card in pairs(G.I.CARD or {}) do
@@ -315,7 +315,7 @@ SMODS.Joker {
 
 		if card.ability.extra.current_floor == 3 then
 
-			if G.GAME.free_booster_packs_count < 1 then G.GAME.free_booster_packs_count = G.GAME.free_booster_packs_count + 1 end
+			if G.GAME.HangedMan_free_booster_packs_count < 1 then G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count + 1 end
 			card.ability.extra.going_down = false
 
 			if context.open_booster and not context.blueprint then 
