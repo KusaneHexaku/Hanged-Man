@@ -8,8 +8,9 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Magna Star',
 		text = {
-			"Draw an additional card for each",
-			"{C:attention}7{} in previous {C:attention}played hand",
+			"The next time you draw cards to hand,",
+			"draw an additional card for each {C:attention}7{}",
+			"scored in previous {C:attention}played hand",
 		}
 	},
 	--[[
@@ -39,8 +40,12 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 		if context.drawing_cards and (G.GAME.current_round.hands_played ~= 0 or G.GAME.current_round.discards_used ~= 0) and card.ability.extra.extra_draw > 0 then
+			local _penalty = card.ability.extra.extra_draw
+			card.ability.extra.extra_draw = 0
             return {
-                cards_to_draw = context.amount + card.ability.extra.extra_draw
+                cards_to_draw = context.amount + _penalty,
+				message = 'Penalty Card',
+				colour = G.C.RARITY.Legendary
             }
         end
 

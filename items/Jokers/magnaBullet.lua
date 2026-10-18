@@ -39,7 +39,11 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 		if context.individual and context.cardarea == G.play and not context.other_card.debuff then
-			context.other_card.toBullet = true
+			context.other_card.MagnaBullet_downgrade = true
+			if context.other_card.base.nominal - card.ability.extra.decrement < 1 then
+				context.other_card.MagnaBullet_destroy = true
+				context.other_card.MagnaBullet_downgrade = nil
+			end
 			return {
 				chips = context.other_card.base.nominal*3
 			}
@@ -47,30 +51,25 @@ SMODS.Joker {
 
 		if context.after and not context.blueprint then
 			for _i, c in ipairs(context.full_hand) do
-				if c.toBullet and c.base.nominal - card.ability.extra.decrement < 1 then 
-					G.E_MANAGER:add_event(Event({
-					trigger = 'after',
-					func = function()
-						c:juice_up(0.3, 0.5)
-						play_sound('tarot1', 0.8, 0.4)
-						if SMODS.shatters(c) then c:shatter() else c:start_dissolve() end
-						return { remove = true }
-					end
-					}))
-				elseif c.toBullet then 
+				if c.MagnaBullet_downgrade then 
 					G.E_MANAGER:add_event(Event({
 					trigger = 'after',
 					func = function()
 						c:juice_up(0.3, 0.5)
 						play_sound('tarot1', 0.8, 0.4)
 						c.base.nominal = c.base.nominal - card.ability.extra.decrement
-						c.toBullet = nil
+						c.MagnaBullet_downgrade = nil
 						return { message = 'Downgrade!', color = G.C.BLUE }
 					end
 					}))
 				end
 				delay(0.2)
 			end
+		end
+
+		if context.destroy_card and not context.blueprint and context.destroy_card.MagnaBullet_destroy then 
+			context.destroy_card.MagnaBullet_destroy = nil
+			return { remove = true }
 		end
 
 	end

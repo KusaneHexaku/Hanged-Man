@@ -8,8 +8,8 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Magna Club',
 		text = {
-			"Each {C:clubs}Club{} cards held in hand",
-			"give {C:chips}+#1#{} Chips and {C:mult}+#2# Mult"
+			"Each {C:clubs}Club{} card held in hand",
+			"gives {C:chips}+#1#{} Chips and {C:mult}+#2# Mult"
 		}
 	},
 	--[[

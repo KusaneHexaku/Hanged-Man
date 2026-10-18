@@ -8,7 +8,7 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Magna Spade',
 		text = {
-			"Each {C:spades}Spade{} cards held in hand",
+			"Each {C:spades}Spade{} card held in hand",
 			"at end of round gives {C:money}$1{}",
 		}
 	},
@@ -61,7 +61,7 @@ SMODS.Joker {
 				ease_dollars(card.ability.extra.gold)
 				G.E_MANAGER:add_event(Event({
 					trigger = 'after',
-					delay = 0.1,
+					delay = 0.2,
 					func = function()
 						v:juice_up(0.3, 0.3)
 						play_sound('tarot1', 0.3, 0.4)

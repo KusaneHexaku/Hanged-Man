@@ -8,8 +8,8 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Magna Diamond',
 		text = {
-			"Each {C:diamonds}Diamonds{} cards held in hand",
-			"give {C:mult}+#1#{} Mult for each",
+			"Each {C:diamonds}Diamond{} card held in hand",
+			"gives {C:mult}+#1#{} Mult for each",
 			"{C:attention}9{} in your {C:attention}full deck{}",
 			"{C:inactive}(Currently {}{C:mult}+#2#{}{C:inactive} Mult){}",
 		}

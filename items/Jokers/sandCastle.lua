@@ -52,9 +52,9 @@ SMODS.Joker {
         if context.individual and not context.blueprint and context.cardarea == G.play then
 
             card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
-
+			local count = ''..card.ability.extra.mult
             return {
-                message = '+1',
+                message = count,
 				colour = G.C.RED,
 				-- The return value, "card", is set to the variable "card", which is the joker.
 				-- Basically, this tells the return value what it's affecting, which if it's the joker itself, it's usually card.

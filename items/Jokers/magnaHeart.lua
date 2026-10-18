@@ -8,7 +8,7 @@ SMODS.Joker {
 	loc_txt = {
 		name = 'Magna Heart',
 		text = {
-			"Each {C:hearts}Heart{} cards held in hand",
+			"Each {C:hearts}Heart{} card held in hand",
 			"has a {C:green}#1# in #2#{} chance",
 			"to give {C:white,X:mult}X#3#{} Mult",
 		}

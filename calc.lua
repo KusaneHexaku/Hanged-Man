@@ -208,6 +208,7 @@ SMODS.current_mod.calculate = function(self, context)
 
         -- Track unique hand types played in current run
         G.GAME.HangedMan_unique_hands_this_run = G.GAME.HangedMan_unique_hands_this_run or {}
+        G.GAME.HangedMan_unique_hands_this_ante = G.GAME.HangedMan_unique_hands_this_run or {}
         
         if HangedMan.indexOf(G.GAME.HangedMan_unique_hands_this_run, context.scoring_name) == nil then
             G.GAME.HangedMan_unique_hands_this_run[#G.GAME.HangedMan_unique_hands_this_run + 1] = context.scoring_name
@@ -215,13 +216,21 @@ SMODS.current_mod.calculate = function(self, context)
             --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.HangedMan_unique_hands_this_run) .. " unique hand types played this run" )
         end
 
-        
-    
+        if HangedMan.indexOf(G.GAME.HangedMan_unique_hands_this_ante, context.scoring_name) == nil then
+            G.GAME.HangedMan_unique_hands_this_ante[#G.GAME.HangedMan_unique_hands_this_ante + 1] = context.scoring_name
+            --print("[HangedMan_CalcEvent] " .. tostring(context.scoring_name) .. " has been played for the first time this ante")
+            --print("[HangedMan_CalcEvent] There has been a total of " .. tostring(#G.GAME.HangedMan_unique_hands_this_ante) .. " unique hand types played this ante" )
+        end
+
         -- Check for unlocks
         check_for_unlock({type = 'unlock_rideTheTide'})
         check_for_unlock({type = 'unlock_homeIsInYourHeart', handname = context.scoring_name, cards = context.scoring_hand})
 
         
+    end
+
+    if context.ante_change then
+        G.GAME.HangedMan_unique_hands_this_ante = {}
     end
 
     if context.open_booster then

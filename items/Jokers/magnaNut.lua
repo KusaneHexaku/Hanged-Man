@@ -202,6 +202,7 @@ SMODS.Joker {
 					'Rhett Herring',
 					'the scientific process',
 					'Dr. Ella Hubber',
+					'The largest host that should eat the other two',
 					'Caroline Roper',
 					'Tom Lum',
 					'Let\'s Learn Everything',
@@ -212,6 +213,15 @@ SMODS.Joker {
 					'the half-mile Strava map',
 					'the quarter-mile radar',
 					'the Curse of the Impenetratable Fog',
+					'the Curse of the Golden Carriage',
+					'the Bamboo Forest',
+					'the ever elusive fish',
+					'the $45 mango',
+					'the konbini bamboo shoots',
+					'Pocari Sweats',
+					'the IKEA opening at 9AM',
+					'Deutsche Bahn',
+					'the one somehow delayed shinkanzen',
 					'Jason Mantzoukas',
 					'Hank Green',
 					'John Green',
@@ -290,7 +300,7 @@ SMODS.Joker {
 					'the concept of Poker hands',
 					'Poker',
 					'Tom Scott',
-					'Matt Gray',
+					'Natalie Gray',
 					'Chris Joel',
 					'Gary Brennan',
 					'The Technical Difficulties',
@@ -302,7 +312,7 @@ SMODS.Joker {
 					'Mark Gottlieb',
 					'Mark Twain',
 					'Tom Gottlieb',
-					'Charlie Puth'
+					'The Tri-State area'
 				}
 
 				if SMODS.pseudorandom_probability(card, 'handedman_magnaNut', 1, 100) then

@@ -15,7 +15,7 @@ SMODS.Blind {
     loc_vars = function (self)
         return {
             vars = {
-                math.min(0.5,(self.mult - (self.debuff.HangedMan_theBank_decrement * (G.GAME.HangedMan_shop_skipped or 0)))),
+                math.max(0.5,(self.mult - (self.debuff.HangedMan_theBank_decrement * (G.GAME.HangedMan_shop_skipped or 0)))),
                 self.debuff.HangedMan_theBank_decrement,
                 self.debuff.HangedMan_theBank_decrement
             }
@@ -46,7 +46,7 @@ SMODS.Blind {
                 G.E_MANAGER:add_event(Event({
                     trigger = "after",
                     func = function ()
-                        G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * math.min(self.debuff.HangedMan_theBank_decrement,(self.mult - (self.debuff.HangedMan_theBank_decrement * (G.GAME.HangedMan_shop_skipped or 0)))) * G.GAME.starting_params.ante_scaling
+                        G.GAME.blind.chips = get_blind_amount(G.GAME.round_resets.ante) * math.max(self.debuff.HangedMan_theBank_decrement,(self.mult - (self.debuff.HangedMan_theBank_decrement * (G.GAME.HangedMan_shop_skipped or 0)))) * G.GAME.starting_params.ante_scaling
                         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
                         G.HUD_blind:get_UIE_by_ID("HUD_blind_count"):juice_up()
                         play_sound('timpani')

@@ -836,6 +836,30 @@ return {
                     "(Minimum #3#X Base Size)"
                 },
             },
+            bl_hangedman_theWatcher = {
+                name = "The Watcher",
+                text = {
+                    "Poker hands played",
+                    "previously this Ante",
+                    "will not score"
+                },
+            },
+            bl_hangedman_theColumn = {
+                name = "The Column",
+                text = {
+                    "Cards played previously",
+                    "this Ante are immediately",
+                    "discarded when drawn"
+                },
+            },
+            bl_hangedman_theLeg = {
+                name = "The Leg",
+                text = {
+                    "Cards held in hand",
+                    "give negative Chips",
+                    "equal to their rank"
+                },
+            },
         },
 
 
