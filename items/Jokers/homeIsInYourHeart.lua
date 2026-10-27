@@ -16,7 +16,14 @@ SMODS.Joker {
 				if v:is_suit('Hearts') then heartsInHand = heartsInHand + 1 end
 			end
 		end
-        return { vars = { card.ability.extra.multiplier, number_format(card.ability.extra.multiplier*heartsInHand) } }
+
+		local loc_key = 'j_hangedman_homeIsInYourHeart'
+        if G.GAME.HangedMan_triviaMachine_reduceInfo and G.GAME.HangedMan_triviaMachine_reduceInfo['homeIsInYourHeart'] then loc_key = loc_key .. '_noCredit' end
+
+        return { 
+			key = loc_key,
+			vars = { card.ability.extra.multiplier, number_format(card.ability.extra.multiplier*heartsInHand) }
+		}
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
 	rarity = 2,

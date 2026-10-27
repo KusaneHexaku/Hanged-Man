@@ -297,6 +297,24 @@ return {
                 }
             },
 
+            j_hangedman_homeIsInYourHeart_noCredit = {
+                name = {
+                        'Home Is In Your Heart',
+                        '{s:0.6}????? & ?????{}',
+                        '{s:0.6}Based on MV art by ????? & ?????{}',
+                        },
+                text = {
+                    "If played hand contains a {C:attention}Full House{},",
+                    "{C:hearts}Heart{} cards gives {C:mult}+#1#{} Mult for each",
+                    "{C:hearts}Heart{} cards held in hand when scored",
+                    "{C:inactive}(Currently{} {C:mult}+#2#{} {C:inactive}Mult){}",
+                },
+                unlock = {
+                    "Play a {C:attention,E:1}Flush House{}",
+                    "with {C:hearts,E:1}Heart{} suit",
+                }
+            },
+
             j_hangedman_keeperOfTithe = {
                 name = 'Keeper of Tithe',
                 text = {
@@ -325,6 +343,27 @@ return {
                     }
                 }
             },
+
+            j_hangedman_theTriviaMachine = {
+		        name = 'The Trivia Machine',
+		        text = {
+                    {
+                        "{C:inactive}#5#{}"
+                    },
+                    {
+                        "Gain {C:chips}Chips{} on a correct answer",
+                        "Lose {C:chips}Chips{} on an incorrect answer",
+                        "or questions that weren't attempted.",
+                        "{C:inactive}(Currently{} +{C:chips}#1#{} {C:inactive}Chips){}"
+                    }
+			        
+		        },
+	        },
+
+
+            
+
+
 
 
             -- dummy lock entries for The Suite states
@@ -485,6 +524,20 @@ return {
 
             j_hangedman_theSuite_DiamondsSpades = {
 		        name = 'The Demiss',
+		        text = {
+                    {
+                        "Scoring {V:1}#1#{} cards {C:attention}retrigger{} once",
+                        "for each scoring {V:2}#2#{} cards",
+                        "to the right of it",
+                    },{
+                        "State changes when Blind selected",
+                        "and after each hand played"
+                    }
+                }
+	        },
+
+            j_hangedman_theSuite_noName = {
+		        name = 'The ??????',
 		        text = {
                     {
                         "Scoring {V:1}#1#{} cards {C:attention}retrigger{} once",

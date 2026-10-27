@@ -54,7 +54,7 @@ SMODS.Joker {
 
         if card.ability and card.ability.extra.generated then
             mainend = {
-                { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
+                { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.1}, nodes = {
                     
                     {n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.1}, nodes = {
                         

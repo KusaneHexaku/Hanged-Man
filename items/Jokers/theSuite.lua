@@ -72,7 +72,9 @@ SMODS.Joker {
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
 	loc_vars = function(self, info_queue, card)
         local loc_key = 'j_hangedman_theSuite'
-        if card.ability then loc_key = loc_key .. '_' .. card.ability.extra.anchorSuit .. card.ability.extra.followSuit end
+
+        if G.GAME.HangedMan_triviaMachine_reduceInfo and G.GAME.HangedMan_triviaMachine_reduceInfo['theSuite'] then loc_key = loc_key .. '_noName'
+        elseif card.ability then loc_key = loc_key .. '_' .. card.ability.extra.anchorSuit .. card.ability.extra.followSuit end
         if loc_key == 'j_hangedman_theSuite_[suit][suit]' then loc_key = 'j_hangedman_theSuite' end
 		return {
             key = loc_key,

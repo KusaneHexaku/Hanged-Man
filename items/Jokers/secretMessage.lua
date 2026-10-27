@@ -30,10 +30,7 @@ SMODS.Joker {
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
 	loc_vars = function(self, info_queue, card)
-
-        return { 
-			vars = card.ability.extra.revealedstring,
-			main_end = mainend }
+    	return { vars = card.ability.extra.revealedstring, }
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
 	rarity = 2,

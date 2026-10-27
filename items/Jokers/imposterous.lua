@@ -213,7 +213,7 @@ SMODS.Joker {
         elseif card.ability.extra.disguisingAs == 'j_hallucination' then loc_ret = {''..(G.GAME and G.GAME.probabilities.normal or 1), 2}
         elseif card.ability.extra.disguisingAs == 'j_lucky_cat' then loc_ret = {0.25, 1}
         elseif card.ability.extra.disguisingAs == 'j_baseball' then loc_ret = {1.5}
-        elseif card.ability.extra.disguisingAs == 'j_bull' then loc_ret = {2, 2*math.max(0,G.GAME.dollars) or 0}
+        elseif card.ability.extra.disguisingAs == 'j_bull' then loc_ret = {2, (2*math.max(0,G.GAME.dollars)) or 0}
         elseif card.ability.extra.disguisingAs == 'j_diet_cola' then
             info_queue[#info_queue + 1] = { key = 'tag_double', set = 'Tag' }
             loc_ret = {localize{type = 'name_text', set = 'Tag', key = 'tag_double', nodes = {}}}
@@ -283,7 +283,120 @@ SMODS.Joker {
     end,
 
 	calculate = function(self, card, context)
-		-- nothing yet just getting the everything else to work first
+		
+        
+        local function imposterous_consequences(card)
+            local eternal_flag = true
+            if card.ability.extra.consequence == 'loseTwoHandSize' then
+                eternal_flag = false
+                G.hand:change_size(-2)
+            elseif card.ability.extra.consequence == 'loseDiscard' then
+                eternal_flag = false
+                G.GAME.round_resets.discards = G.GAME.round_resets.discards - 2
+                ease_discard(-2)
+            elseif card.ability.extra.consequence == 'loseHand' then
+                eternal_flag = false
+                G.GAME.round_resets.hands = G.GAME.round_resets.hands - 2
+                ease_hands_played(-2)
+            elseif card.ability.extra.consequence == 'xmultDecrease' then
+                local possiblexmult = {0.99,0.95,0.9,0.85,0.85,0.8,0.8,0.75,0.75,0.7,0.7,0.65,0.6,0.55,0.5}
+                card.ability.extra.xMult = pseudorandom_element(possiblexmult, pseudoseed('j_hangedman_imposterous'))
+            elseif card.ability.extra.consequence == 'pairOfEggs' then
+                eternal_flag = false
+                SMODS.add_card({set = 'Joker', key = 'j_egg', stickers = {"eternal"}, force_stickers = true, no_edition = true})
+                SMODS.add_card({set = 'Joker', key = 'j_egg', stickers = {"eternal"}, force_stickers = true, no_edition = true})
+             elseif card.ability.extra.consequence == 'pairOfCards' then
+                eternal_flag = false
+                SMODS.add_card({set = 'Joker', key = 'j_credit_card', stickers = {"eternal"}, force_stickers = true, no_edition = true})
+                SMODS.add_card({set = 'Joker', key = 'j_credit_card', stickers = {"eternal"}, force_stickers = true, no_edition = true})
+            elseif card.ability.extra.consequence == 'downgradeAllHand' then
+                eternal_flag = false
+                local handNames = {
+                'High Card',
+                'Pair',
+                'Two Pair',
+                'Three of a Kind',
+                'Straight',
+                'Flush',
+                'Full House',
+                'Four of a Kind',
+                'Straight Flush',
+                'Five of a Kind',
+                'Flush House',
+                'Flush Five'
+    		    }
+
+                update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
+                { handname = 'All hands', chips = '...', mult = '...', level = '' })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.2,
+                    func = function()
+                        play_sound('tarot1')
+                        card:juice_up(0.8, 0.5)
+                        G.TAROT_INTERRUPT_PULSE = true
+                        return true
+                    end
+                }))
+                update_hand_text({ delay = 0 }, { mult = '-', StatusText = true })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        play_sound('tarot1')
+                        card:juice_up(0.8, 0.5)
+                        return true
+                    end
+                }))
+                update_hand_text({ delay = 0 }, { chips = '-', StatusText = true })
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        play_sound('tarot1')
+                        card:juice_up(0.8, 0.5)
+                        G.TAROT_INTERRUPT_PULSE = nil
+                        return true
+                    end
+                }))
+                update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { level = '-1' })
+                delay(1.3)
+
+                SMODS.upgrade_poker_hands({ hands = handNames, instant = true, from = card, level_up = -1 })
+
+
+                update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 },
+                { mult = 0, chips = 0, handname = '', level = '' })
+            elseif card.ability.extra.consequence == 'loseMoney' then
+                local possiblemoney = {-10,-10,-12,-12,-15,-15,-18,-18,-20,-20,-22,-22,-25,-30,-45}
+                ease_dollars(pseudorandom_element(possiblemoney, pseudoseed('j_hangedman_imposterous')))
+                eternal_flag = false
+            elseif card.ability.extra.consequence == 'inflation' then
+                G.GAME.inflation = (G.GAME.inflation or 0) + 1
+                eternal_flag = false
+            elseif card.ability.extra.consequence == 'expensiveReroll' then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.GAME.round_resets.reroll_cost = G.GAME.round_resets.reroll_cost + 1
+                        G.GAME.current_round.reroll_cost = math.max(0, G.GAME.current_round.reroll_cost + 1)
+                        return true
+                    end
+                }))
+            elseif card.ability.extra.consequence == 'fewerBoosters' then
+                SMODS.change_booster_limit(-1)
+                eternal_flag = false
+            elseif card.ability.extra.consequence == 'increaseCurrentBlindRequirement' then
+                local possibleincrement = {0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.75, 0.75, 1, 1.25}
+                G.GAME.blind.chips = math.floor(G.GAME.blind.chips + (G.GAME.blind.chips * pseudorandom_element(possibleincrement, pseudoseed('j_hangedman_imposterous'))))
+                G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                eternal_flag = false
+            elseif card.ability.extra.consequence == 'increaseBlindScaling' then
+                G.GAME.modifiers.scaling = (G.GAME.modifiers.scaling or 1) + 1
+                eternal_flag = false
+            end
+
+            if eternal_flag then card:set_eternal(eternal_flag) else SMODS.destroy_cards(card, nil, nil, true) end
+        end
 
 
         if context.selling_self and not context.blueprint and not card.ability.extra.failure then
@@ -579,120 +692,6 @@ SMODS.Joker {
 				}
             end
 
-        end
-
-
-        function imposterous_consequences(card)
-            local eternal_flag = true
-            if card.ability.extra.consequence == 'loseTwoHandSize' then
-                eternal_flag = false
-                G.hand:change_size(-2)
-            elseif card.ability.extra.consequence == 'loseDiscard' then
-                eternal_flag = false
-                G.GAME.round_resets.discards = G.GAME.round_resets.discards - 2
-                ease_discard(-2)
-            elseif card.ability.extra.consequence == 'loseHand' then
-                eternal_flag = false
-                G.GAME.round_resets.hands = G.GAME.round_resets.hands - 2
-                ease_hands_played(-2)
-            elseif card.ability.extra.consequence == 'xmultDecrease' then
-                local possiblexmult = {0.99,0.95,0.9,0.85,0.85,0.8,0.8,0.75,0.75,0.7,0.7,0.65,0.6,0.55,0.5}
-                card.ability.extra.xMult = pseudorandom_element(possiblexmult, pseudoseed('j_hangedman_imposterous'))
-            elseif card.ability.extra.consequence == 'pairOfEggs' then
-                eternal_flag = false
-                SMODS.add_card({set = 'Joker', key = 'j_egg', stickers = {"eternal"}, force_stickers = true, no_edition = true})
-                SMODS.add_card({set = 'Joker', key = 'j_egg', stickers = {"eternal"}, force_stickers = true, no_edition = true})
-             elseif card.ability.extra.consequence == 'pairOfCards' then
-                eternal_flag = false
-                SMODS.add_card({set = 'Joker', key = 'j_credit_card', stickers = {"eternal"}, force_stickers = true, no_edition = true})
-                SMODS.add_card({set = 'Joker', key = 'j_credit_card', stickers = {"eternal"}, force_stickers = true, no_edition = true})
-            elseif card.ability.extra.consequence == 'downgradeAllHand' then
-                eternal_flag = false
-                local handNames = {
-                'High Card',
-                'Pair',
-                'Two Pair',
-                'Three of a Kind',
-                'Straight',
-                'Flush',
-                'Full House',
-                'Four of a Kind',
-                'Straight Flush',
-                'Five of a Kind',
-                'Flush House',
-                'Flush Five'
-    		    }
-
-                update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
-                { handname = 'All hands', chips = '...', mult = '...', level = '' })
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.2,
-                    func = function()
-                        play_sound('tarot1')
-                        card:juice_up(0.8, 0.5)
-                        G.TAROT_INTERRUPT_PULSE = true
-                        return true
-                    end
-                }))
-                update_hand_text({ delay = 0 }, { mult = '-', StatusText = true })
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        play_sound('tarot1')
-                        card:juice_up(0.8, 0.5)
-                        return true
-                    end
-                }))
-                update_hand_text({ delay = 0 }, { chips = '-', StatusText = true })
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        play_sound('tarot1')
-                        card:juice_up(0.8, 0.5)
-                        G.TAROT_INTERRUPT_PULSE = nil
-                        return true
-                    end
-                }))
-                update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { level = '-1' })
-                delay(1.3)
-
-                SMODS.upgrade_poker_hands({ hands = handNames, instant = true, from = card, level_up = -1 })
-
-
-                update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 },
-                { mult = 0, chips = 0, handname = '', level = '' })
-            elseif card.ability.extra.consequence == 'loseMoney' then
-                local possiblemoney = {-10,-10,-12,-12,-15,-15,-18,-18,-20,-20,-22,-22,-25,-30,-45}
-                ease_dollars(pseudorandom_element(possiblemoney, pseudoseed('j_hangedman_imposterous')))
-                eternal_flag = false
-            elseif card.ability.extra.consequence == 'inflation' then
-                G.GAME.inflation = (G.GAME.inflation or 0) + 1
-                eternal_flag = false
-            elseif card.ability.extra.consequence == 'expensiveReroll' then
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        G.GAME.round_resets.reroll_cost = G.GAME.round_resets.reroll_cost + 1
-                        G.GAME.current_round.reroll_cost = math.max(0, G.GAME.current_round.reroll_cost + 1)
-                        return true
-                    end
-                }))
-            elseif card.ability.extra.consequence == 'fewerBoosters' then
-                SMODS.change_booster_limit(-1)
-                eternal_flag = false
-            elseif card.ability.extra.consequence == 'increaseCurrentBlindRequirement' then
-                local possibleincrement = {0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.75, 0.75, 1, 1.25}
-                G.GAME.blind.chips = math.floor(G.GAME.blind.chips + (G.GAME.blind.chips * pseudorandom_element(possibleincrement, pseudoseed('j_hangedman_imposterous'))))
-                G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-                eternal_flag = false
-            elseif card.ability.extra.consequence == 'increaseBlindScaling' then
-                G.GAME.modifiers.scaling = (G.GAME.modifiers.scaling or 1) + 1
-                eternal_flag = false
-            end
-
-            if eternal_flag then card:set_eternal(eternal_flag) else SMODS.destroy_cards(card, nil, nil, true) end
         end
 
 	end,

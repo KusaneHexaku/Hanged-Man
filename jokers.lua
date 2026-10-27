@@ -1,4 +1,4 @@
-joker_list = {
+HangedMan.joker_list = {
     -- Common
     "backside",
     "boomerang",
@@ -39,6 +39,7 @@ joker_list = {
     "sodaBee",
     "spiralOfStars",
     "stepswitcher",
+    "theTriviaMachine",
 
     -- Rare
     "bingoCard",
@@ -64,7 +65,7 @@ joker_list = {
     -- END OF JOKER LIST
 }
 
-seal_list = {
+HangedMan.seal_list = {
     "glassSeal",
     "hikingSeal",
     "spaceSeal",

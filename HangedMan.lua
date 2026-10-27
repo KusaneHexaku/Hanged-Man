@@ -56,6 +56,7 @@ local animatedAtlasList =
 {
     -- animated jokers
     {"HangedMan_Disapproval", 71, 95, "HangedMan_Disapproval_Frames.png", 4, 3},
+    {"HangedMan_TriviaMachine", 71, 95, "HangedMan_TriviaMachine_Frames.png", 4, nil},
 
     -- blind chips
     {"HangedMan_BlindChips", 34, 34, "HangedMan_BlindChips.png", 21, nil},
@@ -104,7 +105,7 @@ HangedMan.load_file("localization/en-us.lua")
 
 
 -- Loading Jokers based on jokers.lua
-for _, joker in ipairs(joker_list) do
+for _, joker in ipairs(HangedMan.joker_list) do
     assert(SMODS.load_file("items/Jokers/" .. joker .. ".lua"))()
     HangedMan.jokers[#HangedMan.jokers + 1] = "HangedMan_" .. joker
 end
@@ -113,7 +114,8 @@ local folderList = {
     'Seals',
     'Spectrals',
     'Challenges',
-    'Blinds'
+    'Blinds',
+    'Other'
 }
 
 for _, folder in ipairs(folderList) do

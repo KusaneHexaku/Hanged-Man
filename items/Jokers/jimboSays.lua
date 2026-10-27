@@ -37,128 +37,7 @@ SMODS.Joker {
 	attributes = {'mult', 'scaling', 'hand_type', 'enhancements', 'dropout', 'game_changer'},
 	calculate = function(self, card, context)
 
-		if context.setting_blind and not context.blueprint then 
-
-			if next(SMODS.find_mod('GSPhanta')) then card.ability.extra.crossmodFlag['Phanta'] = true else card.ability.extra.crossmodFlag['Phanta'] = false end
-
-			G.E_MANAGER:add_event(Event({
-				trigger = 'immediate',
-				func = function()
-					generateCommand()
-					card:juice_up()
-					play_sound('tarot1', 0.8, 0.4)
-					return true
-				end
-			}))
-		 end
-		if context.after and not context.blueprint then 
-			G.E_MANAGER:add_event(Event({
-				trigger = 'immediate',
-				func = function()
-					generateCommand()
-					card:juice_up()
-					play_sound('tarot1', 0.8, 0.4)
-					return true
-				end
-			}))
-		end
-
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			card.ability.extra.command = 'Follow Jimbo\'s command, but only if he says \"Jimbo Says\"'
-		end
-
-		if context.joker_main then
-
-
-
-			local suits = {'Clubs','Hearts','Spades','Diamonds'}
-			local ranks = {14,13,12,11,7}
-			local enhancements = {'m_stone','m_gold','m_steel'}
-			--[[ count of stuff
-						1-4 : scoring Clubs, Hearts, Spades, and Diamonds
-						5-9 : scoring Aces, Kings, Jacks, Queens, 7
-						10-12 : scoring Stone, Gold, Steel
-						13 : scoring Face cards (in case of Pareidolia)
-				]]
-			local counters = {0,0,0,0,0,0,0,0,0,0,0,0,0}
-
-			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
-			local phantaCounter = {0,0,0,0,0,0,0}
-			--[[ count of stuff
-						1 : scoring Ghost card
-						2 : scoring Marble card
-						3 : scoring Fresh Copper Grate card
-						4 : scoring Exposed Copper Grate card
-						5 : scoring Weathered Copper Grate card
-						6 : scoring Oxidised Copper Grate card
-						7 : count of distinct Copper Grate oxidisation levels in scoring hand
-				]]
-
-			for i, cardPlayed in ipairs(context.scoring_hand) do
-				if not cardPlayed.debuff then
-					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
-					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
-					for iiii, enhancements in ipairs(enhancements) do if SMODS.has_enhancement(cardPlayed, enhancements) then counters[iiii+9] = counters[iiii+9]+1 end end
-					if cardPlayed:is_face() then counters[13] = counters[13] + 1 end
-
-					if card.ability.extra.crossmodFlag['Phanta'] then
-						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
-					end
-
-				end
-            end
-
-			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
-
-				--- Evaluating Triggers on Hand played
-				if card.ability.extra.trigger == 'playFlush' and next(context.poker_hands["Flush"]) then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playStraight' and next(context.poker_hands["Straight"]) then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playFullHouse' and next(context.poker_hands["Full House"]) then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playTwoPair' and next(context.poker_hands["Two Pair"]) then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playHighCard' and next(context.poker_hands["High Card"]) then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playNoFace' and counters[13] == 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAllFace' and counters[13] == #context.full_hand then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playThreeSevens' and counters[9] > 2 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playThreeAces' and counters[5] > 2 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playOneCard' and #context.full_hand == 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playFourCard' and #context.full_hand == 4 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playFiveCard' and #context.full_hand == 5 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playNoClubs' and counters[1] < 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playNoHearts' and counters[2] < 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playNoSpades' and counters[3] < 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playNoDiamonds' and counters[4] < 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnyClubs' and counters[1] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnyHearts' and counters[2] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnySpades' and counters[3] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnyDiamonds' and counters[4] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playOneClubs' and counters[1] == 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playOneHearts' and counters[2] == 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playOneSpades' and counters[3] == 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playOneDiamonds' and counters[4] == 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playFourSuit' and counters[1] > 0 and counters[2] > 0 and counters[3] > 0 and counters[4] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnyStone' and counters[9] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playThreeStone' and counters[9] > 2 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnyGold' and counters[10] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playThreeGold' and counters[10] > 2 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playAnySteel' and counters[11] > 0 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'playThreeSteel' and counters[11] > 2 then resolveAction(card.ability.extra.valid)
-				
-				elseif card.ability.extra.trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'phanta_twoDifferentGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] > 1 then resolveAction(card.ability.extra.valid)
-				elseif card.ability.extra.trigger == 'phanta_twoSameGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] == 1 then resolveAction(card.ability.extra.valid)
-				
-				
-				
-				else resolveAction(not card.ability.extra.valid)
-				end
-
-				return {mult = card.ability.extra.mult}
-
-		end
-
-
-
-		function generateCommand()
+		local function generateCommand()
 
 			local triggerKey = {
 				'playFlush',
@@ -438,7 +317,7 @@ SMODS.Joker {
 
 		end
 
-		function resolveAction(success)
+		local function resolveAction(success)
 			if success then
 				card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.increment
 				G.E_MANAGER:add_event(Event({
@@ -465,5 +344,125 @@ SMODS.Joker {
 				}))
 			end
 		end
+
+		if context.setting_blind and not context.blueprint then 
+
+			if next(SMODS.find_mod('GSPhanta')) then card.ability.extra.crossmodFlag['Phanta'] = true else card.ability.extra.crossmodFlag['Phanta'] = false end
+
+			G.E_MANAGER:add_event(Event({
+				trigger = 'immediate',
+				func = function()
+					generateCommand()
+					card:juice_up()
+					play_sound('tarot1', 0.8, 0.4)
+					return true
+				end
+			}))
+		 end
+		if context.after and not context.blueprint then 
+			G.E_MANAGER:add_event(Event({
+				trigger = 'immediate',
+				func = function()
+					generateCommand()
+					card:juice_up()
+					play_sound('tarot1', 0.8, 0.4)
+					return true
+				end
+			}))
+		end
+
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+			card.ability.extra.command = 'Follow Jimbo\'s command, but only if he says \"Jimbo Says\"'
+		end
+
+		if context.joker_main then
+
+
+
+			local suits = {'Clubs','Hearts','Spades','Diamonds'}
+			local ranks = {14,13,12,11,7}
+			local enhancements = {'m_stone','m_gold','m_steel'}
+			--[[ count of stuff
+						1-4 : scoring Clubs, Hearts, Spades, and Diamonds
+						5-9 : scoring Aces, Kings, Jacks, Queens, 7
+						10-12 : scoring Stone, Gold, Steel
+						13 : scoring Face cards (in case of Pareidolia)
+				]]
+			local counters = {0,0,0,0,0,0,0,0,0,0,0,0,0}
+
+			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
+			local phantaCounter = {0,0,0,0,0,0,0}
+			--[[ count of stuff
+						1 : scoring Ghost card
+						2 : scoring Marble card
+						3 : scoring Fresh Copper Grate card
+						4 : scoring Exposed Copper Grate card
+						5 : scoring Weathered Copper Grate card
+						6 : scoring Oxidised Copper Grate card
+						7 : count of distinct Copper Grate oxidisation levels in scoring hand
+				]]
+
+			for i, cardPlayed in ipairs(context.scoring_hand) do
+				if not cardPlayed.debuff then
+					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
+					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
+					for iiii, enhancements in ipairs(enhancements) do if SMODS.has_enhancement(cardPlayed, enhancements) then counters[iiii+9] = counters[iiii+9]+1 end end
+					if cardPlayed:is_face() then counters[13] = counters[13] + 1 end
+
+					if card.ability.extra.crossmodFlag['Phanta'] then
+						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
+					end
+
+				end
+            end
+
+			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
+
+				--- Evaluating Triggers on Hand played
+				if card.ability.extra.trigger == 'playFlush' and next(context.poker_hands["Flush"]) then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playStraight' and next(context.poker_hands["Straight"]) then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playFullHouse' and next(context.poker_hands["Full House"]) then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playTwoPair' and next(context.poker_hands["Two Pair"]) then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playHighCard' and next(context.poker_hands["High Card"]) then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playNoFace' and counters[13] == 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAllFace' and counters[13] == #context.full_hand then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playThreeSevens' and counters[9] > 2 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playThreeAces' and counters[5] > 2 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playOneCard' and #context.full_hand == 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playFourCard' and #context.full_hand == 4 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playFiveCard' and #context.full_hand == 5 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playNoClubs' and counters[1] < 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playNoHearts' and counters[2] < 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playNoSpades' and counters[3] < 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playNoDiamonds' and counters[4] < 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnyClubs' and counters[1] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnyHearts' and counters[2] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnySpades' and counters[3] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnyDiamonds' and counters[4] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playOneClubs' and counters[1] == 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playOneHearts' and counters[2] == 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playOneSpades' and counters[3] == 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playOneDiamonds' and counters[4] == 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playFourSuit' and counters[1] > 0 and counters[2] > 0 and counters[3] > 0 and counters[4] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnyStone' and counters[9] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playThreeStone' and counters[9] > 2 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnyGold' and counters[10] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playThreeGold' and counters[10] > 2 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playAnySteel' and counters[11] > 0 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'playThreeSteel' and counters[11] > 2 then resolveAction(card.ability.extra.valid)
+				
+				elseif card.ability.extra.trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'phanta_twoDifferentGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] > 1 then resolveAction(card.ability.extra.valid)
+				elseif card.ability.extra.trigger == 'phanta_twoSameGrate' and (phantaCounter[3] + phantaCounter[4] + phantaCounter[5] + phantaCounter[6]) > 1 and phantaCounter[7] == 1 then resolveAction(card.ability.extra.valid)
+				
+				
+				
+				else resolveAction(not card.ability.extra.valid)
+				end
+
+				return {mult = card.ability.extra.mult}
+
+		end
+
 	end
 }

@@ -24,7 +24,7 @@ SMODS.Joker {
 		local mainend = {}
 
 		if card.ability and #card.ability.extra.bannedList > 0 then
-			local textrows = {{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.1}, nodes = {
+			local textrows = {{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
                             {n = G.UIT.T, config = {align = "cm", text = 'NO MORE', colour = G.C.RED, scale = 0.35, max_h = 1, max_w = 8, padding = 0.05}},
                     }}}
 

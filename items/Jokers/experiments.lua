@@ -38,7 +38,8 @@ SMODS.Joker {
 			'discard1Card',
 			'play1Card',
 			'cardSold',
-			'voucherBuy'
+			'voucherBuy',
+			'shopSkipped'
 		},
 
 		experimentsEffectsKey = {
@@ -79,71 +80,7 @@ SMODS.Joker {
 			'freeReroll',
 			'moreBooster'
 		},
-		experimentsTriggersPhrase = {
-			['containPair'] = 'If hand contains Pair,',
-			['containThree'] = 'If hand contains Three of a Kind,',
-			['containFlush'] = 'If hand contains Flush,',
-			['containStraight'] = 'If hand contains Straight,',
-			['3+Clubs'] = 'If hand contains 3+ scoring Clubs cards,',
-			['3+Hearts'] = 'If hand contains 3+ scoring Hearts cards,',
-			['3+Spades'] = 'If hand contains 3+ scoring Spades cards,',
-			['3+Diamonds'] = 'If hand contains 3+ scoring Diamonds cards,',
-			['3+Aces'] = 'If hand contains 3+ scoring Aces,',
-			['3+Kings'] = 'If hand contains 3+ scoring Kings,',
-			['3+Queen'] = 'If hand contains 3+ scoring Queens,',
-			['3+Jack'] = 'If hand contains 3+ scoring Jacks,',
-			['NoFace'] = 'If hand contains no scoring face cards,',
-			['OnlyFace'] = 'If hand contains only scoring face cards,',
-			['hasGoldCard'] = 'If hand contains a scoring Gold card,',
-			['hasSteelCard'] = 'If hand contains a scoring Steel card,',
-			['hasStoneCard'] = 'If hand contains a Stone card,',
-			['glassBreak'] = 'When a Glass card breaks,',
-			['tarotUse'] = 'When a Tarot card is used,',
-			['planetUse'] = 'When a Planet card is used,',
-			['discard1Card'] = 'When discarding 1 card,',
-			['play1Card'] = 'When playing 1 card,',
-			['cardSold'] = 'When a card is sold,',
-			['voucherBuy'] = 'When a Voucher is purchased,'
-			-- 24
-		},
-		experimentsEffectsPhrase = {
-			['multScale1'] = 'increase this card\'s Mult by 1',
-			['multScale2']= 'increase this card\'s Mult by 2',
-			['multScale3']= 'increase this card\'s Mult by 3',
-			['multScale5']= 'increase this card\'s Mult by 5',
-			['chipScale5']= 'increase this card\'s Chips by 5',
-			['chipScale10']= 'increase this card\'s Chips by 10',
-			['chipScale15']= 'increase this card\'s Chips by 15',
-			['chipScale25']= 'increase this card\'s Chips by 25',
-			['xmultScale0.05']= 'increase this card\'s XMult by 0.05',
-			['xmultScale0.1']= 'increase this card\'s XMult by 0.1',
-			['xmultScale0.2']= 'increase this card\'s XMult by 0.2',
-			['xmultScale0.25']= 'increase this card\'s  XMult by 0.25',
-			['randomTarot']= 'spawn a random Tarot card',
-			['randomPlanet']= 'spawn a random Planet card',
-			['1Gold']= 'gain $1',
-			['2Gold']= 'gain $2',
-			['3Gold']= 'gain $3',
-			['5Gold']= 'gain $5',
-			['endRoundGoldScale1']= 'gain $1 more at end of Blind',
-			['endRoundGoldScale2']= 'gain $2 more at end of Blind',
-			['randomFoodJoker']= 'spawn a random Food Joker',
-			['randomChipJoker']= 'spawn a random Chips Joker',
-			['spawnOops']= 'spawn an Oops! All 6s Joker',
-			['topUpTag']= 'spawn a Top-Up Tag',
-			['doubleTag']= 'spawn a Double Tag',
-			['couponTag']= 'spawn a Coupon Tag',
-			['d6Tag']= 'spawn a D6 Tag',
-			['investTag']= 'spawn an Investment Tag',
-			['resetMoneySpawnRare'] = 'lose all your money and spawn a random Rare Joker (must have room)',
-			['halfMoneySpawnUncommon'] = 'lose half your money and spawn 2 random Uncommon Joker (must have room)',
-			['nextHandIncrement'] = 'increase rank of all scored cards in next hand by 1',
-			['threeOfClubsFlood'] = 'add sixteen 3 of Clubs to your deck',
-			['convergeSuit'] = 'convert all scored cards in next hand to a single random suit',
-			['randomSuit'] = 'convert each scored card in next hand to a random suit',
-			['freeReroll'] = 'lose $10 and gain 1 permanent free Shop reroll',
-			['moreBooster'] = 'permanently add 1 Booster Pack to each shop'
-		},
+		
 		activeTriggers = {},
 		activeEffects = {},
 		experimentsPhrases = {'?','?','?','?','?','?','?','?'},
@@ -170,7 +107,7 @@ SMODS.Joker {
 		local mainend = {}
 
 		if card.ability and card.ability.extra.experimentsActive > 0 then
-			local textrows = {{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.1}, nodes = {
+			local textrows = {{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.05}, nodes = {
                             {n = G.UIT.T, config = {align = "cm", text = 'Active Experiments :', colour = G.C.BLUE, scale = 0.3}},
                     }}}
 
@@ -201,7 +138,8 @@ SMODS.Joker {
 			['play1Card'] = {{'When playing ', G.C.UI.TEXT_DARK}, {'1 ', G.C.FILTER}, {'card, ', G.C.UI.TEXT_DARK}},
 			['cardSold'] = {{'When a card is ', G.C.UI.TEXT_DARK}, {'sold', G.C.MONEY}, {', ', G.C.UI.TEXT_DARK}},
 			['voucherBuy'] = {{'When a ', G.C.UI.TEXT_DARK}, {'Voucher ', G.C.FILTER}, {'is purchased, ', G.C.UI.TEXT_DARK}},
-			-- Base : 24
+			['shopSkipped'] = {{'When a ', G.C.UI.TEXT_DARK}, {'Shop ', G.C.FILTER}, {'is left without any purchases, ', G.C.UI.TEXT_DARK}},
+			-- Base : 25
 
 
 			['phanta_playJunk'] = {{'When playing a ', G.C.UI.TEXT_DARK}, {'Junk', G.C.FILTER}, {', ', G.C.UI.TEXT_DARK}},
@@ -320,254 +258,7 @@ SMODS.Joker {
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
 
-		-- Enable Phanta crossmod triggers and effects
-		if not card.ability.extra.supportedCrossmodFlags['Phanta'] and next(SMODS.find_mod('GSPhanta')) then
-			card.ability.extra.supportedCrossmodFlags['Phanta'] = true
-
-			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard', 'phanta_fourGrates'}
-			local phantaEffects = {'phanta_randomHanafuda'}
-			
-			for _, key in ipairs(phantaTriggers) do
-				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
-			end
-			for _, key in ipairs(phantaEffects) do
-				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
-			end
-
-		end
-
-		if not card.ability.extra.supportedCrossmodFlags['AikoShen'] and next(SMODS.find_mod('aikoyorisshenanigans')) then
-			card.ability.extra.supportedCrossmodFlags['AikoShen'] = true
-
-			local aikoshenTriggers = {}
-			local aikoshenEffects = {'aikoshen_bishopring'}
-			
-			for _, key in ipairs(aikoshenTriggers) do
-				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
-			end
-			for _, key in ipairs(aikoshenEffects) do
-				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
-			end
-
-		end
-
-		-- Boss Blind beaten, generate a new Experiment
-
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and card.ability.extra.experimentsActive < 8 then
-            if context.beat_boss then
-
-				G.E_MANAGER:add_event(Event({
-				trigger = 'immediate',
-				func = function()
-						card:juice_up()
-						play_sound('generic1', 0.7 + math.random() * 0.1, 0.8)
-            			play_sound('holo1', 1.0 + math.random() * 0.1, 0.4)
-						return true
-				end
-				}))
-
-				card.ability.extra.experimentsActive = card.ability.extra.experimentsActive + 1
-
-				pseudoshuffle(card.ability.extra.experimentsEffectsKey, pseudoseed("hangedMan_experiment_shuffle"))
-				pseudoshuffle(card.ability.extra.experimentsTriggersKey, pseudoseed("hangedMan_experiment_shuffle"))
-				
-
-				card.ability.extra.activeTriggers[#card.ability.extra.activeTriggers + 1] = card.ability.extra.experimentsTriggersKey[1]
-				card.ability.extra.activeEffects[#card.ability.extra.activeEffects + 1] = card.ability.extra.experimentsEffectsKey[1]
-
-				--card.ability.extra.experimentsPhrases[card.ability.extra.experimentsActive] = card.ability.extra.experimentsTriggersPhrase[card.ability.extra.experimentsTriggersKey[1]] .. " " .. card.ability.extra.experimentsEffectsPhrase[card.ability.extra.experimentsEffectsKey[1]]
-				
-				table.remove(card.ability.extra.experimentsTriggersKey,1)
-				table.remove(card.ability.extra.experimentsEffectsKey,1)
-
-            end
-        end
-
-		if context.remove_playing_cards and not context.blueprint then
-            local glass_cards = 0
-            for _, removed_card in ipairs(context.removed) do
-                if removed_card.shattered then glass_cards = glass_cards + 1 end
-            end  
-			if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
-				for i = 1, glass_cards, 1 do
-					activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
-				end
-			end
-        end
-
-		if context.buying_card and context.card.ability.set == 'Voucher' and not context.blueprint and HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy')]) end
-
-		if context.discard and not context.blueprint and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') or nil]) end
-		if context.before and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card')]) end
-
-        if context.using_consumeable and context.consumeable.ability.set == 'Tarot' and not context.blueprint then
-			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse')]) end
-
-			if context.consumeable.config.center.key == 'c_hanged_man' then
-            	-- Glass Joker updates on Hanged Man and no other destroy consumable
-            	local glass_cards = 0
-            	for _, removed_card in ipairs(G.hand.highlighted) do
-            	    if SMODS.has_enhancement(removed_card, 'm_glass') then glass_cards = glass_cards + 1 end
-            	end
-				if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
-					for i = 1, glass_cards, 1 do
-						activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
-					end
-				end
-			end
-        end
-
-		if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
-			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
-        end
-
-		if context.selling_card and HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold')]) end
-		
-		if context.joker_main then
-
-			local suits = {'Clubs','Hearts','Spades','Diamonds'}
-			local singlesuit = pseudorandom_element(suits, pseudoseed('experiments'))
-			local ranks = {14,13,12,11}
-			local enhances = {'m_gold','m_steel','m_stone'}
-			--[[ count of stuff
-						1-4 : scoring Clubs, Hearts, Spades, and Diamonds
-						5-8 : scoring Aces, Kings, Jacks, and Queens
-						9-11 : scoring Gold, Steel, and Stone
-						12 : scoring Face cards (in case of Pareidolia)
-				]]
-			local counters = {0,0,0,0,0,0,0,0,false,false,false,0}
-
-			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
-			local phantaCounter = {0,0,0,0,0,0,0}
-			--[[ count of stuff
-						1 : scoring Ghost card
-						2 : scoring Marble card
-						3 : scoring Fresh Copper Grate card
-						4 : scoring Exposed Copper Grate card
-						5 : scoring Weathered Copper Grate card
-						6 : scoring Oxidised Copper Grate card
-						7 : count of distinct Copper Grate oxidisation level in scoring hand
-				]]
-
-			for i, cardPlayed in ipairs(context.scoring_hand) do
-				if not cardPlayed.debuff then
-					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
-					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
-					for iiii, enhance in ipairs(enhances) do if SMODS.has_enhancement(cardPlayed, enhance) then counters[iiii+8] = true end end
-					if cardPlayed:is_face() then counters[12] = counters[12] + 1 end
-
-					if card.ability.extra.supportedCrossmodFlags['Phanta'] then
-						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
-					end
-
-					-- For Effect : Increment scored card in next hand by 1
-					if card.ability.extra.flag_incrementHand > 0 and cardPlayed:get_id() then
-						if cardPlayed:get_id() == 14 then
-							G.E_MANAGER:add_event(Event({
-								trigger = 'immediate',
-								func = function()
-									assert(SMODS.modify_rank(cardPlayed, -12))
-									card:Playedjuice_up()
-									play_sound('tarot1', 0.8, 0.4)
-								return true
-							end
-						}))
-						else
-							G.E_MANAGER:add_event(Event({
-								trigger = 'immediate',
-								func = function()
-									assert(SMODS.modify_rank(cardPlayed, 1))
-									cardPlayed:juice_up()
-									play_sound('tarot1', 0.8, 0.4)
-								return true
-							end
-						}))
-						end
-					end
-
-					-- For Effect : Convert all scored card to a single random suit
-					if card.ability.extra.flag_convergeSuit > 0 then
-						G.E_MANAGER:add_event(Event({
-							trigger = 'immediate',
-							func = function()
-								cardPlayed:change_suit(singlesuit)
-								cardPlayed:juice_up()
-								play_sound('tarot1', 0.8, 0.4)
-								return true
-							end
-						}))
-					end
-
-					-- For Effect : Convert each scored card to a random suit
-					if card.ability.extra.flag_randomSuit > 0 then
-						G.E_MANAGER:add_event(Event({
-							trigger = 'immediate',
-							func = function()
-								cardPlayed:change_suit(pseudorandom_element(suits, pseudoseed('experiments')))
-								cardPlayed:juice_up()
-								play_sound('tarot1', 0.8, 0.4)
-								return true
-							end
-						}))
-					end
-
-				end
-            end
-
-			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
-
-			for i, trigger in ipairs(card.ability.extra.activeTriggers) do
-
-				--- Evaluating Triggers on Hand played
-				if trigger == 'containPair' and next(context.poker_hands["Pair"]) then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'containThree' and next(context.poker_hands["Three of a Kind"]) then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'containFlush' and next(context.poker_hands["Flush"]) then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'containStraight' and next(context.poker_hands["Straight"]) then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Clubs' and counters[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Hearts' and counters[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Spades' and counters[3] > 2  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Diamonds' and counters[4] > 2  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Aces' and counters[5] > 2  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Kings' and counters[6] > 2 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Queen' and counters[7] > 2 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == '3+Jack' and counters[8] > 2 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'NoFace' and counters[12] == 0 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'OnlyFace' and counters[12] == #context.full_hand then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'hasGoldCard' and counters[9] then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'hasSteelCard' and counters[10] then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'hasStoneCard' and counters[11] then activateEffect(card.ability.extra.activeEffects[i])
-
-				elseif trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'phanta_hasGhostCard' and phantaCounter[1] > 0 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'phanta_hasMarbleCard' and phantaCounter[2] > 0  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'phanta_has3+GhostCard' and phantaCounter[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'phanta_has3+MarbleCard' and phantaCounter[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
-				elseif trigger == 'phanta_fourGrates' and phantaCounter[7] > 3  then activateEffect(card.ability.extra.activeEffects[i])
-				end
-			end
-			
-			return {
-				chips = card.ability.extra.chip,
-				extra = {
-					mult = card.ability.extra.mult,
-					extra = {
-						xmult = card.ability.extra.xmult,
-					}
-				}
-			}	
-		end
-
-		if context.after then
-
-			-- Decrementing all the Next Hand flags counters
-			if card.ability.extra.flag_incrementHand > 0 then card.ability.extra.flag_incrementHand = card.ability.extra.flag_incrementHand -1 end
-			if card.ability.extra.flag_convergeSuit > 0 then card.ability.extra.flag_convergeSuit = card.ability.extra.flag_convergeSuit -1 end
-			if card.ability.extra.flag_randomSuit > 0 then card.ability.extra.flag_randomSuit = card.ability.extra.flag_randomSuit -1 end
-
-
-		end
-
-		function activateEffect(effectKey)
+		local function activateEffect(effectKey)
 
 			G.E_MANAGER:add_event(Event({
 				trigger = 'immediate',
@@ -862,10 +553,264 @@ SMODS.Joker {
 		end
 
 
+		-- Enable Phanta crossmod triggers and effects
+		if not card.ability.extra.supportedCrossmodFlags['Phanta'] and next(SMODS.find_mod('GSPhanta')) then
+			card.ability.extra.supportedCrossmodFlags['Phanta'] = true
+
+			local phantaTriggers = {'phanta_playJunk', 'phanta_hasGhostCard', 'phanta_has3+GhostCard', 'phanta_hasMarbleCard', 'phanta_has3+MarbleCard', 'phanta_fourGrates'}
+			local phantaEffects = {'phanta_randomHanafuda'}
+			
+			for _, key in ipairs(phantaTriggers) do
+				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
+			end
+			for _, key in ipairs(phantaEffects) do
+				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
+			end
+
+		end
+
+		if not card.ability.extra.supportedCrossmodFlags['AikoShen'] and next(SMODS.find_mod('aikoyorisshenanigans')) then
+			card.ability.extra.supportedCrossmodFlags['AikoShen'] = true
+
+			local aikoshenTriggers = {}
+			local aikoshenEffects = {'aikoshen_bishopring'}
+			
+			for _, key in ipairs(aikoshenTriggers) do
+				card.ability.extra.experimentsTriggersKey[#card.ability.extra.experimentsTriggersKey+1] = key
+			end
+			for _, key in ipairs(aikoshenEffects) do
+				card.ability.extra.experimentsEffectsKey[#card.ability.extra.experimentsEffectsKey+1] = key
+			end
+
+		end
+
+		-- Boss Blind beaten, generate a new Experiment
+
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and card.ability.extra.experimentsActive < 8 then
+            if context.beat_boss then
+
+				G.E_MANAGER:add_event(Event({
+				trigger = 'immediate',
+				func = function()
+						card:juice_up()
+						play_sound('generic1', 0.7 + math.random() * 0.1, 0.8)
+            			play_sound('holo1', 1.0 + math.random() * 0.1, 0.4)
+						return true
+				end
+				}))
+
+				card.ability.extra.experimentsActive = card.ability.extra.experimentsActive + 1
+
+				pseudoshuffle(card.ability.extra.experimentsEffectsKey, pseudoseed("hangedMan_experiment_shuffle"))
+				pseudoshuffle(card.ability.extra.experimentsTriggersKey, pseudoseed("hangedMan_experiment_shuffle"))
+				
+
+				card.ability.extra.activeTriggers[#card.ability.extra.activeTriggers + 1] = card.ability.extra.experimentsTriggersKey[1]
+				card.ability.extra.activeEffects[#card.ability.extra.activeEffects + 1] = card.ability.extra.experimentsEffectsKey[1]
+
+				--card.ability.extra.experimentsPhrases[card.ability.extra.experimentsActive] = card.ability.extra.experimentsTriggersPhrase[card.ability.extra.experimentsTriggersKey[1]] .. " " .. card.ability.extra.experimentsEffectsPhrase[card.ability.extra.experimentsEffectsKey[1]]
+				
+				table.remove(card.ability.extra.experimentsTriggersKey,1)
+				table.remove(card.ability.extra.experimentsEffectsKey,1)
+
+            end
+        end
+
+		if context.remove_playing_cards and not context.blueprint then
+            local glass_cards = 0
+            for _, removed_card in ipairs(context.removed) do
+                if removed_card.shattered then glass_cards = glass_cards + 1 end
+            end  
+			if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
+				for i = 1, glass_cards, 1 do
+					activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
+				end
+			end
+        end
+
+		if context.buying_card and context.card.ability.set == 'Voucher' and not context.blueprint and HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'voucherBuy')]) end
+
+		if context.discard and not context.blueprint and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'discard1Card') or nil]) end
+		if context.before and #context.full_hand == 1 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'play1Card')]) end
+
+        if context.using_consumeable and context.consumeable.ability.set == 'Tarot' and not context.blueprint then
+			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'tarotUse')]) end
+
+			if context.consumeable.config.center.key == 'c_hanged_man' then
+            	-- Glass Joker updates on Hanged Man and no other destroy consumable
+            	local glass_cards = 0
+            	for _, removed_card in ipairs(G.hand.highlighted) do
+            	    if SMODS.has_enhancement(removed_card, 'm_glass') then glass_cards = glass_cards + 1 end
+            	end
+				if glass_cards > 0 and HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak') then
+					for i = 1, glass_cards, 1 do
+						activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'glassBreak')])
+					end
+				end
+			end
+        end
+
+		if context.using_consumeable and context.consumeable.ability.set == 'Planet' and not context.blueprint then
+			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'planetUse')]) end
+        end
+
+		if context.selling_card and not context.blueprint and HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold') then activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'cardSold')]) end
+		
+		if context.ending_shop and not context.blueprint then
+			if HangedMan.indexOf(card.ability.extra.activeTriggers, 'shopSkipped') and G.GAME.HangedMan_have_not_bought_something_in_shop then
+				activateEffect(card.ability.extra.activeEffects[HangedMan.indexOf(card.ability.extra.activeTriggers, 'shopSkipped')])	
+			end
+		end
+		
+		if context.joker_main then
+
+			local suits = {'Clubs','Hearts','Spades','Diamonds'}
+			local singlesuit = pseudorandom_element(suits, pseudoseed('experiments'))
+			local ranks = {14,13,12,11}
+			local enhances = {'m_gold','m_steel','m_stone'}
+			--[[ count of stuff
+						1-4 : scoring Clubs, Hearts, Spades, and Diamonds
+						5-8 : scoring Aces, Kings, Jacks, and Queens
+						9-11 : scoring Gold, Steel, and Stone
+						12 : scoring Face cards (in case of Pareidolia)
+				]]
+			local counters = {0,0,0,0,0,0,0,0,false,false,false,0}
+
+			local phantaEnhances = {'m_phanta_ghostcard','m_phanta_marblecard', 'm_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
+			local phantaCounter = {0,0,0,0,0,0,0}
+			--[[ count of stuff
+						1 : scoring Ghost card
+						2 : scoring Marble card
+						3 : scoring Fresh Copper Grate card
+						4 : scoring Exposed Copper Grate card
+						5 : scoring Weathered Copper Grate card
+						6 : scoring Oxidised Copper Grate card
+						7 : count of distinct Copper Grate oxidisation level in scoring hand
+				]]
+
+			for i, cardPlayed in ipairs(context.scoring_hand) do
+				if not cardPlayed.debuff then
+					for ii, suit in ipairs(suits) do if cardPlayed:is_suit(suit) then counters[ii] = counters[ii]+1 end end
+					for iii, rank in ipairs(ranks) do if cardPlayed:get_id() == rank then counters[iii+4] = counters[iii+4]+1 end end
+					for iiii, enhance in ipairs(enhances) do if SMODS.has_enhancement(cardPlayed, enhance) then counters[iiii+8] = true end end
+					if cardPlayed:is_face() then counters[12] = counters[12] + 1 end
+
+					if card.ability.extra.supportedCrossmodFlags['Phanta'] then
+						for ip, enhance in ipairs(phantaEnhances) do if SMODS.has_enhancement(cardPlayed, enhance) then phantaCounter[ip] = phantaCounter[ip] + 1 end end
+					end
+
+					-- For Effect : Increment scored card in next hand by 1
+					if card.ability.extra.flag_incrementHand > 0 and cardPlayed:get_id() then
+						if cardPlayed:get_id() == 14 then
+							G.E_MANAGER:add_event(Event({
+								trigger = 'immediate',
+								func = function()
+									assert(SMODS.modify_rank(cardPlayed, -12))
+									card:Playedjuice_up()
+									play_sound('tarot1', 0.8, 0.4)
+								return true
+							end
+						}))
+						else
+							G.E_MANAGER:add_event(Event({
+								trigger = 'immediate',
+								func = function()
+									assert(SMODS.modify_rank(cardPlayed, 1))
+									cardPlayed:juice_up()
+									play_sound('tarot1', 0.8, 0.4)
+								return true
+							end
+						}))
+						end
+					end
+
+					-- For Effect : Convert all scored card to a single random suit
+					if card.ability.extra.flag_convergeSuit > 0 then
+						G.E_MANAGER:add_event(Event({
+							trigger = 'immediate',
+							func = function()
+								cardPlayed:change_suit(singlesuit)
+								cardPlayed:juice_up()
+								play_sound('tarot1', 0.8, 0.4)
+								return true
+							end
+						}))
+					end
+
+					-- For Effect : Convert each scored card to a random suit
+					if card.ability.extra.flag_randomSuit > 0 then
+						G.E_MANAGER:add_event(Event({
+							trigger = 'immediate',
+							func = function()
+								cardPlayed:change_suit(pseudorandom_element(suits, pseudoseed('experiments')))
+								cardPlayed:juice_up()
+								play_sound('tarot1', 0.8, 0.4)
+								return true
+							end
+						}))
+					end
+
+				end
+            end
+
+			for i = 3, 6, 1 do if phantaCounter[i] > 0 then phantaCounter[7] = phantaCounter[7] + 1 end end
+
+			for i, trigger in ipairs(card.ability.extra.activeTriggers) do
+
+				--- Evaluating Triggers on Hand played
+				if trigger == 'containPair' and next(context.poker_hands["Pair"]) then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'containThree' and next(context.poker_hands["Three of a Kind"]) then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'containFlush' and next(context.poker_hands["Flush"]) then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'containStraight' and next(context.poker_hands["Straight"]) then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Clubs' and counters[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Hearts' and counters[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Spades' and counters[3] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Diamonds' and counters[4] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Aces' and counters[5] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Kings' and counters[6] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Queen' and counters[7] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == '3+Jack' and counters[8] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'NoFace' and counters[12] == 0 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'OnlyFace' and counters[12] == #context.full_hand then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'hasGoldCard' and counters[9] then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'hasSteelCard' and counters[10] then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'hasStoneCard' and counters[11] then activateEffect(card.ability.extra.activeEffects[i])
+
+				elseif trigger == 'phanta_playJunk' and context.scoring_name == 'phanta_junk' then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_hasGhostCard' and phantaCounter[1] > 0 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_hasMarbleCard' and phantaCounter[2] > 0  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_has3+GhostCard' and phantaCounter[1] > 2 then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_has3+MarbleCard' and phantaCounter[2] > 2  then activateEffect(card.ability.extra.activeEffects[i])
+				elseif trigger == 'phanta_fourGrates' and phantaCounter[7] > 3  then activateEffect(card.ability.extra.activeEffects[i])
+				end
+			end
+			
+			return {
+				chips = card.ability.extra.chip,
+				extra = {
+					mult = card.ability.extra.mult,
+					extra = {
+						xmult = card.ability.extra.xmult,
+					}
+				}
+			}	
+		end
+
+		if context.after then
+
+			-- Decrementing all the Next Hand flags counters
+			if card.ability.extra.flag_incrementHand > 0 then card.ability.extra.flag_incrementHand = card.ability.extra.flag_incrementHand -1 end
+			if card.ability.extra.flag_convergeSuit > 0 then card.ability.extra.flag_convergeSuit = card.ability.extra.flag_convergeSuit -1 end
+			if card.ability.extra.flag_randomSuit > 0 then card.ability.extra.flag_randomSuit = card.ability.extra.flag_randomSuit -1 end
+
+
+		end
+
 	end,
 	
 	calc_dollar_bonus = function(self, card)
 		if card.ability.extra.goldEnd > 0 then return card.ability.extra.goldEnd end
 	end
+
 }
 
