@@ -2003,6 +2003,386 @@ HangedMan.triviaMachine_questions = {
     value = 40,
 },
 
+[120] = {
+    question = {
+        -- main_end compatible format
+        {{'In ', G.C.UI.TEXT_DARK}, {'Minecraft redstone ', G.C.FILTER}, {'terminologies,', G.C.UI.TEXT_DARK}, },
+        {{'what is a "', G.C.UI.TEXT_DARK}, {'hipster', G.C.FILTER}, {'" door?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'A door where all the mechanisms are under the floor', 
+        -- other options
+        'A door which closes flushes with the wall',
+        'A door that opens and closes in a spiral pattern',
+        'A door made of transparent blocks' 
+    },
+    value = 40,
+},
+
+[121] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
+        {{'part of a ', G.C.UI.TEXT_DARK},  {'C7♯9', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'B', 
+        -- other options
+        'G♯',
+        'A',
+        'D♯' 
+    },
+    value = 55,
+},
+
+[122] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
+        {{'part of an ', G.C.UI.TEXT_DARK},  {'F7sus', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'G♯', 
+        -- other options
+        'A♯',
+        'C',
+        'D♯' 
+    },
+    value = 55,
+},
+
+[123] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
+        {{'part of an ', G.C.UI.TEXT_DARK},  {'Aadd9', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'D♯', 
+        -- other options
+        'B',
+        'E',
+        'C♯' 
+    },
+    value = 55,
+},
+
+[124] = {
+    question = {
+        -- main_end compatible format
+        {{'Wilhelm Röntgen ', G.C.FILTER}, {'first tested his invention, ', G.C.UI.TEXT_DARK},},
+        {{'the ', G.C.UI.TEXT_DARK},  {'X-ray machine', G.C.FILTER}, {', on what?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'His wife\'s hand',
+        -- other options
+        'His own hand',
+        'His daughter\'s hand',
+        'His dog\'s paw'
+    },
+    value = 35,
+},
+
+[125] = {
+    question = {
+        -- main_end compatible format
+        {{'What U.S. area is more sometimes referred to', G.C.FILTER},},
+        {{'as "', G.C.UI.TEXT_DARK},  {'Clinton', G.C.FILTER}, {'" in real estate?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Hell\'s Kitchen, New York City',
+        -- other options
+        'Hell, Michigan',
+        'Little Hell, Virginia',
+        'Hell Gate, Montana'
+    },
+    value = 35,
+},
+
+[126] = {
+    question = {
+        -- main_end compatible format
+        {{'In ', G.C.UI.TEXT_DARK}, {'2018', G.C.FILTER}, {', a city in the U.S. temporarily changed', G.C.UI.TEXT_DARK}, },
+        {{'its name in celebration of the launch of a video game.', G.C.UI.TEXT_DARK}, },
+        {{'What ', G.C.UI.TEXT_DARK}, {'terrible pun ', G.C.FILTER}, {'did it change into?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'ToPikachu, Kansas',
+        -- other options
+        'OkLara Croft City, Oklahoma',
+        'Spyrofield, Illinois',
+        'Phoenix Wright, Arizona'
+    },
+    value = 50,
+},
+
+[127] = {
+    question = {
+        -- main_end compatible format
+        {{'Vart ligger närmaste ', G.C.UI.TEXT_DARK}, {'toalett', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Sorry, I don\'t speak Swedish',
+        -- other options
+        'Sorry, I don\'t speak Icelandic',
+        'Sorry, I don\'t speak Turkish',
+        'Sorry, I don\'t speak Polish'
+    },
+    value = 30,
+},
+
+[128] = {
+    question = {
+        -- main_end compatible format
+        {{'Piscina ', G.C.FILTER}, {'este deschisă astăzi?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Sorry, I don\'t speak Romanian',
+        -- other options
+        'Sorry, I don\'t speak Icelandic',
+        'Sorry, I don\'t speak French',
+        'Sorry, I don\'t speak Norwegian'
+    },
+    value = 35,
+},
+
+[129] = {
+    question = {
+        -- main_end compatible format
+        {{'Wo ist der ', G.C.UI.TEXT_DARK}, {'Bahnhof', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Sorry, I don\'t speak German',
+        -- other options
+        'Sorry, I don\'t speak Swedish',
+        'Sorry, I don\'t speak French',
+        'Sorry, I don\'t speak Romanian'
+    },
+    value = 30,
+},
+
+[130] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is the ', G.C.UI.TEXT_DARK}, {'oldest', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Constance Towers',
+        -- other options
+        'Alton Towers',
+        'Fawlty Towers',
+        'Tilted Towers'
+    },
+    value = 35,
+},
+
+[131] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is a ', G.C.UI.TEXT_DARK}, {'hotel', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Fawlty Towers',
+        -- other options
+        'Alton Towers',
+        'Constance Towers',
+        'Tilted Towers'
+    },
+    value = 25,
+},
+
+[132] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is a ', G.C.UI.TEXT_DARK}, {'person', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Constance Towers',
+        -- other options
+        'Alton Towers',
+        'Fawlty Towers',
+        'Tilted Towers'
+    },
+    value = 25,
+},
+
+[133] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is a ', G.C.UI.TEXT_DARK}, {'theme park', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Alton Towers',
+        -- other options
+        'Constance Towers',
+        'Fawlty Towers',
+        'Tilted Towers'
+    },
+    value = 20,
+},
+
+[134] = {
+    question = {
+        -- main_end compatible format
+        {{'What is the name and continent of origin of the rock band', G.C.UI.TEXT_DARK}, },
+        {{'most famous for their 1986 track, "', G.C.UI.TEXT_DARK}, {'The Final Countdown', G.C.FILTER}, {'" ?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Europe',
+        -- other options
+        'North America',
+        'Australia',
+        'Asia'
+    },
+    value = 30,
+},
+
+[135] = {
+    question = {
+        -- main_end compatible format
+        {{'As of 2026, which band is currently tied with ', G.C.UI.TEXT_DARK}, {'Michael Jackson', G.C.FILTER}, },
+        {{'for the "', G.C.UI.TEXT_DARK}, {'Most Grammys won in one night ', G.C.FILTER}, {'" record?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Santana',
+        -- other options
+        'Foo Fighters',
+        'The Beatles',
+        'Coldplay'
+    },
+    value = 40,
+},
+
+[136] = {
+    question = {
+        -- main_end compatible format
+        {{'PewDiePie\'s ', G.C.UI.TEXT_DARK}, {'Bridge Incident ', G.C.FILTER}, {'occured while he was streaming what game?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'Player Unknown\'s BattleGrounds',
+        -- other options
+        'Fortnight',
+        'The Culling',
+        'Apex Legends'
+    },
+    value = 40,
+},
+
+[137] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'primarily', G.C.UI.TEXT_DARK}, {'red', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'Fasttrack (Ben 10)',
+        -- other options
+        'Fiona Fox (Sonic The Hedgehog comics)',
+        'Flaky (Happy Tree Friends)',
+        'Flick (Animal Crossing)'
+    },
+    value = 45,
+},
+
+[138] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these people were added to ', G.C.UI.TEXT_DARK}, {'Fortnite ', G.C.FILTER}, {'first?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Eminem', -- Nov 2023
+        -- other options
+        'Sabrina Carpenter', -- April 2025
+        'Lady Gaga', -- Feb 2024
+        'Shaq' -- Sep 2024
+    },
+    value = 40,
+},
+
+[139] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these people were added to ', G.C.UI.TEXT_DARK}, {'Fortnite ', G.C.FILTER}, {'first?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Lewis Hamilton', -- Nov 2023
+        -- other options
+        'Juice WRLD', -- Nov 2024
+        'The Weeknd', -- Dec 2023
+        'Lionel Messi' -- Dec 2024
+    },
+    value = 40,
+},
+
+[140] = {
+    question = {
+        -- main_end compatible format
+        {{'The meme "', G.C.UI.TEXT_DARK}, {'Coffin Dance', G.C.FILTER}, {'" was based on footages of', G.C.UI.TEXT_DARK}, },
+        {{'a group of dancing pallbearers from which country?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Ghana',
+        -- other options
+        'Nigeria',
+        'Morocco',
+        'Uganda'
+    },
+    value = 45,
+},
+
+[141] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'the title of a song', G.C.UI.TEXT_DARK},  },
+        {{'by the English musician ', G.C.UI.TEXT_DARK}, {'Rick Astley', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK},},
+    },
+    choices = {
+        -- correct answer
+        'Dance with Me',
+        -- other options
+        'She Wants to Dance with Me',
+        'Dance',
+        'She Makes Me'
+    },
+    value = 40,
+},
+
+[142] = {
+    question = {
+        -- main_end compatible format
+        {{'Natural Harmonia Gropius ', G.C.FILTER}, {'is the actual full name of', G.C.UI.TEXT_DARK},},
+        {{'a character from which video game?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Pokémon Black & White',
+        -- other options
+        'Dark Souls 2',
+        'Sonic Generations',
+        'Rain World'
+    },
+    value = 45,
+},
 
 
 }

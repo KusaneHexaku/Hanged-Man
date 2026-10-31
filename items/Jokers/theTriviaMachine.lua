@@ -219,7 +219,7 @@ SMODS.Joker {
 
 		if context.joker_main then 
 			card.ability.extra.accepting = false
-			return { chips = card.ability.extra.chips }
+			if card.ability.extra.chips > 0 then return { chips = card.ability.extra.chips } end
 		end
 
 		if context.end_of_round and not context.blueprint then

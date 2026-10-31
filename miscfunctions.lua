@@ -93,6 +93,11 @@ function HangedMan.display_wheel_nope(card)
     }))
 end
 
+-- function to remove all elements of a table
+function HangedMan.emptyTable(table)
+    if (not table) or (not type(table) == "table") then return end
+    for k in pairs (table) do table[k] = nil end
+end
 
 
 -- yahimouse helper function reference

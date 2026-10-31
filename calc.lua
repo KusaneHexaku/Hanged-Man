@@ -229,11 +229,8 @@ SMODS.current_mod.calculate = function(self, context)
         
     end
 
-    if context.ante_change then
-        G.GAME.HangedMan_unique_hands_this_ante = G.GAME.HangedMan_unique_hands_this_ante or {}
-        for k in pairs (G.GAME.HangedMan_unique_hands_this_ante) do
-            G.GAME.HangedMan_unique_hands_this_ante[k] = nil
-        end
+    if context.ante_change then 
+        HangedMan.emptyTable(G.GAME.HangedMan_unique_hands_this_ante)
     end
 
     if context.open_booster then
