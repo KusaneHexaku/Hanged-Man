@@ -189,14 +189,16 @@ SMODS.Joker {
 						colour = G.C.BLUE,
 					}
 				else
-					card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+					--card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+					card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
 					return {
 						message = 'Incorrect!',
 						colour = G.C.RED,
 					}
 				end
 			else
-				card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+				--card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+				card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
 				return {
 					message = 'Skipped!',
 					colour = G.C.UI.TEXT_DARK,

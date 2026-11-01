@@ -351,9 +351,9 @@ return {
                         "{C:inactive}#5#{}"
                     },
                     {
-                        "Gain {C:chips}Chips{} on a correct answer",
-                        "Lose {C:chips}Chips{} on an incorrect answer",
-                        "or questions that weren't attempted.",
+                        "Gain {C:chips}Chips{} on correct answers,",
+                        "lose half of current {C:chips}Chips{} on",
+                        "incorrect answers or unattempted questions",
                         "{C:inactive}(Currently{} +{C:chips}#1#{} {C:inactive}Chips){}"
                     }
 			        

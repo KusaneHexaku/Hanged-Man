@@ -2384,5 +2384,141 @@ HangedMan.triviaMachine_questions = {
     value = 45,
 },
 
+[143] = {
+    question = {
+        -- main_end compatible format
+        {{'What unforgettable event occured on ', G.C.UI.TEXT_DARK}, {'September 9th, 2001', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'Cheater Charles Ingram appeared on "Who Wants To Be A Millionaire?"',
+        -- other options
+        '"Special K" by Placebo releases on a single CD exploiting censorship loophole',
+        'Udinese Calcio players exposed for using fake passports to skirt league rules',
+        'The overturned ruling in the "Snow Bowl" match leading to the Patriots\' period of dominance'
+    },
+    value = 35,
+},
+
+[144] = {
+    question = {
+        -- main_end compatible format
+        {{'Where might you find a "', G.C.UI.TEXT_DARK}, {'syzygy', G.C.FILTER}, {'" ?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'In space',
+        -- other options
+        'In your DNA',
+        'In the Alps',
+        'In a bakery'
+    },
+    value = 30,
+},
+
+[145] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these characters from ', G.C.UI.TEXT_DARK}, {'Squid Game ', G.C.FILTER}, {'has the lowest player number?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'Han Mi-nyeo', -- 212
+        -- other options
+        'Cho Sang-woo', -- 218
+        'Park Jung-bae', -- 390
+        'Lee Myung-gi' -- 333
+    },
+    value = 60,
+},
+
+[146] = {
+    question = {
+        -- main_end compatible format
+        {{'According to the USDA, roughly how many ', G.C.UI.TEXT_DARK}, {'(kilo)calories', G.C.FILTER}, },
+        {{'of energy does one litre of ', G.C.UI.TEXT_DARK}, {'olive oil ', G.C.FILTER}, {'gives?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        '8,120',
+        -- other options
+        '12,550',
+        '4,640',
+        '6,480'
+    },
+    value = 45,
+},
+
+[147] = {
+    question = {
+        -- main_end compatible format
+        {{'What animal is in the name of both the NLF team from ', G.C.UI.TEXT_DARK}, {'Miami', G.C.FILTER}, {',', G.C.UI.TEXT_DARK}, },
+        {{'and an ', G.C.UI.TEXT_DARK}, {'emulator ', G.C.FILTER}, {'for the Nintendo GameCube and Wii?', G.C.UI.TEXT_DARK},  },
+    },
+    choices = {
+        -- correct answer
+        'Dolphin',
+        -- other options
+        'Whale',
+        'Seal',
+        'Shark'
+    },
+    value = 30,
+},
+
+[148] = {
+    question = {
+        -- main_end compatible format
+        {{'Drosophilia bifurca', G.C.FILTER}, {', known for having', G.C.UI.TEXT_DARK}, },
+        {{'the longest ', G.C.UI.TEXT_DARK}, {'sperm cell ', G.C.FILTER}, {'of any organism', G.C.UI.TEXT_DARK}, },
+        {{' on Earth, is a species of what?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Fruit fly',
+        -- other options
+        'Toothed whale',
+        'Elephant',
+        'Marmoset'
+    },
+    value = 45,
+},
+
+[149] = {
+    question = {
+        -- main_end compatible format
+        {{'In the show "', G.C.UI.TEXT_DARK}, {'Taskmaster', G.C.FILTER}, {'", which contestant became', G.C.UI.TEXT_DARK}, },
+        {{'the namesake of a part of its set after', G.C.UI.TEXT_DARK}, },
+        {{'having ', G.C.UI.TEXT_DARK}, {'fallen off of it ', G.C.FILTER},  {'during an episode?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Jessica Knappett',
+        -- other options
+        'Lou Sanders',
+        'David Baddiel',
+        'Mel Giedroyc'
+    },
+    value = 45,
+},
+
+[150] = {
+    question = {
+        -- main_end compatible format
+        {{'The 2025', G.C.UI.TEXT_DARK}, {'Super Bowl halftime show', G.C.FILTER}, },
+        {{'was headlined by which rapper?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Kendrick Lamar',
+        -- other options
+        'Jay-Z',
+        'Dr. Dre',
+        '50 Cent'
+    },
+    value = 30,
+},
+
+
 
 }
