@@ -2519,6 +2519,38 @@ HangedMan.triviaMachine_questions = {
     value = 30,
 },
 
+[151] = {
+    question = {
+        -- main_end compatible format
+        {{'In ancient Greece, where are you most likely to find a ', G.C.UI.TEXT_DARK}, {'chiton', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'Being worn by people',
+        -- other options
+        'Being baked in an oven',
+        'Being thrown by soldiers',
+        'Being performed in an ampitheatre'
+    },
+    value = 35,
+},
+
+[152] = {
+    question = {
+        -- main_end compatible format
+        {{'In the ocean, where are you most likely to find a ', G.C.UI.TEXT_DARK}, {'chiton', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    choices = {
+        -- correct answer
+        'In rocky crevices',
+        -- other options
+        'In a coral reef',
+        'Inside a clam',
+        'Under the sand'
+    },
+    value = 35,
+},
+
 
 
 }

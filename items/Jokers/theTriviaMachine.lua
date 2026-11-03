@@ -5,7 +5,7 @@ SMODS.Joker {
     discovered = false,
 	blueprint_compat = true,
 
-	config = { extra = { chips = 0, question = -1, used = {}, accepting = false, answered = nil, wilded = false,
+	config = { extra = { chips = 0, question = -1, used = {}, accepting = false, answered = nil, wilded = false, fallback = false,
 		choices = {
 			['Spades'] = '?',
 			['Hearts'] = '?',
@@ -25,7 +25,28 @@ SMODS.Joker {
 		local textrows = {}
 		local header = 'Welcome to the Trivia Machine!'
 
-		if card.ability.extra.question > 0 then
+		if card.ability.extra.fallback then
+
+			textrows = {
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'ERROR LOADING QUESTIONS', colour = G.C.RED, scale = 0.35}},
+            		}
+				},
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'Question packet missing from', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						{n = G.UIT.T, config = {align = "cm", text = 'items/Other', colour = G.C.FILTER, scale = 0.32}},
+            		}
+				},
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'Please reinstall this mod!', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+            		}
+				},
+			}
+
+		elseif card.ability.extra.question > 0 then
 			value = (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
 			header = 'Question ID '.. card.ability.extra.question
 			textrows = {
@@ -134,6 +155,9 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 
 		if context.setting_blind and not context.blueprint then
+
+			if not HangedMan.triviaMachine_questions then card.ability.extra.fallback = true end
+
 			if #card.ability.extra.used > math.floor(#HangedMan.triviaMachine_questions*0.75) then
 				table.remove(card.ability.extra.used, 1)
 			end
@@ -169,7 +193,7 @@ SMODS.Joker {
 		end
 
 
-		if context.before and card.ability.extra.accepting and not context.blueprint then
+		if context.before and card.ability.extra.accepting and not context.blueprint and not card.ability.extra.fallback then
 
 			if #context.full_hand == 1 then
 
@@ -224,7 +248,7 @@ SMODS.Joker {
 			if card.ability.extra.chips > 0 then return { chips = card.ability.extra.chips } end
 		end
 
-		if context.end_of_round and not context.blueprint then
+		if context.end_of_round and not context.blueprint and not card.ability.extra.fallback then
 
 			if G.GAME.HangedMan_triviaMachine_reduceInfo and HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo then
 				G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}

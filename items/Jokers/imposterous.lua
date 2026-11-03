@@ -311,20 +311,29 @@ SMODS.Joker {
                 SMODS.add_card({set = 'Joker', key = 'j_credit_card', stickers = {"eternal"}, force_stickers = true, no_edition = true})
             elseif card.ability.extra.consequence == 'downgradeAllHand' then
                 eternal_flag = false
-                local handNames = {
-                'High Card',
-                'Pair',
-                'Two Pair',
-                'Three of a Kind',
-                'Straight',
-                'Flush',
-                'Full House',
-                'Four of a Kind',
-                'Straight Flush',
-                'Five of a Kind',
-                'Flush House',
-                'Flush Five'
-    		    }
+
+                local handNames = {}
+                if not G.handlist then 
+                    -- fallback to hardcoded vanilla list as failsafe
+                    handNames = {
+                    'High Card',
+                    'Pair',
+                    'Two Pair',
+                    'Three of a Kind',
+                    'Straight',
+                    'Flush',
+                    'Full House',
+                    'Four of a Kind',
+                    'Straight Flush',
+                    'Five of a Kind',
+                    'Flush House',
+                    'Flush Five'
+                    }
+                else
+                    for index, value in ipairs(G.handlist) do
+                        handNames[index] = value
+                    end
+                end
 
                 update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
                 { handname = 'All hands', chips = '...', mult = '...', level = '' })
@@ -444,20 +453,28 @@ SMODS.Joker {
             elseif reward == 'randomRareJoker' then
                 SMODS.add_card({set = 'Joker', rarity = 'Rare', stickers = {""}})
             elseif reward == 'upgradeAllHands' then
-                local handNames = {
-                'High Card',
-                'Pair',
-                'Two Pair',
-                'Three of a Kind',
-                'Straight',
-                'Flush',
-                'Full House',
-                'Four of a Kind',
-                'Straight Flush',
-                'Five of a Kind',
-                'Flush House',
-                'Flush Five'
-    		    }
+                local handNames = {}
+                if not G.handlist then 
+                    -- fallback to hardcoded vanilla list as failsafe
+                    handNames = {
+                    'High Card',
+                    'Pair',
+                    'Two Pair',
+                    'Three of a Kind',
+                    'Straight',
+                    'Flush',
+                    'Full House',
+                    'Four of a Kind',
+                    'Straight Flush',
+                    'Five of a Kind',
+                    'Flush House',
+                    'Flush Five'
+                    }
+                else
+                    for index, value in ipairs(G.handlist) do
+                        handNames[index] = value
+                    end
+                end
 
                 update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
                 { handname = 'All hands', chips = '...', mult = '...', level = '' })
