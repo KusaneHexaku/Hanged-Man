@@ -158,10 +158,13 @@ SMODS.Joker {
 
 			if not HangedMan.triviaMachine_questions then card.ability.extra.fallback = true end
 
+			-- IMPROBABLE FAILSAFE: if, somehow, atleast 75% of all questions in the packet has already been seen this run,
+			-- allows the earliest seen question to be used again
 			if #card.ability.extra.used > math.floor(#HangedMan.triviaMachine_questions*0.75) then
 				table.remove(card.ability.extra.used, 1)
 			end
 
+			-- select a question that is not in the "used" list
 			local _q = pseudorandom(pseudoseed('HangedMan_triviaMachine'), 1, #HangedMan.triviaMachine_questions)
 			local _it = 0
 			while HangedMan.indexOf(card.ability.extra.used, _q) do
@@ -173,17 +176,27 @@ SMODS.Joker {
 			--print('Question #' .. card.ability.extra.question .. ' out of ' .. #HangedMan.triviaMachine_questions .. ' selected')
 
 			local suitorder = {'Spades', 'Hearts', 'Clubs', 'Diamonds'}
+			-- select correct suit and set it to the correct answer
 			HangedMan.better_pseudoshuffle(suitorder, "HangedMan_triviaMachine")
 			card.ability.extra.correct = suitorder[1]
-			for i, suit in ipairs(suitorder) do
-				card.ability.extra.choices[suit] = HangedMan.triviaMachine_questions[card.ability.extra.question].choices[i]
+			local correct = HangedMan.triviaMachine_questions[card.ability.extra.question].correct
+			HangedMan.better_pseudoshuffle(correct, "HangedMan_triviaMachine")
+			card.ability.extra.choices[suitorder[1]] = correct[1]
+
+			-- pick 3 random incorrect answers to give to the other suits
+			local incorrect = HangedMan.triviaMachine_questions[card.ability.extra.question].other_choices
+			HangedMan.better_pseudoshuffle(incorrect, "HangedMan_triviaMachine")
+			for i = 2, 4, 1 do
+				card.ability.extra.choices[suitorder[i]] = incorrect[i]
 			end
+
 
 			card.ability.extra.accepting = true
 			card.ability.extra.answered = nil
 			card.ability.extra.wilded = false
 			card.ability.extra.used[#card.ability.extra.used+1] = card.ability.extra.question
 
+			-- if question has a reduceInfo key, set a flag to make that card shows an alternative description
 			if HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo then
 				G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
 				for _i, key in ipairs(HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo) do
@@ -213,16 +226,16 @@ SMODS.Joker {
 						colour = G.C.BLUE,
 					}
 				else
-					--card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
-					card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
+					card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+					--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
 					return {
 						message = 'Incorrect!',
 						colour = G.C.RED,
 					}
 				end
 			else
-				--card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
-				card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
+				card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+				--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
 				return {
 					message = 'Skipped!',
 					colour = G.C.UI.TEXT_DARK,

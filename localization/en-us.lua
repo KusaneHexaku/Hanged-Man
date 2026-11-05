@@ -344,6 +344,7 @@ return {
                 }
             },
 
+            --[[
             j_hangedman_theTriviaMachine = {
 		        name = 'The Trivia Machine',
 		        text = {
@@ -354,6 +355,23 @@ return {
                         "Gain {C:chips}Chips{} on correct answers,",
                         "lose half of current {C:chips}Chips{} on",
                         "incorrect answers or unattempted questions",
+                        "{C:inactive}(Currently{} +{C:chips}#1#{} {C:inactive}Chips){}"
+                    }
+			        
+		        },
+	        },
+            ]]
+
+            j_hangedman_theTriviaMachine = {
+		        name = 'The Trivia Machine',
+		        text = {
+                    {
+                        "{C:inactive}#5#{}"
+                    },
+                    {
+                        "Gain {C:chips}Chips{} on correct answers,",
+                        "lose {C:chips}Chips{} on incorrect answers",
+                        "or questions that went unattempted",
                         "{C:inactive}(Currently{} +{C:chips}#1#{} {C:inactive}Chips){}"
                     }
 			        

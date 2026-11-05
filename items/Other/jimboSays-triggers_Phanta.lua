@@ -77,6 +77,46 @@ local phanta_triggers = {
     end
 },
 
+['phanta_playGhost'] = {
+    key = 'phanta_playGhost',
+    textbit = 'lay a hand containing a Ghost card',
+    eval = function (context)
+        local flag = false
+        for _, playing_card in ipairs(context.full_hand) do
+            if SMODS.has_enhancement(playing_card, 'm_phanta_ghostcard') then flag = true end
+        end
+        return flag
+    end,
+    available = function ()
+        if not G.playing_cards then return false end
+        local tally = 0
+       for _, playing_card in ipairs(G.playing_cards) do
+            if SMODS.has_enhancement(playing_card, 'm_phanta_ghostcard') then tally = tally + 1 end
+        end
+        return (tally > 3) and (next(SMODS.find_mod('GSPhanta')))
+    end
+},
+
+['phanta_playMarble'] = {
+    key = 'phanta_playMarble',
+    textbit = 'lay a hand containing a Marble card',
+    eval = function (context)
+        local flag = false
+        for _, playing_card in ipairs(context.full_hand) do
+            if SMODS.has_enhancement(playing_card, 'm_phanta_marblecard') then flag = true end
+        end
+        return flag
+    end,
+    available = function ()
+        if not G.playing_cards then return false end
+        local tally = 0
+       for _, playing_card in ipairs(G.playing_cards) do
+            if SMODS.has_enhancement(playing_card, 'm_phanta_marblecard') then tally = tally + 1 end
+        end
+        return (tally > 3) and (next(SMODS.find_mod('GSPhanta')))
+    end
+},
+
 
 }
 
