@@ -12,9 +12,10 @@ SMODS.Joker {
 			['Clubs'] = '?',
 			['Diamonds'] = '?'
 		},
-		correct = '?'
+		correct = '?',
+		streak = 0
 
-} },
+		} },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
@@ -186,8 +187,8 @@ SMODS.Joker {
 			-- pick 3 random incorrect answers to give to the other suits
 			local incorrect = HangedMan.triviaMachine_questions[card.ability.extra.question].other_choices
 			HangedMan.better_pseudoshuffle(incorrect, "HangedMan_triviaMachine")
-			for i = 2, 4, 1 do
-				card.ability.extra.choices[suitorder[i]] = incorrect[i]
+			for i = 2, #suitorder, 1 do
+				card.ability.extra.choices[suitorder[i]] = incorrect[i-1]
 			end
 
 
@@ -221,6 +222,8 @@ SMODS.Joker {
 					}
 				elseif context.full_hand[1]:is_suit(card.ability.extra.correct) and (not SMODS.has_any_suit(context.full_hand[1])) then
 					card.ability.extra.chips = card.ability.extra.chips + (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
+					card.ability.extra.streak = (card.ability.extra.streak or 0) + 1
+					check_for_unlock({ type = 'who_wants_to_be_a_triviaMachine', streak = card.ability.extra.streak })
 					return {
 						message = 'Correct!',
 						colour = G.C.BLUE,
@@ -228,6 +231,7 @@ SMODS.Joker {
 				else
 					card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
 					--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
+					card.ability.extra.streak = 0
 					return {
 						message = 'Incorrect!',
 						colour = G.C.RED,
@@ -236,18 +240,15 @@ SMODS.Joker {
 			else
 				card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
 				--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
+				card.ability.extra.streak = 0
 				return {
 					message = 'Skipped!',
 					colour = G.C.UI.TEXT_DARK,
 				}
 			end
 
-			if G.GAME.HangedMan_triviaMachine_reduceInfo and HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo then
-				G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
-				for _i, key in ipairs(HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo) do
-					if G.GAME.HangedMan_triviaMachine_reduceInfo and G.GAME.HangedMan_triviaMachine_reduceInfo[key] then G.GAME.HangedMan_triviaMachine_reduceInfo[key] = nil end
-				end
-			end
+			G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
+			HangedMan.emptyTable(G.GAME.HangedMan_triviaMachine_reduceInfo)
 
 			card.ability.extra.accepting = false
 
@@ -263,12 +264,10 @@ SMODS.Joker {
 
 		if context.end_of_round and not context.blueprint and not card.ability.extra.fallback then
 
-			if G.GAME.HangedMan_triviaMachine_reduceInfo and HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo then
-				G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
-				for _i, key in ipairs(HangedMan.triviaMachine_questions[card.ability.extra.question].reduceInfo) do
-					if G.GAME.HangedMan_triviaMachine_reduceInfo and G.GAME.HangedMan_triviaMachine_reduceInfo[key] then G.GAME.HangedMan_triviaMachine_reduceInfo[key] = nil end
-				end
-			end
+			HangedMan.emptyTable(G.GAME.HangedMan_triviaMachine_reduceInfo)
+
+			G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
+			HangedMan.emptyTable(G.GAME.HangedMan_triviaMachine_reduceInfo)
 
 			card.ability.extra.question = -1
 			card.ability.extra.accepting = false

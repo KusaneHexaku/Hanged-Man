@@ -230,6 +230,7 @@ SMODS.Joker {
                     card.ability.extra.XMult = card.ability.extra.XMult * 2
                 end]]
                 card.ability.extra.XMult = card.ability.extra.XMult + card.ability.extra.completedLines
+                check_for_unlock({ type = 'bingoCard_blackout', lines = card.ability.extra.completedLines })
                 return {
                     Xmult = card.ability.extra.XMult
                 }

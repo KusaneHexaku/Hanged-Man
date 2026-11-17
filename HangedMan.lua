@@ -60,6 +60,7 @@ local animatedAtlasList =
 
     -- blind chips
     {"HangedMan_BlindChips", 34, 34, "HangedMan_BlindChips.png", 21, nil},
+    {"HangedMan_ShowdownBlindChips", 34, 34, "HangedMan_ShowdownBlindChips.png", 21, nil},
 }
 
 for _index, _object in ipairs(animatedAtlasList) do

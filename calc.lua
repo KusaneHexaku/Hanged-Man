@@ -272,6 +272,7 @@ SMODS.current_mod.calculate = function(self, context)
 
 
     if context.before and #context.full_hand == 5 then
+
         local test = {8,4,6,2,14}
         local flag = true
 

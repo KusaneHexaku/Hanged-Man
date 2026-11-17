@@ -773,7 +773,7 @@ HangedMan.triviaMachine_questions = {
     question = {
         -- main_end compatible format
         {{'Which of these people have both been part of', G.C.UI.TEXT_DARK},},
-        {{'a ', G.C.UI.TEXT_DARK}, {'Super Bowl halftime show ', G.C.FILTER}, {',', G.C.UI.TEXT_DARK},},
+        {{'a ', G.C.UI.TEXT_DARK}, {'Super Bowl halftime show', G.C.FILTER}, {',', G.C.UI.TEXT_DARK},},
         {{'and a ', G.C.UI.TEXT_DARK}, {'Hunger Games ', G.C.FILTER}, {'film?', G.C.UI.TEXT_DARK},},
     },
     correct = {'Lenny Kravitz'},
@@ -1618,7 +1618,7 @@ HangedMan.triviaMachine_questions = {
     question = {
         -- main_end compatible format
         {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'the name of a holder of the title', G.C.UI.TEXT_DARK}, },
-        {{'Chief Mouser to the Cabinet Office', G.C.FILTER}, {'at 10 Downing Street?', G.C.UI.TEXT_DARK}, },
+        {{'Chief Mouser to the Cabinet Office ', G.C.FILTER}, {'at 10 Downing Street?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'Palmerston'}, -- former chief mouser to the Foreign & Commonwealth Office, not the Cabinet Office
     other_choices = {
@@ -1815,8 +1815,8 @@ HangedMan.triviaMachine_questions = {
 [109] = {
     question = {
         -- main_end compatible format
-        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from this mod', G.C.UI.TEXT_DARK}},
-        {{'would retrigger played ', G.C.UI.TEXT_DARK}, {'Diamond ', G.C.SUITS.Diamonds}, {'cards', G.C.UI.TEXT_DARK}, },
+        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from', G.C.UI.TEXT_DARK}},
+        {{'this mod would retrigger played ', G.C.UI.TEXT_DARK}, {'Diamond ', G.C.SUITS.Diamonds}, {'cards', G.C.UI.TEXT_DARK}, },
         {{'based on played ', G.C.UI.TEXT_DARK}, {'Spade ', G.C.SUITS.Spades}, {'cards to their right?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'The Demiss'},
@@ -1834,8 +1834,8 @@ HangedMan.triviaMachine_questions = {
 [110] = {
     question = {
         -- main_end compatible format
-        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from this mod', G.C.UI.TEXT_DARK}},
-        {{'would retrigger played ', G.C.UI.TEXT_DARK}, {'Club ', G.C.SUITS.Clubs}, {'cards', G.C.UI.TEXT_DARK}, },
+        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from', G.C.UI.TEXT_DARK}},
+        {{'this mod would retrigger played ', G.C.UI.TEXT_DARK}, {'Club ', G.C.SUITS.Clubs}, {'cards', G.C.UI.TEXT_DARK}, },
         {{'based on played ', G.C.UI.TEXT_DARK}, {'Heart ', G.C.SUITS.Hearts}, {'cards to their right?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'The Coyish'},
@@ -1853,8 +1853,8 @@ HangedMan.triviaMachine_questions = {
 [111] = {
     question = {
         -- main_end compatible format
-        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from this mod', G.C.UI.TEXT_DARK}},
-        {{'would retrigger played ', G.C.UI.TEXT_DARK}, {'Spade ', G.C.SUITS.Spades}, {'cards', G.C.UI.TEXT_DARK}, },
+        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from', G.C.UI.TEXT_DARK}},
+        {{'this mod would retrigger played ', G.C.UI.TEXT_DARK}, {'Spade ', G.C.SUITS.Spades}, {'cards', G.C.UI.TEXT_DARK}, },
         {{'based on played ', G.C.UI.TEXT_DARK}, {'Heart ', G.C.SUITS.Hearts}, {'cards to their right?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'The Sleuth'},
@@ -1874,8 +1874,8 @@ HangedMan.triviaMachine_questions = {
 [112] = {
     question = {
         -- main_end compatible format
-        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from this mod', G.C.UI.TEXT_DARK}},
-        {{'would retrigger played ', G.C.UI.TEXT_DARK}, {'Heart ', G.C.SUITS.Hearts}, {'cards', G.C.UI.TEXT_DARK}, },
+        {{'Which state of the Joker "', G.C.UI.TEXT_DARK}, {'The Suite', G.C.FILTER}, {'" from', G.C.UI.TEXT_DARK}},
+        {{'this mod would retrigger played ', G.C.UI.TEXT_DARK}, {'Heart ', G.C.SUITS.Hearts}, {'cards', G.C.UI.TEXT_DARK}, },
         {{'based on played ', G.C.UI.TEXT_DARK}, {'Diamond ', G.C.SUITS.Diamonds}, {'cards to their right?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'The Horrid'},
@@ -2101,7 +2101,7 @@ HangedMan.triviaMachine_questions = {
 [125] = {
     question = {
         -- main_end compatible format
-        {{'What U.S. area is more sometimes referred to', G.C.FILTER},},
+        {{'What U.S. area is more sometimes referred to', G.C.UI.TEXT_DARK},},
         {{'as "', G.C.UI.TEXT_DARK},  {'Clinton', G.C.FILTER}, {'" in real estate?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'Hell\'s Kitchen, New York City'},
@@ -2283,7 +2283,7 @@ HangedMan.triviaMachine_questions = {
 [137] = {
     question = {
         -- main_end compatible format
-        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'primarily', G.C.UI.TEXT_DARK}, {'red', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK},  },
+        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'primarily ', G.C.UI.TEXT_DARK}, {'red', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK},  },
     },
     correct = {'Fasttrack (Ben 10)'},
     other_choices = {
@@ -2664,7 +2664,8 @@ HangedMan.triviaMachine_questions = {
     other_choices = {
         'Leaking classified documents relating to the Russo-Ukrainian war',
         'Leaking proprietary source code owned by Intel',
-        'Leaking the phone number and email address of over 4,000 ICE Agents'
+        'Leaking the phone number and email address of over 4,000 ICE Agents',
+        'Leaking the entirety of "The Little Mermaid (2023)" weeks before its theatrical release'
     },
     value = 35,
 },
@@ -2736,7 +2737,9 @@ HangedMan.triviaMachine_questions = {
         'CEO of the Jade Dragon Frozen Food company',
         'Member of localisation team for "Yakuza: Like a Dragon"',
         'Executive producer on "Dragon\'s Den"',
-        'Social media manager for Bad Dragon'
+        'Social media manager for Bad Dragon',
+        'On-stage drummer for the band Imagine Dragons',
+        'Animator on "How to Train Your Dragon"',
     },
     value = 75,
 },
@@ -2761,6 +2764,257 @@ HangedMan.triviaMachine_questions = {
     value = 45,
 },
 
+[166] = {
+    question = {
+        -- main_end compatible format
+        {{'How many sets of the ', G.C.UI.TEXT_DARK}, {'multiplayer games ', G.C.FILTER}, {'in', G.C.UI.TEXT_DARK}, },
+        {{'Rhythm Heaven Groove ', G.C.FILTER}, {'are based on games from previous entries?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {'4 concretely, technically 5 if you count Cake Wait as being based on Wake-Up Caller'},
+    other_choices = {
+        '2 concretely, technically 3 if you count Cake Wait as being based on Wake-Up Caller',
+        '3 concretely, technically 4 if you count Cake Wait as being based on Wake-Up Caller',
+        '5 concretely, technically 6 if you count Cake Wait as being based on Wake-Up Caller',
+    },
+    value = 55,
+},
+
+[167] = {
+    question = {
+        -- main_end compatible format
+        {{'The card ', G.C.UI.TEXT_DARK}, {'Imposterous ', HEX('FF00FF')}, {'from this mod', G.C.UI.TEXT_DARK}, },
+        {{'is a reference to another mod for which game?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {'Keep Talking and Nobody Explodes'},
+    other_choices = {
+        'Terraria',
+        'Minecraft',
+        'Among Us',
+        'Super Smash Bros. Ultimate',
+        'Pokémon Emerald',
+        'Balatro',
+        'Inscryption',
+        'PlateUp',
+        'Left 4 Dead 2',
+        'Webfishing',
+        'Opus Magnum',
+        'Grand Theft Auto V',
+        'Slay the Spire',
+        'Friday Night Funkin\'',
+        'Geometry Dash',
+        'Pizza Towers',
+        'Baba Is You'
+    },
+    value = 45,
+},
+
+[168] = {
+    question = {
+        -- main_end compatible format
+        {{'In the November 10, 2017 ', G.C.UI.TEXT_DARK}, {'Unicode Technical Committee ', G.C.FILTER}, {'meeting,', G.C.UI.TEXT_DARK}, },
+        {{'a surprise attendee suddenly enters the room, who was then listed as', G.C.UI.TEXT_DARK},},
+        {{'official representative and given ', G.C.UI.TEXT_DARK}, {'0.002 ', G.C.FILTER}, {'votes.', G.C.UI.TEXT_DARK}, },
+        {{'Who was it?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {'A mouse that fell from the ceiling lights'},
+    other_choices = {
+        'A child of one of the attendees',
+        'A person coming into the wrong meeting room',
+        'A pigeon that flew through an open window',
+        'A representative listed for next month\'s meeting who read the schedule wrong',
+        'A janitor coming in to mop the floor',
+        'A spirit rumoured to haunt that meeting room',
+        'A headmate of one of the attendees fronting unexpectedly',
+        'A pizza delivery person'
+    },
+    value = 45,
+},
+
+[169] = {
+    question = {
+        -- main_end compatible format
+        {{'Who was in ', G.C.UI.TEXT_DARK}, {'Paris', G.C.FILTER}, {'?,', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'The Rugrats, in a 2000 film',
+        'Barbie, in a 2009 film',
+        'Totally Spies!, in a 2009 film',
+        'John Wick, in a 2023 film',
+        'Tow Mater, in a 2011 film',
+        'Ethan Hunt, in a 2018 film',
+        'Alex Browning, in a 2000 film',
+        'Jason Bourne, in a 2002 film',
+        'The Smurfs, in a 2013 film',
+        'First Lieutenant Aldo Raine, in a 2009 film',
+        'Detective James Carter, in a 2007 film'
+    },
+    other_choices = {
+        'Ethan Hunt, in a 2025 film',
+        'John Wick, in a 2017 film',
+        'The Rugrats, in a 2003 film',
+        'Sam Lawton, in a 2011 film',
+        'Lightning McQueen, in a 2011 film',
+        'Jason Bourne, in a 2016 film',
+        'Detective James Carter, in a 2001 film',
+        'Detective James Carter, in a 1998 film',
+        'Philip J. Fry, in a 2007 film',
+        'Bender Bending Rodriguez, in a 2009 film',
+        'The Simpsons, in a 2007 film',
+        'Penn Jilette, in a 2016 film',
+        'Penn Jilette, in a 2009 film',
+        'Vanessa Shelly, in a 2023 film',
+        'Garrett Schmidt, in a 2023 film',
+        'Jabari Booker, in a 2027 film',
+        'Gracie Hart, in a 2000 film',
+        'Paul Blart, in a 2009 film',
+        'Paul Blart, in a 2015 film',
+        'Barbie, in a 2008 film',
+        'Barbie, in a 2006 film',
+        'Barbie, in a 2004 film',
+        'Barbie, in a 2003 film',
+        'Dewey Finn, in a 2003 film',
+        'April O\'Neil, in a 2023 film',
+        'Doug McCallister, in a 2025 film',
+        'Wolfman Jack, in a 2022 film',
+        'Dan Landsman, in a 2015 film',
+        'Paul McCartney, in a 2007 film',
+        'Victoria Corren Mitchell, in a 2011 film'
+    },
+    value = 60,
+},
+
+[170] = {
+    question = {
+        -- main_end compatible format
+        {{'The original logo for ', G.C.UI.TEXT_DARK}, {'Chupa Chups ', G.C.FILTER}, {'was designed by which Spanish artist?', G.C.UI.TEXT_DARK}, },
+        
+    },
+    correct = {'Salvador Dalí'},
+    other_choices = {
+        'Pablo Picasso',
+        'Joan Miró',
+        'Óscar Domínguez',
+        'Maruja Mallo',
+        'Luis Buñuel',
+        'Remedios Varo',
+        'Julio Gonzales',
+        'Isabel Oliver'
+
+    },
+    value = 35,
+},
+
+[171] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'one of the Knights featured', G.C.UI.TEXT_DARK}, },
+        {{'in the "', G.C.UI.TEXT_DARK}, {'Dark Ages ', G.C.FILTER}, {'" expansion for ', G.C.UI.TEXT_DARK}, {'Dominion', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+        
+    },
+    correct = {
+        'Dame Amelia',
+        'Dame Amaranth',
+        'Dame Aurelia',
+        'Dame Aurora',
+        'Dame Brooks',
+        'Dame Bertha',
+        'Dame Blake',
+        'Dame Cristine',
+        'Dame Cameron',
+        'Dame Charlotte',
+        'Dame Gabriella',
+        'Dame Leah',
+        'Dame Joanne',
+        'Dame Reyna',
+        'Dame Page',
+        'Dame Patricia',
+        'Dame Sofia',
+        'Dame Victoria',
+        'Sir Brigand',
+        'Sir Corsair',
+        'Sir Frederick',
+        'Sir Gordon',
+        'Sir Matias',
+        'Sir Nathaniel',
+        'Sir Oliver',
+        'Sir Paxton',
+        'Sir Romeo',
+        'Sir Sullivan',
+        'Sir Thaddeus',
+        'Sir Victor',
+        'Sir Vincent',
+        'Sir Cumsice',
+        'Dame Danielle',
+        'Sir Cumstance'
+    },
+    other_choices = {
+        'Dame Anna',
+        'Dame Josephine',
+        'Dame Molly',
+        'Dame Natalie',
+        'Dame Sylbia',
+        'Sir Bailey',
+        'Sir Destry',
+        'Sir Martin',
+        'Sir Michael',
+        'Sir Vander'
+
+    },
+    value = 65,
+},
+
+[172] = {
+    question = {
+        -- main_end compatible format
+        {{'As of 2026, which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'the name of', G.C.UI.TEXT_DARK}, },
+        {{'an expansion for the game ', G.C.UI.TEXT_DARK}, {'Dominion', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+        
+    },
+    correct = {
+        'Black Market',
+        'Familiars',
+        'Journey',
+        'Prophecies',
+        'Kingdoms',
+        'Colonies',
+        'Creation',
+        'Treasures',
+        'Civilizations',
+        'Stone Ages',
+        'Zombies',
+        'Annex',
+        'Academies',
+        'Bounty Hunters',
+        'Wayfarers',
+        'Enlightenment',
+        'Bureaucracy',
+        'Odysseys',
+        'Forts',
+        'Masterminds',
+        'Santuaries'
+    },
+    other_choices = {
+        'Intrigue',
+        'Seaside',
+        'Alchemy',
+        'Prosperity',
+        'Cornucopia',
+        'Hinterlands',
+        'Dark Ages',
+        'Guilds',
+        'Adventures',
+        'Empires',
+        'Nocturne',
+        'Renaissance',
+        'Menagerie',
+        'Allies',
+        'Plunder',
+        'Rising Sun',
+        --'Arcana'
+
+    },
+    value = 60,
+},
 
 
 }

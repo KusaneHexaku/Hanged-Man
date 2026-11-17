@@ -113,6 +113,7 @@ SMODS.Joker {
                     	    card:juice_up()
                     	    card.children.center:set_sprite_pos({x = 5, y = 5})
                     	    play_sound('crumpleLong2', 0.8, 0.4)
+							check_for_unlock({ type = 'rideTheTide_wipedout' })
                     		return true
                 		end
            	 		}))

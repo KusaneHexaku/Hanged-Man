@@ -115,6 +115,18 @@ SMODS.Joker {
 
 	remove_from_deck = function(self, card, from_debuff)
 
+		if G.GAME.HangedMan_free_booster_packs_count > 0 and ((card.ability.extra.current_floor == 0) or (card.ability.extra.current_floor == 3)) then
+			G.GAME.HangedMan_free_booster_packs_count = G.GAME.HangedMan_free_booster_packs_count - 1
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					for _, other_card in pairs(G.I.CARD or {}) do
+						if other_card.set_cost then other_card:set_cost() end
+					end
+					return true
+				end
+			}))
+		end
+
     end,
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
@@ -247,6 +259,7 @@ SMODS.Joker {
 						card.children.center:set_sprite_pos({x = card.ability.extra.current_floor, y = 0})
 						card:juice_up(0.3, 0.5)
 						play_sound('explosion_release1')
+						check_for_unlock({ type = 'escape_theTower' })
 						return true
 					end)
 					}))

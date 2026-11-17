@@ -1,24 +1,24 @@
 -- Returns index of a given value from a list, or return nil if no matches found
 function HangedMan.indexOf(array, value)
-    if not array then return nil end
-    if not value then return nil end
+    if not array then return end
+    if not value then return end
     for i, v in ipairs(array) do if v == value then return i end end
     return nil
 end
 
 -- Rounds a decimal number to closest number of certain decimal places, defaulting to zero
 -- because for some reason lua is unable to provide this itself
-function HangedMan.round(num, numDecimalPlaces)
-    if not num then return nil end
-    local mult = 10^(numDecimalPlaces or 0)
-    return math.floor(num * mult + 0.5) / mult
+function HangedMan.round(number, decimal_places)
+    if not number then return end
+    local mult = 10^(decimal_places or 0)
+    return math.floor(number * mult + 0.5) / mult
 end
 
 -- A re-implementation of the pseudoshuffle function that actually works with a list of integers
 -- the vanilla function uses sort_id without checking if the entry is something that cannot be indexed, such as an int
 -- so if you have a list of integers, the game simply crashes anytime you call the function on it
 function HangedMan.better_pseudoshuffle(list, seed)
-    if not list then return nil end
+    if (not list) or (not type(list) == "table") then return end
     if seed then math.randomseed(pseudoseed(""..seed)) end
 
     for i = #list, 2, -1 do
@@ -60,18 +60,21 @@ function HangedMan.instant_death()
     G.STATE_COMPLETE = false
 end
 
--- Function to display a `Nope!` on any card a la Wheel of Fortune failing
-function HangedMan.display_wheel_nope(card)
+-- Function to display a pop-up text on a card a la Wheel of Fortune failing
+-- If text is not provided, defaults to 'Nope!'
+-- If colour is not provided, defaults to G.C.SECONDARY_SET.Tarot
+function HangedMan.display_wheel_text(card, text, colour)
+    if not card then return end
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
         delay = 0.4,
         func = function()
             attention_text({
-                text = localize('k_nope_ex'),
+                text = (text or localize('k_nope_ex')),
                 scale = 1.3,
                 hold = 1.4,
                 major = card,
-                backdrop_colour = G.C.SECONDARY_SET.Tarot,
+                backdrop_colour = (colour or G.C.SECONDARY_SET.Tarot),
                 align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and 'tm' or 'cm',
                 offset = { x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) and -0.2 or 0 },
                 silent = true
@@ -97,6 +100,39 @@ end
 function HangedMan.emptyTable(table)
     if (not table) or (not type(table) == "table") then return end
     for k in pairs (table) do table[k] = nil end
+end
+
+-- function to split a string into a list
+function HangedMan.string_to_list(input_string)
+    if not input_string then return end
+    local ret = {}
+    for i = 1, string.len(input_string), 1 do
+        ret[i] = input_string:sub(i, i)
+    end
+    return ret
+end
+
+-- simple one way hash, not meant to be secure
+function HangedMan.simple_text_hash(input_string)
+    local o = HangedMan.string_to_list(input_string)
+    if not o then return end
+    local h = {}
+    local r = 0
+    for i = 1, #o, 1 do
+        h[i] = string.byte(o[i])
+        r = (r + string.byte(o[i])) % 256
+    end
+    h[#h+1] = h[(r % #o)+1]
+    for i = 1, #o-1, 1 do
+        for ij = 1, #o, 1 do
+            h[ij] = (h[ij] + h[ij+1] + r) % 256
+            r = (r + h[ij]) % 256
+        end
+    end
+    for i, byte in ipairs(h) do
+        h[i] = string.format("%x", byte)
+    end
+    return table.concat(h,'') 
 end
 
 

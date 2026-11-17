@@ -56,9 +56,14 @@ SMODS.Joker {
 				card.ability.extra.command = 'Jimbo Says p'  .. textbit
 			else
 				card.ability.extra.valid = false
-				card.ability.extra.command = pseudorandom_element(HangedMan.jimboSays_invalidCommandHeaders, pseudoseed('jimboSays'))  .. textbit
-			end
 
+				if SMODS.pseudorandom_probability(card, 'jimboSays', 1, pseudorandom_element(chanceChance, pseudoseed('jimboSays_silly'))) then
+					card.ability.extra.command = pseudorandom_element(HangedMan.jimboSays_silly_invalidCommandHeaders, pseudoseed('jimboSays'))  .. textbit
+				else
+					card.ability.extra.command = pseudorandom_element(HangedMan.jimboSays_invalidCommandHeaders, pseudoseed('jimboSays'))  .. textbit
+				end
+
+			end
 		end
 
 		local function resolveAction(success)

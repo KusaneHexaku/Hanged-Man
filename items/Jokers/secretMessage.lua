@@ -126,13 +126,11 @@ SMODS.Joker {
 			}
 
 			card.ability.extra.selectedID = pseudorandom("hangedMan_secretMessage", 1, 46)
-
 			selectedstring = possiblestrings[card.ability.extra.selectedID]
-			
-			for i = 1, 45, 1 do card.ability.extra.fullstring[i] = selectedstring:sub(i, i) end
+			card.ability.extra.fullstring = HangedMan.string_to_list(selectedstring)
+			--for i = 1, 45, 1 do card.ability.extra.fullstring[i] = selectedstring:sub(i, i) end
 
 			HangedMan.better_pseudoshuffle(card.ability.extra.unrevealedindex, pseudoseed("hangedMan_secretMessage"))
-
 			card.ability.extra.generated = true
 
 		end
@@ -155,6 +153,7 @@ SMODS.Joker {
 			if context.other_card:get_id() == 8 and #card.ability.extra.unrevealedindex > 0  then
 				card.ability.extra.revealedstring[card.ability.extra.unrevealedindex[#card.ability.extra.unrevealedindex]] = card.ability.extra.fullstring[card.ability.extra.unrevealedindex[#card.ability.extra.unrevealedindex]]
 				table.remove(card.ability.extra.unrevealedindex)
+				check_for_unlock({ type = 'reveal_entire_secretMessage', remaining = #card.ability.extra.unrevealedindex })
 			end
 
 			

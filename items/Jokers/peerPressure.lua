@@ -118,6 +118,7 @@ SMODS.Joker {
 						for key, value in pairs(editioncount) do
 							if value > 2 and ((not sscard.edition) or (sscard.edition and (not sscard.edition.key == key))) then 
 								sscard:set_edition(key, nil, nil, true)
+								check_for_unlock({ type = 'have_edition' })
 							end
 						end
 					end

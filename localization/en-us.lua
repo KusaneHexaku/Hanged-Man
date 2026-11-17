@@ -931,6 +931,38 @@ return {
                     "equal to their rank"
                 },
             },
+            bl_hangedman_theShift = {
+                name = "The Shift",
+                text = {
+                    "#1# in #2# cards drawn",
+                    "change to random",
+                    "suit and rank"
+                },
+            },
+            bl_hangedman_theFix = {
+                name = "The Fix",
+                text = {
+                    "All probability",
+                    "numerators are",
+                    "set to #1#"
+                },
+            },
+
+            -- showdown bosses
+            bl_hangedman_final_navyNeedle = {
+                name = "Navy Needle",
+                text = {
+                    "Play only 1 hand",
+                },
+            },
+            bl_hangedman_final_wistfulWater = {
+                name = "Wistful Water",
+                text = {
+                    "Double Blind requirement",
+                    "when a Discard is used"
+                },
+            },
+
         },
 
 
@@ -1292,6 +1324,28 @@ return {
     
 
     misc = {
+
+        achievement_names={
+            ach_hangedman_escape_theTower = "Winner Winner",
+            ach_hangedman_reveal_entire_secretMessage = "Full House",
+            ach_hangedman_rideTheTide_wipedout = "Wiped Out",
+            ach_hangedman_bingoCard_blackout = "Blackout",
+            ach_hangedman_complete_the_spiralOfStars = "Unending Thorns",
+            ach_hangedman_who_wants_to_be_a_triviaMachine = "Who Wants to be a Trivia Machine?",
+            ach_hangedman_cyclomancy_stacked_odds = "Stacked Odds",
+            ach_hangedman_theColourOfMoney_synesthesia = "Synesthesia",
+        },
+        achievement_descriptions={
+            ach_hangedman_escape_theTower = "Escape The Tower",
+            ach_hangedman_reveal_entire_secretMessage = "Discover the full Secret Message",
+            ach_hangedman_rideTheTide_wipedout = "Let the Tide swallow you",
+            ach_hangedman_bingoCard_blackout = "Fully fill out the Bingo Card",
+            ach_hangedman_complete_the_spiralOfStars = "See the full Spiral of Stars",
+            ach_hangedman_who_wants_to_be_a_triviaMachine = "Correctly answer 15 questions in a row (Wild Cards do not count, but also do not reset this streak)",
+            ach_hangedman_cyclomancy_stacked_odds = "Upgrade Cyclomancy 5 times with a single hand",
+            ach_hangedman_theColourOfMoney_synesthesia = "Cashout right at the moment The Colour of Money is about to destroy itself",
+        },
+
         challenge_names = {
             c_hangedman_theColourOfMoneyChal = "The Colour of Money",
             c_hangedman_spotTheDifferenceChal = "Spot the Difference",

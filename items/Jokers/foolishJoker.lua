@@ -204,7 +204,9 @@ SMODS.Joker {
 
 					delay(0.7)
 		
-					if editionFlag then cardPicked:set_edition(convertTo, true)
+					if editionFlag then 
+						cardPicked:set_edition(convertTo, true)
+						check_for_unlock({ type = 'have_edition' })
 					else cardPicked:set_ability(convertTo, nil, true) end
 
 					G.E_MANAGER:add_event(Event({
@@ -315,7 +317,7 @@ SMODS.Joker {
                     }))
 
         		else
-					HangedMan.display_wheel_nope(card)
+					HangedMan.display_wheel_text(card, localize('k_nope_ex'), G.C.SECONDARY_SET.Tarot)
         		end
 			end
 		end
@@ -543,7 +545,7 @@ SMODS.Joker {
 				trigger = "after",
 				delay = 0.4,
 				func = function()
-					if not G.GAME.phanta_philo_cards then HangedMan.display_wheel_nope(card)
+					if not G.GAME.phanta_philo_cards then HangedMan.display_wheel_text(card, localize('k_nope_ex'), G.C.SECONDARY_SET.Tarot)
 					else 
 						for i = 1, math.min(2, G.consumeables.config.card_limit - count_consumables()) do
 							G.E_MANAGER:add_event(Event({

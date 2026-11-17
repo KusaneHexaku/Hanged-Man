@@ -114,7 +114,22 @@ SMODS.Joker {
 			end
         end
 
-		
+		if context.selling_self then
+			if card.ability.extra.countdown == 1 then
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					func = function()
+						check_for_unlock({ type = 'theColourOfMoney_synesthesia' })
+						return true
+					end
+				}))
+				HangedMan.display_wheel_text(card, 'PERFECT!', G.C.EDITION)
+			else
+				HangedMan.display_wheel_text(card, '$'..(card.ability.extra.countdown-1)..' missed!', G.C.RED)
+			end
+
+
+		end
 
 	end,
 

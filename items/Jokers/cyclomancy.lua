@@ -5,7 +5,7 @@ SMODS.Joker {
     discovered = false,
 	blueprint_compat = true,
 	-- loc_text is the actual name and description that show in-game for the card.
-	config = { extra = { xmult = 1, increment = 0.1, full_stack = {{'[rank]','[suit]'}}, index = 1 } },
+	config = { extra = { xmult = 1, increment = 0.1, full_stack = {{'[rank]','[suit]'}}, index = 1, streak = 0 } },
 	-- loc_vars gives your loc_text variables to work with, in the format of #n#, n being the variable in order.
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
@@ -129,10 +129,14 @@ SMODS.Joker {
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
 
+		if context.before and not context.blueprint then card.ability.extra.streak = 0 end
+
 		if context.individual and context.cardarea == G.play and
         	context.other_card:get_id() == G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index][1] and
             context.other_card:is_suit(G.GAME.HangedMan_cyclomancy_stack[card.ability.extra.index][2]) then
 				card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.increment
+				card.ability.extra.streak = card.ability.extra.streak + 1
+				check_for_unlock({ type = 'cyclomancy_stacked_odds', streak = card.ability.extra.streak })
 				if card.ability.extra.index == 52 then card.ability.extra.index = 1 else card.ability.extra.index = card.ability.extra.index +1 end
 				return {
 					message = 'Next!',
@@ -146,5 +150,7 @@ SMODS.Joker {
                 xmult = card.ability.extra.xmult
             }
 		end
+
+		if context.after and not context.blueprint then card.ability.extra.streak = 0 end
 	end
 }

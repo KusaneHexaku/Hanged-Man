@@ -95,6 +95,8 @@ SMODS.Joker {
 			elseif card.ability.extra.wordAdded < 52 then card.ability.extra.currentText[4] = card.ability.extra.currentText[4] .. card.ability.extra.fullText[card.ability.extra.wordAdded]
 			elseif card.ability.extra.wordAdded < 65 then card.ability.extra.currentText[5] = card.ability.extra.currentText[5] .. card.ability.extra.fullText[card.ability.extra.wordAdded] end
 		
+			check_for_unlock({ type = 'reveal_entire_secretMessage', stars = card.ability.extra.wordAdded })
+
 		end
 
 

@@ -38,7 +38,7 @@ local phanta_triggers = {
         if not G.playing_cards then return false end
         local tally = 0
         local copper = {'m_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
-       for _, playing_card in ipairs(G.playing_cards) do
+        for _, playing_card in ipairs(G.playing_cards) do
             for i, level in ipairs(copper) do
                 if SMODS.has_enhancement(playing_card, level) then tally = tally + 1 end
             end
@@ -68,7 +68,7 @@ local phanta_triggers = {
         if not G.playing_cards then return false end
         local tally = 0
         local copper = {'m_phanta_coppergratefresh','m_phanta_coppergrateexposed','m_phanta_coppergrateweathered','m_phanta_coppergrateoxidised'}
-       for _, playing_card in ipairs(G.playing_cards) do
+        for _, playing_card in ipairs(G.playing_cards) do
             for i, level in ipairs(copper) do
                 if SMODS.has_enhancement(playing_card, level) then tally = tally + 1 end
             end
@@ -90,7 +90,7 @@ local phanta_triggers = {
     available = function ()
         if not G.playing_cards then return false end
         local tally = 0
-       for _, playing_card in ipairs(G.playing_cards) do
+        for _, playing_card in ipairs(G.playing_cards) do
             if SMODS.has_enhancement(playing_card, 'm_phanta_ghostcard') then tally = tally + 1 end
         end
         return (tally > 3) and (next(SMODS.find_mod('GSPhanta')))
@@ -110,7 +110,7 @@ local phanta_triggers = {
     available = function ()
         if not G.playing_cards then return false end
         local tally = 0
-       for _, playing_card in ipairs(G.playing_cards) do
+        for _, playing_card in ipairs(G.playing_cards) do
             if SMODS.has_enhancement(playing_card, 'm_phanta_marblecard') then tally = tally + 1 end
         end
         return (tally > 3) and (next(SMODS.find_mod('GSPhanta')))
