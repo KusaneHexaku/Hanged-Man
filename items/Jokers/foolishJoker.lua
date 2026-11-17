@@ -30,63 +30,106 @@ SMODS.Joker {
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
 	loc_vars = function(self, info_queue, card)
+
+		local mainend = {}
+		local textrows = {}
+
 		local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
 		local last_tarot_planet = fool_c and localize { type = 'name_text', key = fool_c.key, set = fool_c.set } or 'nothing'
 		local colour1 = G.C.UI.TEXT_INACTIVE
-
 		local professionalnoun = {'he', 'she', 'they'}
 
-		if fool_c and fool_c.key == 'c_phanta_sludge' or card.ability.extra.phanta_sludged then
-			last_tarot_planet = 'Sludge'
-			card.ability.extra.phanta_sludged = true
-			info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_PhantaSludged', vars = {} } 
-		elseif fool_c and fool_c.name == 'The Fool' then
-			colour1 = G.C.UI.TEXT_INACTIVE
-			last_tarot_planet = 'nothing'
-		elseif fool_c and fool_c.name == 'The Wheel of Fortune' then
-			colour1 = G.C.SECONDARY_SET.Tarot
-			info_queue[#info_queue + 1] = G.P_CENTERS["c_wheel_of_fortune"]
-		elseif fool_c and fool_c.set == "Tarot" then
-			colour1 = G.C.SECONDARY_SET.Tarot
-			info_queue[#info_queue + 1] = { set = fool_c.set, key = 'c_hangedman_foolishJoker_' .. last_tarot_planet:gsub("[%p%c%s]", ""), vars = {} } 
-
-			if fool_c.key == 'c_magician' then info_queue[#info_queue + 1] = G.P_CENTERS['m_lucky']
-			elseif fool_c.key == 'c_empress' then info_queue[#info_queue + 1] = G.P_CENTERS['m_mult']
-			elseif fool_c.key == 'c_heirophant' then info_queue[#info_queue + 1] = G.P_CENTERS['m_bonus']
-			elseif fool_c.key == 'c_lovers' then info_queue[#info_queue + 1] = G.P_CENTERS['m_wild']
-			elseif fool_c.key == 'c_chariot' then info_queue[#info_queue + 1] = G.P_CENTERS['m_steel']
-			elseif fool_c.key == 'c_justice' then info_queue[#info_queue + 1] = G.P_CENTERS['m_glass']
-			elseif fool_c.key == 'c_devil' then info_queue[#info_queue + 1] = G.P_CENTERS['m_gold']
-			elseif fool_c.key == 'c_tower' then info_queue[#info_queue + 1] = G.P_CENTERS['m_stone']
-			
-			-- Phanta info_queues
-			elseif fool_c.key == 'c_phanta_grave' then info_queue[#info_queue + 1] = G.P_CENTERS['m_phanta_ghostcard']
-			elseif fool_c.key == 'c_phanta_brazier' then 
-				info_queue[#info_queue + 1] = G.P_CENTERS['m_phanta_coppergratefreshshorter'] 
-				info_queue[#info_queue + 1] = G.P_CENTERS['e_phanta_waxed_showcase']
-			elseif fool_c.key == 'c_phanta_sculptor' then info_queue[#info_queue + 1] = G.P_CENTERS['m_phanta_marblecard']
-			elseif fool_c.key == 'c_phanta_beekeeper' then info_queue[#info_queue + 1] = G.P_CENTERS['e_phanta_waxed_showcase']
-			
-
-			-- catchall for any Tarot not implemented yet
-			elseif not HangedMan.indexOf(card.ability.extra.supportedTarot,fool_c.key) then
-				colour1 = G.C.UI.TEXT_INACTIVE
-				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {} } 
-			else end
-
-
-		elseif fool_c and fool_c.set == "Planet" then
-			local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
-			if (not upgradeHand) and (not fool_c.key == 'c_akyrs_planet_bishop_ring') then
-				colour1 = G.C.UI.TEXT_INACTIVE
-				info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_incompatibleCardNotice', vars = {professionalnoun[math.random(#professionalnoun)]} } 
-			end
+		if not fool_c then colour1 = G.C.UI.TEXT_INACTIVE
+		elseif fool_c.set == 'Tarot' then colour1 = G.C.SECONDARY_SET.Tarot
+		elseif fool_c.set == 'Planet' then
 			colour1 = G.C.SECONDARY_SET.Planet
-			info_queue[#info_queue + 1] = { set = "Tarot", key = 'c_hangedman_foolishJoker_UpgradePlanet', vars = {} } 
 			info_queue[#info_queue + 1] = G.P_CENTERS[fool_c.key]
+		else colour1 = G.C.UI.TEXT_INACTIVE
 		end
 
-		return { vars = { last_tarot_planet, colours = {colour1} } }
+		if fool_c and (fool_c.key == 'c_phanta_sludge') or (card.ability.extra.phanta_sludged) then
+			last_tarot_planet = 'Sludge'
+			card.ability.extra.phanta_sludged = true
+			
+			textrows = {
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'Sludged!', colour = G.C.RED, scale = 0.35}},
+            		}
+				},
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'All functionalities disabled', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+            		}
+				},
+			}
+
+		elseif fool_c and (fool_c.key == 'c_fool') then
+			colour1 = G.C.UI.TEXT_INACTIVE
+			last_tarot_planet = 'nothing'
+
+		elseif fool_c and (fool_c.set == 'Tarot') and (HangedMan.foolishJoker_effects[fool_c.key]) then
+
+			local descobject = HangedMan.foolishJoker_effects[fool_c.key].description(card)
+			-- append text
+			for textLine = 1, #descobject, 1 do
+				local textpiece = {}
+				for _i, textcolourpair in ipairs(descobject[textLine]) do
+					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.32}}
+				end
+				textrows[textLine+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = textpiece}
+			end
+
+		elseif fool_c and (fool_c.set == 'Tarot') and (not HangedMan.foolishJoker_effects[fool_c.key]) then
+			textrows = {
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = '[!] Incompatible Tarot [!]', colour = G.C.RED, scale = 0.35}},
+            		}
+				},
+				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+					{
+	                    {n = G.UIT.T, config = {align = "cm", text = 'This card needs its Foolish effect implemented!', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						{n = G.UIT.T, config = {align = "cm", text = 'If you\'re the creator of the mod this Tarot is from,', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						{n = G.UIT.T, config = {align = "cm", text = 'check "Other/foolishJoker-effects.lua" to see how', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						{n = G.UIT.T, config = {align = "cm", text = 'you can add your own Tarots\' effects to this card!', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+            		}
+				},
+			}
+		elseif fool_c and (fool_c.set == 'Planet') and (HangedMan.foolishJoker_effects[fool_c.key]) then
+			local descobject = HangedMan.foolishJoker_effects[fool_c.key].description(card)
+			-- append text
+			for textLine = 1, #descobject, 1 do
+				local textpiece = {}
+				for _i, textcolourpair in ipairs(descobject[textLine]) do
+					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.32}}
+				end
+
+				textrows[textLine+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = textpiece}
+			end
+
+		elseif fool_c and (fool_c.set == 'Planet') and (not HangedMan.foolishJoker_effects[fool_c.key]) then
+			local descobject = HangedMan.foolishJoker_effects['planet_replication_catchall'].description(card)
+			-- append text
+			for textLine = 1, #descobject, 1 do
+				local textpiece = {}
+				for _i, textcolourpair in ipairs(descobject[textLine]) do
+					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.32}}
+				end
+
+				textrows[textLine+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = textpiece}
+			end
+		end
+
+		mainend = {
+            { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = textrows}
+        }
+
+
+		return {
+			vars = { last_tarot_planet, colours = {colour1} },
+			main_end = mainend
+		}
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
 	rarity = 3,
@@ -100,483 +143,16 @@ SMODS.Joker {
 	attributes = {'hangedman_tarot_jokers','economy','generation','rank','suit','hand_type','destroy_card','discard','joker','tarot','planet','tag','skip','modify_card','enhancements'},
 	calculate = function(self, card, context)
 
+		if card.ability.extra.phanta_sludged then return end
 
-		if context.before and not context.blueprint and not card.ability.extra.phanta_sludged then
-
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-			if not fool_c then return true end
-			
-			local convertTarotGroup = {'c_magician','c_empress','c_lovers','c_heirophant','c_strength','c_devil','c_star','c_moon','c_sun','c_world'}
-
-			-- handles the effects of Playing Cards manipulation type Tarots, activates when scored
-			if fool_c and HangedMan.indexOf(convertTarotGroup, fool_c.key) then 
-				local toEnhance = {}
-	            for _, scored_card in ipairs(context.scoring_hand) do
-					scored_card.foolishEnhance = nil
-					if fool_c.key == 'c_magician' and not next(SMODS.get_enhancements(scored_card))
-					or fool_c.key == 'c_empress' and not next(SMODS.get_enhancements(scored_card))
-					or fool_c.key == 'c_lovers' and not next(SMODS.get_enhancements(scored_card))
-					or fool_c.key == 'c_heirophant' and not next(SMODS.get_enhancements(scored_card))
-					or fool_c.key == 'c_devil' and not next(SMODS.get_enhancements(scored_card))
-					or fool_c.key == 'c_strength'
-					or fool_c.key == 'c_star' and not scored_card:is_suit('Diamonds')
-					or fool_c.key == 'c_moon' and not scored_card:is_suit('Clubs')
-					or fool_c.key == 'c_sun' and not scored_card:is_suit('Hearts')
-					or fool_c.key == 'c_world' and not scored_card:is_suit('Spades')
-					then scored_card.foolishEnhance = true end
-
-                	if not scored_card.debuff and scored_card.foolishEnhance then
-	                    toEnhance[#toEnhance + 1] = scored_card
-						G.E_MANAGER:add_event(Event({
-						trigger = 'immediate',
-						func = function()
-							scored_card:flip()
-							scored_card:juice_up(0.3, 0.3)
-							play_sound('tarot1', 0.8, 0.4)							
-							return true
-						end
-						}))
-                	end
-				delay(0.25)
-            	end
-
-				delay(0.3)
-				for _i, scored_card in ipairs(toEnhance) do
-					if fool_c.key == 'c_magician' and not next(SMODS.get_enhancements(scored_card)) then scored_card:set_ability('m_lucky', nil, true)
-					elseif fool_c.key == 'c_empress' and not next(SMODS.get_enhancements(scored_card)) then scored_card:set_ability('m_mult', nil, true)
-					elseif fool_c.key == 'c_lovers' and not next(SMODS.get_enhancements(scored_card)) then scored_card:set_ability('m_wild', nil, true)
-					elseif fool_c.key == 'c_heirophant' and not next(SMODS.get_enhancements(scored_card)) then scored_card:set_ability('m_bonus', nil, true)
-					elseif fool_c.key == 'c_devil' and not next(SMODS.get_enhancements(scored_card)) then scored_card:set_ability('m_gold', nil, true)
-					elseif fool_c.key == 'c_strength' then assert(SMODS.modify_rank(scored_card, 1))
-					elseif fool_c.key == 'c_star' then scored_card:change_suit('Diamonds')
-					elseif fool_c.key == 'c_moon' then scored_card:change_suit('Clubs')
-					elseif fool_c.key == 'c_sun' then scored_card:change_suit('Hearts')
-					elseif fool_c.key == 'c_world' then scored_card:change_suit('Spades')
-					end
-					G.E_MANAGER:add_event(Event({
-						trigger = 'immediate',
-						func = function()
-							scored_card:flip()
-							scored_card:juice_up(0.3, 0.3)
-							play_sound('tarot2', 0.8, 0.6)
-							scored_card.foolishEnhance = nil
-							return true
-						end
-					}))
-					delay(0.25)
-				end	
-			end
-
-
-			-- handles the effects of special cases Playing Cards manipulation type Tarots, picking 1 random card from hand
-			local convertTo = nil
-			local editionFlag = false
-			if fool_c and fool_c.key == 'c_chariot' then convertTo = 'm_steel'
-			elseif fool_c and fool_c.key == 'c_justice' then convertTo = 'm_glass' 
-			elseif fool_c and fool_c.key == 'c_tower' then convertTo = 'm_stone'
-			
-			-- Phanta compat
-			elseif fool_c and fool_c.key == 'c_phanta_grave' then convertTo = 'm_phanta_ghostcard'
-			elseif fool_c and fool_c.key == 'c_phanta_brazier' then convertTo = 'm_phanta_coppergratefresh'
-			elseif fool_c and fool_c.key == 'c_phanta_sculptor' then convertTo = 'm_phanta_marblecard'
-			elseif fool_c and fool_c.key == 'c_phanta_beekeeper' then 
-				convertTo = 'e_phanta_waxed'
-				editionFlag = true
-			else end
-			
-			if convertTo then
-				local eligible_hand_card = {}
-
-				if editionFlag then eligible_hand_card = SMODS.Edition:get_edition_cards(G.hand, true)
-				else for _i, v in ipairs(G.hand.cards) do if not next(SMODS.get_enhancements(v)) then eligible_hand_card[#eligible_hand_card + 1] = v end end end
-				local cardPicked = pseudorandom_element(eligible_hand_card, pseudoseed('foolishJoker'))
-
-				if cardPicked then
-					G.E_MANAGER:add_event(Event({
-						trigger = 'immediate',
-						func = function()
-							cardPicked:flip()
-							cardPicked:juice_up(0.3, 0.3)
-							play_sound('tarot1', 0.8, 0.4)							
-							return true
-						end
-					}))
-
-					delay(0.7)
-		
-					if editionFlag then 
-						cardPicked:set_edition(convertTo, true)
-						check_for_unlock({ type = 'have_edition' })
-					else cardPicked:set_ability(convertTo, nil, true) end
-
-					G.E_MANAGER:add_event(Event({
-						trigger = 'immediate',
-						func = function()
-							cardPicked:flip()
-							cardPicked:juice_up(0.3, 0.3)
-							play_sound('tarot2', 0.8, 0.6)
-							return true
-						end
-					}))
-
-					delay(0.25)
-				end
-			end
-
-
-
-
-		end
-
-		if context.after and not context.blueprint and not card.ability.extra.phanta_sludged then
-
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-			
-			if not fool_c then return true end
-
-			-- Crossmod compat : Phanta's Gatherer
-			if fool_c and fool_c.key == 'c_phanta_gatherer' then
-				G.E_MANAGER:add_event(Event({
-            		trigger = 'after',
-            		delay = 0.4,
-            		func = function()
-                		play_sound('timpani')
-                		card:juice_up(0.3, 0.5)
-                		ease_dollars(4, true)
-                		return true
-            		end
-        		}))
-			end
-
-
-			
-
-			-- handles Tarots effects that spawns a Consumable card
-			local spawnType = nil
-			if fool_c and fool_c.key == 'c_high_priestess' then spawnType = 'Planet'
-			elseif fool_c and fool_c.key == 'c_emperor' then spawnType = 'Tarot' end
-
-			if spawnType and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    func = (function()
-                        SMODS.add_card {
-                            set = spawnType,
-                        }
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end)
-                }))
-            end
-
-			-- handles Tarots that gives money
-			if fool_c and fool_c.key == 'c_hermit' then
-				G.E_MANAGER:add_event(Event({
-            		trigger = 'after',
-            		delay = 0.4,
-            		func = function()
-                		play_sound('timpani')
-                		card:juice_up(0.3, 0.5)
-                		ease_dollars(math.max(0, math.min(math.floor(G.GAME.dollars*0.2),20)), true)
-                	return true
-            	end
-        		}))
-        		delay(0.6)
-			end
-
-			if fool_c and fool_c.key == 'c_temperance' then
-        		G.E_MANAGER:add_event(Event({
-            		trigger = 'after',
-            		delay = 0.4,
-            		func = function()
-                		play_sound('timpani')
-                		card:juice_up(0.3, 0.5)
-                		ease_dollars(pseudorandom_element(G.jokers.cards, pseudoseed('foolishJoker')).sell_cost, true)
-                		return true
-            		end
-        		}))
-        		delay(0.6)
-			end
-
-
-			-- handles Wheel of Fortune, code mostly yoinked directly from vremade's Wheel
-			if fool_c and fool_c.key == 'c_wheel_of_fortune' then
-				if SMODS.pseudorandom_probability(card, 'foolishJoker', 1, 4) then
-            		local editionless_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
-            		local eligible_card = pseudorandom_element(editionless_jokers, 'foolishJoker')
-            		local edition = SMODS.poll_edition { key = 'foolishJoker', guaranteed = true, no_negative = true, options = { 'e_polychrome', 'e_holo', 'e_foil' } }
-
-					G.E_MANAGER:add_event(Event({
-                		trigger = 'after',
-                		delay = 0.4,
-                		func = function()
-							eligible_card:set_edition(edition, true)
-            				check_for_unlock({ type = 'have_edition' })
-							return true
-						end
-                    }))
-
-        		else
-					HangedMan.display_wheel_text(card, localize('k_nope_ex'), G.C.SECONDARY_SET.Tarot)
-        		end
-			end
-		end
-
-		-- end of round effects
-		if context.end_of_round and context.game_over == false and not context.blueprint and not card.ability.extra.phanta_sludged then
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-
-			-- handles Judgement, spawning a Joker when Blind beaten
-			if fool_c and fool_c.key == 'c_judgement' and #G.jokers.cards < G.jokers.config.card_limit then
-				G.E_MANAGER:add_event(Event({
-            		trigger = 'after',
-            		delay = 0.4,
-            		func = function()
-            	  		play_sound('timpani')
-            	  		SMODS.add_card({ set = 'Joker' })
-            	   		card:juice_up(0.3, 0.5)
-            	   		return true
-           			end
-        		}))
-        		delay(0.6)
-			end
-
-			-- handles Phanta's The Exorcist, destroying up to 3 random cards held in hand at end of Blind
-			if fool_c and fool_c.key == 'c_phanta_exorcist' then
-				local cards = G.hand.cards
-				local candidates = {}
-				for i = 1, #cards do candidates[#candidates+1] = cards[i] end
-				local selected = {}
-				table.sort(candidates,
-				function(a, b)
-					return not a.playing_card or not b.playing_card or a.playing_card < b.playing_card
-				end
-				)
-				local size = math.min(3, #candidates)
-				HangedMan.better_pseudoshuffle(candidates, "hangedman_foolishJoker_exorcist")
-				for i = 1, size do selected[#selected + 1] = candidates[i] end
-
-				G.E_MANAGER:add_event(Event({
-					trigger = "after",
-					delay = 0.4,
-					func = function()
-						play_sound("tarot1")
-						card:juice_up(0.3, 0.5)
-						delay(0.2)
-						G.hand:unhighlight_all()
-						return true
-					end
-				}))
-				SMODS.destroy_cards(selected)
-				delay(0.5)
-				
-			end
-
-			-- handles Phanta's The Angel
-			if fool_c and fool_c.key == 'c_phanta_angel' then
-				local candidates = G.hand.cards
-
-				G.E_MANAGER:add_event(Event({
-					trigger = "after",
-					delay = 0.4,
-					func = function()
-						play_sound("tarot1")
-						card:juice_up(0.3, 0.5)
-						return true
-					end
-				}))
-
-				for i = 1, #candidates do
-					local percent = 1.15 - (i - 0.999) / (#candidates - 0.998) * 0.3
-					G.E_MANAGER:add_event(Event({
-						trigger = "after",
-						delay = 0.15,
-						func = function()
-						candidates[i]:flip()
-						play_sound("card1", percent)
-						candidates[i]:juice_up(0.3, 0.3)
-						return true
-						end
-					}))
-				end
-
-				delay(0.2)
-
-				for i = 1, #candidates do
-					G.E_MANAGER:add_event(Event({
-						func = function()
-						assert(SMODS.modify_rank(candidates[i], 1))
-						return true
-						end
-					}))
-				end
-
-				for i = 1, #candidates do
-					local percent = 0.85 + (i - 0.999) / (#candidates - 0.998) * 0.3
-					G.E_MANAGER:add_event(Event({
-						trigger = "after",
-						delay = 0.15,
-						func = function()
-						candidates[i]:flip()
-						play_sound("tarot2", percent, 0.6)
-						candidates[i]:juice_up(0.3, 0.3)
-						return true
-						end
-					}))
-				end
-
-				G.E_MANAGER:add_event(Event({
-					trigger = "after",
-					delay = 0.2,
-					func = function()
-						G.hand:unhighlight_all()
-						return true
-					end
-				}))
-
-				delay(0.5)
-				
-			end
-
-
-
-			-- the rest of Planet cards effects
-
-			if fool_c and fool_c.set == 'Planet' then
-
-				local upgradeHand = HangedMan.planet_hand_type_from_key(fool_c.key) or nil
-				if not upgradeHand then return end
-
-				-- catching special cases for non-standard Planet cards
-
-				-- Aikoshen's Bishop Ring
-				if fool_c.key == 'c_akyrs_planet_bishop_ring' then
-				
-					G.GAME.akyrs_pure_unlocked = true
-					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_akyrs_pure_hands'),chips = '...', mult = '...', level=''})
-					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
-						play_sound('tarot1')
-						card:juice_up(0.8, 0.5)
-						G.TAROT_INTERRUPT_PULSE = true
-						return true end }))
-					update_hand_text({delay = 0}, {mult = '+', StatusText = true})
-					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-						play_sound('tarot1')
-						card:juice_up(0.8, 0.5)
-						return true end }))
-					update_hand_text({delay = 0}, {chips = '+', StatusText = true})
-					G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-						play_sound('tarot1')
-						card:juice_up(0.8, 0.5)
-						G.TAROT_INTERRUPT_PULSE = nil
-						return true end }))
-					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
-					delay(1.3)
-					G.GAME.akyrs_pure_hand_modifier.multiplier = G.GAME.akyrs_pure_hand_modifier.multiplier + 1 * 0.5 * G.GAME.akyrs_pure_hand_modifier.level
-					G.GAME.akyrs_pure_hand_modifier.level = G.GAME.akyrs_pure_hand_modifier.level + 1
-					update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-
-
-				-- Edgecase with Aikoshen's Microscopium
-				elseif fool_c.key == 'c_akyrs_p_microscopium' then
-					
-				update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_words_long'),chips = '...', mult = '...', level=''})
-				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
-					play_sound('tarot1')
-					card:juice_up(0.8, 0.5)
-					G.TAROT_INTERRUPT_PULSE = true
-					return true end }))
-				update_hand_text({delay = 0}, {mult = '+', StatusText = true})
-				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-					play_sound('tarot1')
-					card:juice_up(0.8, 0.5)
-					return true end }))
-				update_hand_text({delay = 0}, {chips = '+', StatusText = true})
-				G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-					play_sound('tarot1')
-					card:juice_up(0.8, 0.5)
-					G.TAROT_INTERRUPT_PULSE = nil
-					return true end }))
-				update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
-				delay(1.3)
-				SMODS.upgrade_poker_hands({ hands = upgradeHand, instant = true})
-				update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
-
-				-- Catching Aikoshen's Factorio multi-hand Planets cards
-				elseif string.find(fool_c.key, 'c_akyrs_planet', 1, true) then
-
-					--print('Aikoshen Planet detected!')
-					local lockey = {
-						['c_akyrs_planet_vulcanus'] = 'k_akyrs_pairs',
-						['c_akyrs_planet_nauvis'] = 'k_akyrs_unique_hand_combo',
-						['c_akyrs_planet_fulgora'] = 'k_akyrs_unique_flush_hands',
-						['c_akyrs_planet_gleba'] = 'k_akyrs_unique_straight_hands',
-						['c_akyrs_planet_aquilo'] = 'k_akyrs_any_combo_hands',
-						['c_akyrs_planet_shattered'] = 'k_akyrs_gt5_hands',
-					}
-
-					AKYRS.auto_planet_anim(card, localize(lockey[fool_c.key]))
-					SMODS.upgrade_poker_hands{hands = SMODS.Attributes[upgradeHand].keys, instant = true}
-
-				else
-					-- standard Planet card handling
-					SMODS.upgrade_poker_hands({ hands = {upgradeHand}})
-
-				end
-
-        		delay(0.6)
-
-			end
-
-        end
-
-		if context.setting_blind and not context.blueprint and not card.ability.extra.phanta_sludged then
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-			-- thank you ghostsalt much appreciated :3
-			if fool_c and fool_c.key == 'c_phanta_philosopher' then
-				G.E_MANAGER:add_event(Event({
-				func = function()
-					G.FUNCS.phanta_run_philo_menu(2)
-					return true
-				end
-				}))
-
-				G.E_MANAGER:add_event(Event({
-				trigger = "after",
-				delay = 0.4,
-				func = function()
-					if not G.GAME.phanta_philo_cards then HangedMan.display_wheel_text(card, localize('k_nope_ex'), G.C.SECONDARY_SET.Tarot)
-					else 
-						for i = 1, math.min(2, G.consumeables.config.card_limit - count_consumables()) do
-							G.E_MANAGER:add_event(Event({
-							trigger = "after",
-							delay = 0.4,
-							blockable = false,
-							func = function()
-								if G.consumeables.config.card_limit > #G.consumeables.cards then
-								play_sound("timpani")
-								local _card = SMODS.add_card({ key = G.GAME.phanta_philo_cards[i].key, edition = G.GAME.phanta_philo_cards[i].edition })
-								for k, v in pairs(SMODS.Stickers) do
-									if _card.ability[k] or _card[k] then
-									_card:remove_sticker(k)
-									end
-								end
-								-- add any stickers it had
-								for _, v in ipairs(G.GAME.phanta_philo_cards[i].stickers) do
-									_card:add_sticker(v, true)
-								end
-								card:juice_up(0.3, 0.5)
-								end
-								return true
-							end
-							}))
-						end
-					end
-					return true
-				end
-				}))
-				delay(0.4)
-			end
+		local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
+		if not fool_c then return end
+		if fool_c.set == 'Tarot' then 
+			if not HangedMan.foolishJoker_effects[fool_c.key] then return end
+			HangedMan.foolishJoker_effects[fool_c.key].effect(card, context)
+		elseif fool_c.set == 'Planet' then
+			if HangedMan.foolishJoker_effects[fool_c.key] then HangedMan.foolishJoker_effects[fool_c.key].effect(card, context)
+			else HangedMan.foolishJoker_effects['planet_replication_catchall'].effect(card, context) end
 		end
 
 		-- juice card if Hanged Man is active
@@ -586,83 +162,6 @@ SMODS.Joker {
             local eval = function() return G.GAME.current_round.discards_used == 0 and not G.RESET_JIGGLES and fool_c and fool_c.key == 'c_hanged_man' end
             juice_card_until(card, eval, true)
         end
-
-		-- additional checks for Death's effect
-		if context.pre_discard and not context.blueprint and #context.full_hand == 2 and not card.ability.extra.phanta_sludged then 
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-			if fool_c and fool_c.key == 'c_death' and #context.full_hand == 2 then
-				card.ability.extra.deathActivating = false
-				local rightmost = G.hand.highlighted[1]
-        		for i = 1, #G.hand.highlighted do
-					if G.hand.highlighted[i].T.x > rightmost.T.x then
-    	            	rightmost = G.hand.highlighted[i]
-        	    	end
-            		local percent = 1.15 - (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
-            			G.E_MANAGER:add_event(Event({
-            	    		trigger = 'immediate',
-            	    		func = function()
-            	        		G.hand.highlighted[i]:flip()
-            	        		play_sound('card1', percent)
-            	        		G.hand.highlighted[i]:juice_up(0.3, 0.3)
-            	        	return true
-                		end
-	            	}))
-					delay(0.2)
-        		end
-        		delay(0.6)
-
-        		for i = 1, #G.hand.highlighted do
-					if G.hand.highlighted[i] ~= rightmost then
-                    	copy_card(rightmost, G.hand.highlighted[i])
-                    end
-	            	local percent = 0.85 + (i - 0.999) / (#G.hand.highlighted - 0.998) * 0.3
-            		G.E_MANAGER:add_event(Event({
-	                	trigger = 'immediate',
-                		func = function()
-	                    	G.hand.highlighted[i]:flip()
-                    		play_sound('tarot2', percent, 0.6)
-                    		G.hand.highlighted[i]:juice_up(0.3, 0.3)
-                    		return true
-                		end
-            		}))
-					delay(0.2)
-        		end
-				delay(0.5)
-			end
-		end
-
-		-- handles effects that activates on Discards
-		if context.discard and not context.blueprint and not card.ability.extra.phanta_sludged then
-
-			local fool_c = G.GAME.last_tarot_planet and G.P_CENTERS[G.GAME.last_tarot_planet] or nil
-			if not fool_c then return false
-			elseif fool_c and fool_c.key == 'c_hanged_man' and G.GAME.current_round.discards_used <= 0 then
-				for i, v in ipairs(G.hand.highlighted) do
-					if SMODS.shatters(v) then
-						G.E_MANAGER:add_event(Event({
-							trigger = 'immediate',
-							func = function()
-								v:shatter() 
-								return true
-							end
-						}))
-					else
-						G.E_MANAGER:add_event(Event({
-							trigger = 'immediate',
-							func = function()
-								v:start_dissolve()
-								return true
-							end
-						}))
-					end
-					delay(0.3)
-					return { remove = true, delay = 0.3 }
-					
-				end
-				delay(0.5)
-			end
-			
-		end
 
 	end,
 

@@ -223,7 +223,8 @@ return {
                     "{C:tarot}Tarot{} or {C:planet}Planet{} card",
                     "used during this run",
                     "{s:0.8,C:tarot}The Fool{s:0.8} excluded",
-                    "{C:inactive}(Currently replicating{} {V:1}#1#{}{C:inactive}){}",
+                    "",
+                    "Currently replicating{} {V:1}#1#{}",
              
 		        },
                 unlock = {
