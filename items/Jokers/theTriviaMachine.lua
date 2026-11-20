@@ -119,22 +119,22 @@ SMODS.Joker {
 					['Diamonds'] = G.C.SUITS.Diamonds,
 				}
 
-				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Spades', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Spades'], r = 0.02, hover = true}, nodes = {
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Spades', align = "cm", h = 1.6, minw = 10, padding = 0.04, colour = col_table['Spades'], r = 0.02, hover = true}, nodes = {
 					{n=G.UIT.C, config={}, nodes={
 						{n = G.UIT.T, config = {align = "cm", text = options['Spades'], colour = G.C.WHITE, scale = 0.36}}
 					}},
 				}}
-				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Hearts', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Hearts'], r = 0.02, hover = true}, nodes = {
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Hearts', align = "cm", h = 1.6, minw = 10, padding = 0.04, colour = col_table['Hearts'], r = 0.02, hover = true}, nodes = {
 					{n=G.UIT.C, config={}, nodes={
 						{n = G.UIT.T, config = {align = "cm", text = options['Hearts'], colour = G.C.WHITE, scale = 0.36}}
 					}},
 				}}
-				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Clubs', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Clubs'], r = 0.02, hover = true}, nodes = {
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Clubs', align = "cm", h = 1.6, minw = 10, padding = 0.04, colour = col_table['Clubs'], r = 0.02, hover = true}, nodes = {
 					{n=G.UIT.C, config={}, nodes={
 						{n = G.UIT.T, config = {align = "cm", text = options['Clubs'], colour = G.C.WHITE, scale = 0.36}}
 					}},
 				}}
-				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Diamonds', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Diamonds'], r = 0.02, hover = true}, nodes = {
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Diamonds', align = "cm", h = 1.6, minw = 10, padding = 0.04, colour = col_table['Diamonds'], r = 0.02, hover = true}, nodes = {
 					{n=G.UIT.C, config={}, nodes={
 						{n = G.UIT.T, config = {align = "cm", text = options['Diamonds'], colour = G.C.WHITE, scale = 0.36}}
 					}},

@@ -1255,7 +1255,7 @@ HangedMan.triviaMachine_questions = {
     correct = {'No, it\'s actually a wasp'},
     other_choices = {
         'No, it\'s actually a bee',
-        'No, it\'s actually a hornet',
+        'No, it\'s actually an ant',
         'Yes'
     },
     value = 30
@@ -2040,7 +2040,7 @@ HangedMan.triviaMachine_questions = {
     question = {
         -- main_end compatible format
         {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
-        {{'part of a ', G.C.UI.TEXT_DARK},  {'C7♯9', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+        {{'part of a ', G.C.UI.TEXT_DARK},  {'C7♯9 ', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'B', 'E'},
     other_choices = {
@@ -2055,7 +2055,7 @@ HangedMan.triviaMachine_questions = {
     question = {
         -- main_end compatible format
         {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
-        {{'part of an ', G.C.UI.TEXT_DARK},  {'F7sus', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+        {{'part of an ', G.C.UI.TEXT_DARK},  {'F7sus ', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'G♯', 'B'},
     other_choices = {
@@ -2070,7 +2070,7 @@ HangedMan.triviaMachine_questions = {
     question = {
         -- main_end compatible format
         {{'Which of these notes is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, },
-        {{'part of an ', G.C.UI.TEXT_DARK},  {'Aadd9', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
+        {{'part of an ', G.C.UI.TEXT_DARK},  {'Aadd9 ', G.C.FILTER}, {'chord?', G.C.UI.TEXT_DARK}, },
     },
     correct = {'D♯', 'G♯'},
     other_choices = {

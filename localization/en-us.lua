@@ -1077,7 +1077,7 @@ return {
             ach_hangedman_rideTheTide_wipedout = "Let the Tide swallow you",
             ach_hangedman_bingoCard_blackout = "Fully fill out the Bingo Card",
             ach_hangedman_complete_the_spiralOfStars = "See the full Spiral of Stars",
-            ach_hangedman_who_wants_to_be_a_triviaMachine = "Correctly answer 15 questions in a row (Wild Cards do not count, but also do not reset this streak)",
+            ach_hangedman_who_wants_to_be_a_triviaMachine = "Correctly answer 15 questions in a row",
             ach_hangedman_cyclomancy_stacked_odds = "Upgrade Cyclomancy 5 times with a single hand",
             ach_hangedman_theColourOfMoney_synesthesia = "Cashout right at the moment The Colour of Money is about to destroy itself",
         },
