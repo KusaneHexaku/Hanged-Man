@@ -63,7 +63,8 @@ end
 -- Function to display a pop-up text on a card a la Wheel of Fortune failing
 -- If text is not provided, defaults to 'Nope!'
 -- If colour is not provided, defaults to G.C.SECONDARY_SET.Tarot
-function HangedMan.display_wheel_text(card, text, colour)
+-- If sound is not provided, defaults to 'tarot2'
+function HangedMan.display_wheel_text(card, text, colour, sound)
     if not card then return end
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
@@ -85,11 +86,11 @@ function HangedMan.display_wheel_text(card, text, colour)
                 blockable = false,
                 blocking = false,
                 func = function()
-                    play_sound('tarot2', 0.76, 0.4)
+                    play_sound((sound or 'tarot2'), 0.76, 0.4)
                     return true
                 end
             }))
-        play_sound('tarot2', 1, 0.4)
+        play_sound((sound or 'tarot2'), 1, 0.4)
         card:juice_up(0.3, 0.5)
         return true
         end

@@ -106,7 +106,7 @@ SMODS.Joker {
 				constructed_card[#constructed_card+1] = pseudorandom_element(suits, pseudoseed('hangedman_constructTowerCondition'))
 				card.ability.extra.escape_condition[#card.ability.extra.escape_condition+1] = constructed_card
 			end
-			print(card.ability.extra.escape_condition)
+			--print(card.ability.extra.escape_condition)
 
 			card.ability.extra.freedom_countdown = card.ability.extra.freedom_countdown_reset
 

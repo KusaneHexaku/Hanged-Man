@@ -2886,8 +2886,7 @@ HangedMan.triviaMachine_questions = {
 [170] = {
     question = {
         -- main_end compatible format
-        {{'The original logo for ', G.C.UI.TEXT_DARK}, {'Chupa Chups ', G.C.FILTER}, {'was designed by which Spanish artist?', G.C.UI.TEXT_DARK}, },
-        
+        {{'The original logo for ', G.C.UI.TEXT_DARK}, {'Chupa Chups ', G.C.FILTER}, {'was designed by which Spanish artist?', G.C.UI.TEXT_DARK}, },  
     },
     correct = {'Salvador Dalí'},
     other_choices = {
@@ -2909,7 +2908,6 @@ HangedMan.triviaMachine_questions = {
         -- main_end compatible format
         {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'one of the Knights featured', G.C.UI.TEXT_DARK}, },
         {{'in the "', G.C.UI.TEXT_DARK}, {'Dark Ages ', G.C.FILTER}, {'" expansion for ', G.C.UI.TEXT_DARK}, {'Dominion', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
-        
     },
     correct = {
         'Dame Amelia',
@@ -2968,7 +2966,6 @@ HangedMan.triviaMachine_questions = {
         -- main_end compatible format
         {{'As of 2026, which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'the name of', G.C.UI.TEXT_DARK}, },
         {{'an expansion for the game ', G.C.UI.TEXT_DARK}, {'Dominion', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
-        
     },
     correct = {
         'Black Market',
@@ -3011,10 +3008,363 @@ HangedMan.triviaMachine_questions = {
         'Plunder',
         'Rising Sun',
         --'Arcana'
-
     },
     value = 60,
 },
+
+[173] = {
+    question = {
+        -- main_end compatible format
+        {{'What was the first ', G.C.UI.TEXT_DARK}, {'YouTube ', G.C.RED}, {'video to ever', G.C.UI.TEXT_DARK}, },
+        {{'reached the 32-bit integer limit with its view count?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'PSY - Gangnam Style',
+    },
+    other_choices = {
+        'Wiz Khalifa - See You Again',
+        'Luis Fonsi - Despacito',
+        'Justin Bieber - Baby',
+        'Lady Gaga - Bad Romance',
+        'HDCYT - Charlie Bit My finger',
+        'Judson Laipply - Evolution of Dance',
+        'Crazy Frog - Axel F',
+        'Ultra Records - Dame Tu Cosita',
+        'Maroon 5 - Sugar',
+        'Katy Perry - Dark Horse',
+        'Justin Bieber - Sorry',
+        'Maroon 5 - Girls Like You',
+        'A completely random and non-descript unlisted Facebook ad',
+        'LooLoo Kids - Johny Johny Yes Papa',
+        'Cocomelon - Wheels on the Bus',
+        'Pinkfong - Baby Shark',
+        'Mark Ronson - Uptown Funk',
+        'Katy Perry - California Girls',
+        'Tom Scott - Two Drums and a Cymbal Falls Off a Cliff',
+        'Smosh - Pokémon Theme Music Video',
+        'MrBeast - I Spent 100 Days In Jenny\'s Mod Hardcore Minecraft',
+        'jacksfilms - Your Grammar Sucks #147',
+        'They Might Be Giants - I Can\'t Believe It\'s Not Constantinople',
+        'Tom Scott - 10 Things That Is Illegal to Do in England',
+        'TomSka - asdfmovies 8',
+        'Tom Lum - Bees Can Preceive Time',
+        'PSY - Gentleman',
+        'PSY - Daddy',
+        'The Anime Man - I Spent 100 Days In a Manga Café',
+        'D!NG - Michael Says Prime Numbers for 3 Hours',
+        'Bean - Looks Inside...',
+        'robro - Can I beat Minecraft while beating myself?',
+        'Thatnoaharguy - minecraft but every step i get cracked by a femboy',
+        'Dream - Minecraft Film Director VS 5 Paid Actors Manhunt FINALE Rematch'
+    },
+    value = 40,
+},
+
+[174] = {
+    question = {
+        -- main_end compatible format
+        {{'What pigment is traditionally made with ', G.C.UI.TEXT_DARK}, {'lapis lazuli', G.C.SECONDARY_SET.Spectral}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'Ultramarine blue',
+    },
+    other_choices = {
+        'Prussian blue',
+        'Maya blue',
+        'Egyptian blue',
+        'Han blue',
+        'Oregon blue',
+        'Cerulean blue',
+        'Russian blue',
+        'Paris blue',
+        'Cambridge blue'
+    },
+    value = 30,
+},
+
+[175] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of these is ', G.C.UI.TEXT_DARK}, {'NOT ', G.C.RED}, {'a medicine that', G.C.UI.TEXT_DARK}, },
+        {{'can be used to treat ', G.C.UI.TEXT_DARK}, {'seizures', G.C.FILTER}, {'?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'Propranolol',
+        'Cefotaxime',
+        'Neostigmine',
+        'Sodium thiosulfate',
+        'Selenium sulfide',
+        'Podophyllotoxin',
+        'Clomifene',
+        'Chloroquine'
+    },
+    other_choices = {
+        'Carbamazepine',
+        'Diazepam',
+        'Levetiracetam',
+        'Lorazepam',
+        'Phenobarbital',
+        'Phenytoin',
+        'Sodium valproate',
+    },
+    value = 75,
+},
+
+[176] = {
+    question = {
+        -- main_end compatible format
+        {{'Which of the vanilla ', G.C.UI.TEXT_DARK}, {'Legendary ', G.C.RARITY[4]}, {'jokers', G.C.UI.TEXT_DARK}, },
+        {{'is present in Shakespeare\'s "', G.C.UI.TEXT_DARK}, {'Hamlet', G.C.FILTER}, {'" ?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'Yorick',
+    },
+    other_choices = {
+        'Canio',
+        'Triboulet',
+        'Chicot',
+        'Perkeo',
+    },
+    value = 40,
+},
+
+[177] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.DARK_EDITION}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.DARK_EDITION',
+    },
+    other_choices = {
+        'G.C.EDITION',
+        'G.C.SECONDARY_SET.Enhanced',
+        'G.C.SECONDARY_SET.Spectral',
+        'G.C.RARITY.Legendary',
+        'G.C.RARITY[4]'
+    },
+    value = 50,
+},
+
+[178] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.EDITION}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.EDITION',
+    },
+    other_choices = {
+        'G.C.DARK_EDITION',
+        'G.C.SECONDARY_SET.Enhanced',
+        'G.C.SECONDARY_SET.Spectral',
+        'G.C.RARITY.Legendary',
+        'G.C.RARITY[4]'
+    },
+    value = 50,
+},
+
+[179] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.SECONDARY_SET.Enhanced}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.SECONDARY_SET.Enhanced',
+    },
+    other_choices = {
+        'G.C.DARK_EDITION',
+        'G.C.EDITION',
+        'G.C.SECONDARY_SET.Spectral',
+        'G.C.RARITY.Legendary',
+        'G.C.RARITY[4]',
+        'G.C.SECONDARY_SET.Tarot'
+    },
+    value = 50,
+},
+
+[180] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.SECONDARY_SET.Spectral}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.SECONDARY_SET.Spectral',
+    },
+    other_choices = {
+        'G.C.DARK_EDITION',
+        'G.C.EDITION',
+        'G.C.SECONDARY_SET.Enhanced',
+        'G.C.RARITY.Legendary',
+        'G.C.RARITY[4]'
+    },
+    value = 50,
+},
+
+[181] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.RARITY[4]}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.RARITY[4]',
+    },
+    other_choices = {
+        'G.C.DARK_EDITION',
+        'G.C.EDITION',
+        'G.C.SECONDARY_SET.Enhanced',
+        'G.C.RARITY.Legendary',
+        'G.C.SECONDARY_SET.Spectral',
+        'G.C.SECONDARY_SET.Tarot'
+    },
+    value = 50,
+},
+
+[182] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.SECONDARY_SET.Tarot}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.SECONDARY_SET.Tarot',
+    },
+    other_choices = {
+        'G.C.DARK_EDITION',
+        'G.C.EDITION',
+        'G.C.SECONDARY_SET.Enhanced',
+        'G.C.RARITY.Legendary',
+        'G.C.SECONDARY_SET.Spectral',
+        'G.C.RARITY[4]'
+    },
+    value = 50,
+},
+
+[183] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.UI.TEXT_INACTIVE}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.UI.TEXT_INACTIVE',
+    },
+    other_choices = {
+        'G.C.UI.TEXT_DARK',
+        'G.C.DYN_UI.DARK',
+        'G.C.DARK_EDITION',
+        'G.C.UI.TEXT_GRAY',
+        'G.C.DYN_UI.GRAY',
+        'G.C.DYN_UI.INACTIVE',
+        'G.C.GRAY',
+        'G.C.DARK',
+        'G.C.INACTIVE',
+    },
+    value = 50,
+},
+
+[184] = {
+    question = {
+        -- main_end compatible format
+        {{'Internally, what is ', G.C.UI.TEXT_DARK}, {'THIS ', G.C.FILTER}, {'colour called in ', G.C.UI.TEXT_DARK}, {'Balatro', G.C.FILTER}, {'\'s code?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'G.C.FILTER',
+    },
+    other_choices = {
+        'G.C.YELLOW',
+        'G.C.GOLD',
+        'G.C.MONEY',
+        'G.C.UI.TEXT_HIGHLIGHT',
+        'G.C.UI.TEXT_YELLOW',
+        'G.C.DYN_UI.ACTIVE',
+        'G.C.UI.TEXT_ACTIVE',
+        'G.C.UI.FILTER',
+        'G.C.UI.TEXT_FILTER',
+    },
+    value = 50,
+},
+
+[185] = {
+    question = {
+        -- main_end compatible format
+        {{'The show "', G.C.UI.TEXT_DARK}, {'Frasier', G.C.FILTER}, {'" was a spin-off from what other show?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'Cheers',
+    },
+    other_choices = {
+        'Full House',
+        'Friends',
+        'M*A*S*H',
+        'The Golden Girls',
+        'Family Matters',
+        'Growing Pains',
+        'Saved by the Bell',
+        'Everybody Loves Raymond',
+        'The Nanny',
+        'Will & Grace',
+        'Two and a Half Men',
+        'The IT Crowd',
+        'Peep Show',
+        'I Think You Should Leave',
+        'Psych',
+        'Only Fools & Horses'
+    },
+    value = 30,
+},
+
+[186] = {
+    question = {
+        -- main_end compatible format
+        {{'Why is the manga/anime series "', G.C.UI.TEXT_DARK}, {'Citrus', G.C.FILTER}, {'" named that?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'One of the main character is named after a citrus fruit',
+    },
+    other_choices = {
+        'One of the main character is allergic to citrus fruits',
+        'One of the main character\'s family runs a citrus fruit farm',
+        'One of the main character really loves citrus fruits',
+        'The main characters met at a grocery store buying a citrus fruit',
+        'The story is set in a school named after a citrus fruit',
+        'The story is set in a culinary school',
+        'One of the main character has a part-time job as a citrus-themed mascot',
+        'One of the main character threw a citrus fruit at the other one',
+        'The main characters met because they\'re fans of a citrus-themed magical girl anime',
+        'The main characters had their first kiss under a citrus fruit tree',
+        'The author was living of citrus fruits during the writing of this series',
+        'The author was struggling to come up with a name, then simply had a look in their fridge',
+        'The author really likes citrus fruits',
+    },
+    value = 55,
+},
+
+[187] = {
+    question = {
+        -- main_end compatible format
+        {{'Flint', G.C.FILTER}, {', ', G.C.UI.TEXT_DARK}, {'Dent', G.C.FILTER}, {', and ', G.C.UI.TEXT_DARK}, {'Sweet ', G.C.FILTER}, {'are all', G.C.UI.TEXT_DARK}, },
+        {{'examples of types of what?', G.C.UI.TEXT_DARK}, },
+    },
+    correct = {
+        'Corns',
+    },
+    other_choices = {
+        'Peppers',
+        'Potatoes',
+        'Lettuces',
+        'Cucumbers',
+        'Limes',
+        'Cabbages',
+        'Chickens',
+        'Beetles',
+        'Mackerels',
+        'Grapes',
+        'Frogs',
+        'Pumpkins',
+        'Chicken nugget shapes',
+    },
+    value = 45,
+},
+
 
 
 }

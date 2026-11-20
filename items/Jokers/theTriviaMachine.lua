@@ -5,7 +5,7 @@ SMODS.Joker {
     discovered = false,
 	blueprint_compat = true,
 
-	config = { extra = { chips = 0, question = -1, used = {}, accepting = false, answered = nil, wilded = false, fallback = false,
+	config = { extra = { chips = 0, question = -1, used = {}, fallback = false,
 		choices = {
 			['Spades'] = '?',
 			['Hearts'] = '?',
@@ -20,127 +20,7 @@ SMODS.Joker {
 	-- #1# is the first variable in vars, #2# the second, #3# the third, and so on.
 	-- It's also where you'd add to the info_queue, which is where things like the negative tooltip are.
 	loc_vars = function(self, info_queue, card)
-
-		local mainend = {}
-		local value = 0
-		local textrows = {}
-		local header = 'Welcome to the Trivia Machine!'
-
-		if card.ability.extra.fallback then
-
-			textrows = {
-				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'ERROR LOADING QUESTIONS', colour = G.C.RED, scale = 0.35}},
-            		}
-				},
-				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'Question packet missing from', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-						{n = G.UIT.T, config = {align = "cm", text = 'items/Other', colour = G.C.FILTER, scale = 0.32}},
-            		}
-				},
-				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'Please reinstall this mod!', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-            		}
-				},
-			}
-
-		elseif card.ability.extra.question > 0 then
-			value = (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
-			header = 'Question ID '.. card.ability.extra.question
-			textrows = {
-				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'This question is worth ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-						{n = G.UIT.T, config = {align = "cm", text = ''..value, colour = G.C.CHIPS, scale = 0.32}},
-						{n = G.UIT.T, config = {align = "cm", text = ' Chips', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-            		}
-				},
-				{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = ' ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-            		}
-				}
-			}
-
-			-- append question
-			for questionLine = 1, #HangedMan.triviaMachine_questions[card.ability.extra.question].question, 1 do
-				local textpiece = {}
-				for _i, textcolourpair in ipairs(HangedMan.triviaMachine_questions[card.ability.extra.question].question[questionLine]) do
-					textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.32}}
-				end
-
-				textrows[questionLine+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = textpiece}
-			end
-			
-
-			local col_table = {
-				['Spades'] = G.C.SUITS.Spades,
-				['Hearts'] = G.C.SUITS.Hearts,
-				['Clubs'] = G.C.SUITS.Clubs,
-				['Diamonds'] = G.C.SUITS.Diamonds,
-			}
-
-			if not card.ability.extra.accepting then
-				col_table['Spades'] = G.C.UI.TEXT_INACTIVE
-				col_table['Hearts'] = G.C.UI.TEXT_INACTIVE
-				col_table['Clubs'] = G.C.UI.TEXT_INACTIVE
-				col_table['Diamonds'] = G.C.UI.TEXT_INACTIVE
-			end
-
-			if card.ability.extra.answered and (not card.ability.extra.wilded) then 
-				if card.ability.extra.answered == card.ability.extra.correct then col_table[card.ability.extra.answered] = G.C.GREEN
-				else col_table[card.ability.extra.answered] = G.C.RED end
-			end
-
-			textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = {
-				{n = G.UIT.T, config = {align = "cm", text = ' ', colour = G.C.UI.TEXT_DARK, scale = 0.2}},
-			}}
-			textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = {
-				{n = G.UIT.T, config = {align = "cm", text = 'Spades: ', colour = col_table['Spades'], scale = 0.32}},
-				{n = G.UIT.T, config = {align = "cm", text = card.ability.extra.choices['Spades'], colour = col_table['Spades'], scale = 0.32}}
-			}}
-			textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = {
-				{n = G.UIT.T, config = {align = "cm", text = 'Hearts: ', colour = col_table['Hearts'], scale = 0.32}},
-				{n = G.UIT.T, config = {align = "cm", text = card.ability.extra.choices['Hearts'], colour = col_table['Hearts'], scale = 0.32}}
-			}}
-			textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = {
-				{n = G.UIT.T, config = {align = "cm", text = 'Clubs: ', colour = col_table['Clubs'], scale = 0.32}},
-				{n = G.UIT.T, config = {align = "cm", text = card.ability.extra.choices['Clubs'], colour = col_table['Clubs'], scale = 0.32}}
-			}}
-			textrows[#textrows+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = {
-				{n = G.UIT.T, config = {align = "cm", text = 'Diamonds: ', colour = col_table['Diamonds'], scale = 0.32}},
-				{n = G.UIT.T, config = {align = "cm", text = card.ability.extra.choices['Diamonds'], colour = col_table['Diamonds'], scale = 0.32}}
-			}}
-
-			
-
-		else
-
-			textrows = {
-				{n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'Play only ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-						{n = G.UIT.T, config = {align = "cm", text = '1 ', colour = G.C.FILTER, scale = 0.32}},
-						{n = G.UIT.T, config = {align = "cm", text = 'card with first hand', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-            		}
-				},
-				{n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = 
-					{
-	                    {n = G.UIT.T, config = {align = "cm", text = 'of Blind to answer the question', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
-            		}
-				},
-			}
-
-		end
-
-		mainend = {
-            { n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = textrows}
-        }
-		
-        return { vars = { card.ability.extra.chips, value, value*-1, card.ability.extra.question, header}, main_end = mainend }
+		return { vars = { card.ability.extra.chips} }
 	end,
 	-- Sets rarity. 1 common, 2 uncommon, 3 rare, 4 legendary.
 	rarity = 2,
@@ -154,6 +34,181 @@ SMODS.Joker {
 
 	-- The functioning part of the joker, looks at context to decide what step of scoring the game is on, and then gives a 'return' value if something activates.
 	calculate = function(self, card, context)
+
+		local function HangedMan_triviaMachine_createQuestionMenu(q_ID, options)
+			return create_UIBox_generic_options({
+				contents = G.FUNCS.HangedMan_triviaMachine_createQuestionObject(q_ID, options),
+				no_back = true
+			})
+		end
+
+		G.FUNCS.HangedMan_triviaMachine_showQuestionMenu = function(q_ID, options)
+			-- clears user selection from previous question
+			G.GAME.HangedMan_triviaMachine_selected = nil
+			-- pause the action
+			G.SETTINGS.paused = true
+			-- create the menu
+			G.FUNCS.overlay_menu {
+				definition = HangedMan_triviaMachine_createQuestionMenu(q_ID, options)
+			}
+		end
+
+		G.FUNCS.HangedMan_triviaMachine_createQuestionObject = function(q_ID, options)
+			-- this is the menu code itself
+
+			local mainend = {}
+			local value = 0
+			local textrows = {}
+			local question = {}
+			local answer = {}
+			local header = 'Welcome to the Trivia Machine!'
+
+			if (not q_ID) or (not options) then
+
+				textrows = {
+					{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+						{
+							{n = G.UIT.T, config = {align = "cm", text = 'ERROR LOADING QUESTIONS', colour = G.C.RED, scale = 0.35}},
+						}
+					},
+					{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+						{
+							{n = G.UIT.T, config = {align = "cm", text = 'Missing Question ID or Options table', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						}
+					},
+					{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+						{
+							{n = G.UIT.T, config = {align = "cm", text = 'Please report this to Kusane!', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						}
+					},
+				}
+
+			elseif q_ID > 0 then
+				value = (HangedMan.triviaMachine_questions[q_ID].value or 0)
+				header = 'Question ID '.. q_ID
+				question = {
+					{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+						{
+							{n = G.UIT.T, config = {align = "cm", text = header, colour = G.C.UI.TEXT_INACTIVE, scale = 0.32}},
+						}
+					},
+					{n = G.UIT.R, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = 
+						{
+							{n = G.UIT.T, config = {align = "cm", text = 'This question is worth ', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+							{n = G.UIT.T, config = {align = "cm", text = ''..value, colour = G.C.CHIPS, scale = 0.32}},
+							{n = G.UIT.T, config = {align = "cm", text = ' Chips', colour = G.C.UI.TEXT_DARK, scale = 0.32}},
+						}
+					},
+				}
+
+				-- append question
+				for questionLine = 1, #HangedMan.triviaMachine_questions[q_ID].question, 1 do
+					local textpiece = {}
+					for _i, textcolourpair in ipairs(HangedMan.triviaMachine_questions[q_ID].question[questionLine]) do
+						textpiece[#textpiece+1] = {n = G.UIT.T, config = {align = "cm", text = textcolourpair[1], colour = textcolourpair[2], scale = 0.36}}
+					end
+
+					question[#question+1] = {n = G.UIT.R, config = {align = "cm", h = 0.5, w = 10, padding = 0.025}, nodes = textpiece}
+				end
+				
+
+				local col_table = {
+					['Spades'] = G.C.SUITS.Spades,
+					['Hearts'] = G.C.SUITS.Hearts,
+					['Clubs'] = G.C.SUITS.Clubs,
+					['Diamonds'] = G.C.SUITS.Diamonds,
+				}
+
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Spades', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Spades'], r = 0.02, hover = true}, nodes = {
+					{n=G.UIT.C, config={}, nodes={
+						{n = G.UIT.T, config = {align = "cm", text = options['Spades'], colour = G.C.WHITE, scale = 0.36}}
+					}},
+				}}
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Hearts', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Hearts'], r = 0.02, hover = true}, nodes = {
+					{n=G.UIT.C, config={}, nodes={
+						{n = G.UIT.T, config = {align = "cm", text = options['Hearts'], colour = G.C.WHITE, scale = 0.36}}
+					}},
+				}}
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Clubs', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Clubs'], r = 0.02, hover = true}, nodes = {
+					{n=G.UIT.C, config={}, nodes={
+						{n = G.UIT.T, config = {align = "cm", text = options['Clubs'], colour = G.C.WHITE, scale = 0.36}}
+					}},
+				}}
+				answer[#answer+1] = {n = G.UIT.R, config = {button = "HangedMan_triviaMachine_button", answer_choice='Diamonds', align = "cm", h = 1.2, minw = 10, padding = 0.04, colour = col_table['Diamonds'], r = 0.02, hover = true}, nodes = {
+					{n=G.UIT.C, config={}, nodes={
+						{n = G.UIT.T, config = {align = "cm", text = options['Diamonds'], colour = G.C.WHITE, scale = 0.36}}
+					}},
+				}}
+
+			end
+
+			local question_ob = {
+				{ n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = question}
+			}
+
+			local answer_ob = {
+				{ n=G.UIT.C, config = {align = "cm", h = 1, w = 10, padding = 0.025}, nodes = answer}
+			}
+
+
+
+			-- and then, return the ui
+			local t = {
+				{
+				n = G.UIT.C,
+				config = { align = "cm" },
+				nodes = {
+					{
+					n = G.UIT.R,
+					config = { align = "cm" },
+					nodes = {
+						{
+						n = G.UIT.B,
+						config = { w = 3, h = 0.2 },
+						nodes = {}
+						}
+					}
+					},
+					{
+					n = G.UIT.R,
+					config = { align = "cm", r = 0.1, colour = G.C.WHITE, emboss = 0.05 },
+					nodes = {
+						{
+						n = G.UIT.R,
+						config = { align = "cm", padding = 0.07, no_fill = false },
+						nodes = question_ob
+						},
+					}
+					},
+					{
+					n = G.UIT.R,
+					config = { align = "cm", r = 0.1, colour = G.C.WHITE, emboss = 0.05 },
+					nodes = {
+						{
+						n = G.UIT.R,
+						config = { align = "cm", padding = 0.1, no_fill = false },
+						nodes = answer_ob
+						}
+					}
+					}
+				}
+				}
+			}
+			return t
+		end
+
+		G.FUNCS.HangedMan_triviaMachine_button = function(e)
+			G.GAME.HangedMan_triviaMachine_selected = G.GAME.HangedMan_triviaMachine_selected or nil
+			G.GAME.HangedMan_triviaMachine_selected = e.config.answer_choice
+			G.FUNCS.HangedMan_triviaMachine_closeQuestionMenu()
+		end
+
+		-- called when leaving the menu
+		G.FUNCS.HangedMan_triviaMachine_closeQuestionMenu = function(e)
+		if G.OVERLAY_MENU then G.FUNCS.exit_overlay_menu() end
+		G.SETTINGS.paused = false
+		end
+
 
 		if context.setting_blind and not context.blueprint then
 
@@ -191,10 +246,6 @@ SMODS.Joker {
 				card.ability.extra.choices[suitorder[i]] = incorrect[i-1]
 			end
 
-
-			card.ability.extra.accepting = true
-			card.ability.extra.answered = nil
-			card.ability.extra.wilded = false
 			card.ability.extra.used[#card.ability.extra.used+1] = card.ability.extra.question
 
 			-- if question has a reduceInfo key, set a flag to make that card shows an alternative description
@@ -204,61 +255,37 @@ SMODS.Joker {
 					G.GAME.HangedMan_triviaMachine_reduceInfo[key] = true
 				end
 			end
-		end
 
-
-		if context.before and card.ability.extra.accepting and not context.blueprint and not card.ability.extra.fallback then
-
-			if #context.full_hand == 1 then
-
-				card.ability.extra.answered = context.full_hand[1].base.suit
-
-				if SMODS.has_any_suit(context.full_hand[1]) then
-					card.ability.extra.chips = card.ability.extra.chips + (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
-					card.ability.extra.wilded = true
-					return {
-						message = 'Wilded!',
-						colour = G.C.SECONDARY_SET.Tarot,
-					}
-				elseif context.full_hand[1]:is_suit(card.ability.extra.correct) and (not SMODS.has_any_suit(context.full_hand[1])) then
-					card.ability.extra.chips = card.ability.extra.chips + (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
-					card.ability.extra.streak = (card.ability.extra.streak or 0) + 1
-					check_for_unlock({ type = 'who_wants_to_be_a_triviaMachine', streak = card.ability.extra.streak })
-					return {
-						message = 'Correct!',
-						colour = G.C.BLUE,
-					}
-				else
-					card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
-					--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
-					card.ability.extra.streak = 0
-					return {
-						message = 'Incorrect!',
-						colour = G.C.RED,
-					}
-				end
-			else
-				card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
-				--card.ability.extra.chips = math.max(0, math.floor(card.ability.extra.chips/2) or 0)
-				card.ability.extra.streak = 0
-				return {
-					message = 'Skipped!',
-					colour = G.C.UI.TEXT_DARK,
-				}
+			G.E_MANAGER:add_event(Event({
+			func = function()
+				G.FUNCS.HangedMan_triviaMachine_showQuestionMenu(card.ability.extra.question,card.ability.extra.choices)
+				return true
 			end
+			}))
 
-			G.GAME.HangedMan_triviaMachine_reduceInfo = G.GAME.HangedMan_triviaMachine_reduceInfo or {}
-			HangedMan.emptyTable(G.GAME.HangedMan_triviaMachine_reduceInfo)
+			G.E_MANAGER:add_event(Event({
+				trigger = "after",
+				delay = 0.4,
+				func = function()
+					if (not G.GAME.HangedMan_triviaMachine_selected) or (not (card.ability.extra.correct == G.GAME.HangedMan_triviaMachine_selected)) then
+						card.ability.extra.chips = math.max(0,card.ability.extra.chips - (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0))
+						card.ability.extra.streak = 0
+						HangedMan.display_wheel_text(card, 'Incorrect!', G.C.RED)
+					else 
+						card.ability.extra.chips = card.ability.extra.chips + (HangedMan.triviaMachine_questions[card.ability.extra.question].value or 0)
+						card.ability.extra.streak = (card.ability.extra.streak or 0) + 1
+						check_for_unlock({ type = 'who_wants_to_be_a_triviaMachine', streak = card.ability.extra.streak })
+						HangedMan.display_wheel_text(card, 'Correct!', G.C.BLUE, 'timpani')
+					end
+					return true
+				end
+				}))
+			delay(0.6)
 
-			card.ability.extra.accepting = false
 
 		end
-
-
-
 
 		if context.joker_main then 
-			card.ability.extra.accepting = false
 			if card.ability.extra.chips > 0 then return { chips = card.ability.extra.chips } end
 		end
 
@@ -270,9 +297,6 @@ SMODS.Joker {
 			HangedMan.emptyTable(G.GAME.HangedMan_triviaMachine_reduceInfo)
 
 			card.ability.extra.question = -1
-			card.ability.extra.accepting = false
-			card.ability.extra.answered = nil
-			card.ability.extra.wilded = false
 
 		end
 		
